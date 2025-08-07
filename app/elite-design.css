@@ -1,0 +1,579 @@
+/* 🏆 ELITE PORTFOLIO - LUXURY DESIGN SYSTEM */
+/* Inspired by premium brands: Apple, Tesla, Rolex, Louis Vuitton */
+
+:root {
+  /* Elite Color Palette - Sophisticated & Expensive */
+  --elite-gold: #d4af37;
+  --elite-platinum: #e5e4e2;
+  --elite-charcoal: #1a1a1a;
+  --elite-obsidian: #0d0d0d;
+  --elite-pearl: #f8f8ff;
+  --elite-champagne: #f7e7ce;
+  --elite-bronze: #cd7f32;
+  --elite-silver: #c0c0c0;
+  --elite-midnight: #191970;
+  --elite-cream: #fffdd0;
+
+  /* Luxury Gradients */
+  --gradient-gold: linear-gradient(135deg, #d4af37 0%, #ffd700 50%, #b8860b 100%);
+  --gradient-platinum: linear-gradient(135deg, #e5e4e2 0%, #ffffff 50%, #c0c0c0 100%);
+  --gradient-elite: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #0d0d0d 100%);
+  --gradient-luxury: linear-gradient(45deg, #d4af37 0%, #e5e4e2 50%, #d4af37 100%);
+
+  /* Elite Shadows */
+  --shadow-luxury: 0 20px 60px rgba(212, 175, 55, 0.15), 0 8px 25px rgba(0, 0, 0, 0.3);
+  --shadow-premium: 0 10px 40px rgba(212, 175, 55, 0.1), 0 4px 15px rgba(0, 0, 0, 0.2);
+  --shadow-subtle: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+  /* Typography Scale */
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "SF Mono", "Monaco", "Cascadia Code", "Roboto Mono", monospace;
+}
+
+/* ===== ELITE FOUNDATION ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--gradient-elite);
+  color: var(--elite-pearl);
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ===== LUXURY SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--elite-obsidian);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-gold);
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ffd700 0%, #d4af37 100%);
+}
+
+/* ===== ELITE MOTION SYSTEM ===== */
+
+/* Whisper Motion - Subtle, Expensive Feel */
+.whisper-motion {
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-origin: center;
+}
+
+.whisper-motion:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: var(--shadow-luxury);
+}
+
+/* Silk Transition - Smooth as Silk */
+.silk-transition {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.silk-transition::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+  transition: left 0.8s ease;
+}
+
+.silk-transition:hover::before {
+  left: 100%;
+}
+
+/* Velvet Touch - Luxurious Interaction */
+.velvet-touch {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.velvet-touch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-luxury);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.velvet-touch:hover::after {
+  opacity: 0.1;
+}
+
+.velvet-touch:hover {
+  transform: translateY(-1px);
+  color: var(--elite-gold);
+}
+
+/* Platinum Glow - Premium Highlight */
+.platinum-glow {
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+.platinum-glow:hover {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 0 40px rgba(212, 175, 55, 0.3);
+  transform: scale(1.02);
+}
+
+/* Diamond Sparkle - Subtle Animation */
+@keyframes diamond-sparkle {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.diamond-sparkle {
+  animation: diamond-sparkle 4s ease-in-out infinite;
+}
+
+/* Marble Slide - Elegant Movement */
+.marble-slide {
+  transform: translateX(-20px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.marble-slide.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Gold Accent - Luxury Highlight */
+.gold-accent {
+  position: relative;
+}
+
+.gold-accent::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-gold);
+  transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gold-accent:hover::before {
+  width: 100%;
+}
+
+/* ===== ELITE COMPONENTS ===== */
+
+/* Luxury Card */
+.luxury-card {
+  background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(13, 13, 13, 0.95));
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-premium);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-gold);
+  opacity: 0.5;
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-luxury);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* Premium Button */
+.premium-button {
+  background: var(--gradient-gold);
+  color: var(--elite-obsidian);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-premium);
+}
+
+.premium-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.premium-button:hover::before {
+  left: 100%;
+}
+
+.premium-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-luxury);
+}
+
+.premium-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Elite Text Styles */
+.elite-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.elite-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 400;
+  color: var(--elite-platinum);
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+}
+
+.elite-body {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--elite-pearl);
+  opacity: 0.8;
+  line-height: 1.7;
+}
+
+/* ===== SOPHISTICATED ANIMATIONS ===== */
+
+/* Breathe Animation - Subtle Life */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+}
+
+.breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* Float Animation - Elegant Suspension */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+.float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Shimmer Effect - Luxury Shine */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Pulse Glow - Premium Attention */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.3);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ===== ELITE LAYOUT SYSTEM ===== */
+
+/* Container */
+.elite-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Grid System */
+.elite-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.elite-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.elite-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.elite-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Flex System */
+.elite-flex {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.elite-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.elite-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== ELITE HEADER STYLES ===== */
+.elite-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(13, 13, 13, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  transition: all 0.3s ease;
+}
+
+.elite-header.scrolled {
+  background: rgba(13, 13, 13, 0.95);
+  border-bottom-color: rgba(212, 175, 55, 0.2);
+  box-shadow: var(--shadow-subtle);
+}
+
+.elite-nav-item {
+  color: var(--elite-platinum);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.elite-nav-item:hover {
+  color: var(--elite-gold);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.elite-nav-item.active {
+  color: var(--elite-gold);
+}
+
+.elite-nav-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--elite-gold);
+  border-radius: 50%;
+}
+
+/* ===== ELITE HERO SECTION ===== */
+.elite-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.elite-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .elite-container {
+    padding: 0 1rem;
+  }
+
+  .luxury-card {
+    padding: 1.5rem;
+  }
+
+  .premium-button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .elite-grid {
+    gap: 1rem;
+  }
+
+  .elite-flex {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-card {
+    padding: 1rem;
+  }
+
+  .premium-button {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus States */
+.premium-button:focus,
+.elite-nav-item:focus {
+  outline: 2px solid var(--elite-gold);
+  outline-offset: 2px;
+}
+
+/* ===== ELITE BACKGROUND ELEMENTS ===== */
+.elite-bg-element {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.elite-bg-element-1 {
+  top: 10%;
+  left: 10%;
+  width: 300px;
+  height: 300px;
+  animation: float 12s ease-in-out infinite;
+}
+
+.elite-bg-element-2 {
+  top: 60%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  animation: float 15s ease-in-out infinite reverse;
+}
+
+.elite-bg-element-3 {
+  bottom: 20%;
+  left: 30%;
+  width: 250px;
+  height: 250px;
+  animation: breathe 10s ease-in-out infinite;
+}
+
+/* ===== ELITE LOADING STATES ===== */
+.elite-skeleton {
+  background: linear-gradient(90deg, rgba(26, 26, 26, 0.8) 25%, rgba(212, 175, 55, 0.1) 50%, rgba(26, 26, 26, 0.8) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 4px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .elite-header,
+  .premium-button {
+    display: none !important;
+  }
+
+  .luxury-card {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
