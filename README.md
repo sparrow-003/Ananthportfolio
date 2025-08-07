@@ -59,9 +59,9 @@ I’m always open to:
 - AI projects or Web3 builds  
 - Or just creative experiments
 
-### 👉 [**Hire Me**](https://wa.me/919876543210?text=Hi%20Ananth!%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20hire%20you%20for%20a%20project.) ← tap to DM me instantly!
+### 👉 [**Hire Me**](https://wa.me/6384227309?text=Hi%20Ananth!%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20hire%20you%20for%20a%20project.) ← tap to DM me instantly!
 
-📬 Or email: sparrow003official@gmail.com
+📬 Or email: thanan757@@gmail.com
 
 ---
 
