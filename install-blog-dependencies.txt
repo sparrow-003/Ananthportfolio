@@ -1,0 +1,11 @@
+Run this command to install the required blog dependencies:
+
+npm install @supabase/supabase-js react-markdown react-syntax-highlighter @types/react-syntax-highlighter react-share
+
+Or if you're using yarn:
+
+yarn add @supabase/supabase-js react-markdown react-syntax-highlighter @types/react-syntax-highlighter react-share
+
+Or if you're using pnpm:
+
+pnpm add @supabase/supabase-js react-markdown react-syntax-highlighter @types/react-syntax-highlighter react-share
