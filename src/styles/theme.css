@@ -1,0 +1,194 @@
+/* Enhanced Theme Variables - Light & Dark Modes */
+
+:root {
+    /* Light Mode Color System */
+    --light-bg-primary: hsl(0, 0%, 100%);
+    --light-bg-secondary: hsl(214, 32%, 98%);
+    --light-bg-tertiary: hsl(214, 40%, 96%);
+
+    --light-accent-blue: hsl(217, 91%, 50%);
+    --light-accent-gold: hsl(45, 100%, 51%);
+    --light-accent-indigo: hsl(240, 70%, 55%);
+
+    --light-text-primary: hsl(222, 47%, 8%);
+    --light-text-secondary: hsl(222, 47%, 30%);
+    --light-text-muted: hsl(215, 20%, 50%);
+
+    --light-card-bg: hsla(0, 0%, 100%, 0.95);
+    --light-card-border: hsla(217, 80%, 55%, 0.2);
+    --light-card-shadow: 0 8px 32px hsla(217, 91%, 50%, 0.08);
+    --light-card-hover-shadow: 0 12px 48px hsla(217, 91%, 50%, 0.12);
+
+    --light-glow: hsla(45, 100%, 51%, 0.3);
+    --light-glow-blue: hsla(217, 91%, 50%, 0.25);
+
+    /* Dark Mode Color System */
+    --dark-bg-primary: hsl(222, 47%, 4%);
+    --dark-bg-secondary: hsl(222, 47%, 6%);
+    --dark-bg-tertiary: hsl(222, 47%, 8%);
+
+    --dark-accent-cyan: hsl(199, 89%, 48%);
+    --dark-accent-teal: hsl(175, 80%, 50%);
+    --dark-accent-emerald: hsl(160, 85%, 45%);
+
+    --dark-text-primary: hsl(210, 40%, 98%);
+    --dark-text-secondary: hsl(210, 40%, 85%);
+    --dark-text-muted: hsl(215, 20%, 65%);
+
+    --dark-card-bg: hsla(222, 47%, 6%, 0.95);
+    --dark-card-border: hsla(199, 89%, 48%, 0.2);
+    --dark-card-shadow: 0 8px 32px hsla(199, 89%, 48%, 0.15);
+    --dark-card-hover-shadow: 0 12px 48px hsla(199, 89%, 48%, 0.25);
+
+    --dark-glow: hsla(199, 89%, 48%, 0.25);
+    --dark-glow-teal: hsla(175, 80%, 50%, 0.3);
+}
+
+/* Light Theme Application */
+.light {
+    --theme-bg-primary: var(--light-bg-primary);
+    --theme-bg-secondary: var(--light-bg-secondary);
+    --theme-bg-tertiary: var(--light-bg-tertiary);
+
+    --theme-accent-primary: var(--light-accent-blue);
+    --theme-accent-secondary: var(--light-accent-gold);
+
+    --theme-text-primary: var(--light-text-primary);
+    --theme-text-secondary: var(--light-text-secondary);
+    --theme-text-muted: var(--light-text-muted);
+
+    --theme-card-bg: var(--light-card-bg);
+    --theme-card-border: var(--light-card-border);
+    --theme-card-shadow: var(--light-card-shadow);
+    --theme-card-hover-shadow: var(--light-card-hover-shadow);
+
+    --theme-glow: var(--light-glow);
+}
+
+/* Dark Theme Application */
+.dark {
+    --theme-bg-primary: var(--dark-bg-primary);
+    --theme-bg-secondary: var(--dark-bg-secondary);
+    --theme-bg-tertiary: var(--dark-bg-tertiary);
+
+    --theme-accent-primary: var(--dark-accent-cyan);
+    --theme-accent-secondary: var(--dark-accent-teal);
+
+    --theme-text-primary: var(--dark-text-primary);
+    --theme-text-secondary: var(--dark-text-secondary);
+    --theme-text-muted: var(--dark-text-muted);
+
+    --theme-card-bg: var(--dark-card-bg);
+    --theme-card-border: var(--dark-card-border);
+    --theme-card-shadow: var(--dark-card-shadow);
+    --theme-card-hover-shadow: var(--dark-card-hover-shadow);
+
+    --theme-glow: var(--dark-glow);
+}
+
+/* Background Gradients */
+.light {
+    --theme-bg-gradient-main: linear-gradient(135deg,
+            hsl(0, 0%, 100%) 0%,
+            hsl(214, 32%, 98%) 50%,
+            hsl(214, 40%, 96%) 100%);
+
+    --theme-bg-gradient-hero: linear-gradient(180deg,
+            hsl(0, 0%, 100%) 0%,
+            hsl(214, 40%, 99%) 50%,
+            hsl(217, 91%, 98%) 100%);
+}
+
+.dark {
+    --theme-bg-gradient-main: linear-gradient(135deg,
+            hsl(222, 47%, 4%) 0%,
+            hsl(220, 50%, 7%) 50%,
+            hsl(217, 55%, 9%) 100%);
+
+    --theme-bg-gradient-hero: linear-gradient(180deg,
+            hsl(222, 47%, 4%) 0%,
+            hsl(220, 45%, 6%) 50%,
+            hsl(217, 50%, 8%) 100%);
+}
+
+/* Global Background Application */
+body.light {
+    background: var(--theme-bg-primary);
+    background-image: var(--theme-bg-gradient-main);
+    color: var(--theme-text-primary);
+}
+
+body.dark {
+    background: var(--theme-bg-primary);
+    background-image: var(--theme-bg-gradient-main);
+    color: var(--theme-text-primary);
+}
+
+/* Smooth theme transitions */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+    border-color: var(--theme-card-border);
+}
+
+/* Card System */
+.theme-card {
+    background: var(--theme-card-bg);
+    border: 1px solid var(--theme-card-border);
+    box-shadow: var(--theme-card-shadow);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-card:hover {
+    box-shadow: var(--theme-card-hover-shadow);
+    transform: translateY(-2px);
+}
+
+/* Typography with theme-aware gradients */
+.theme-text-gradient-primary {
+    background: linear-gradient(90deg,
+            var(--theme-accent-primary),
+            var(--theme-accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+/* Button System */
+.theme-button-primary {
+    background: var(--theme-accent-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--theme-glow);
+}
+
+/* Glass Navigation Bar */
+.theme-nav-glass {
+    background: var(--theme-card-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--theme-card-border);
+    box-shadow: 0 4px 16px hsla(0, 0%, 0%, 0.05);
+}
+
+.light .theme-nav-glass {
+    box-shadow: 0 4px 16px hsla(217, 91%, 50%, 0.08);
+}
+
+.dark .theme-nav-glass {
+    box-shadow: 0 4px 16px hsla(199, 89%, 48%, 0.15);
+}

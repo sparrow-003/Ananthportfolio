@@ -1,0 +1,62 @@
+import { Helmet } from 'react-helmet-async';
+import { memo } from 'react';
+
+interface SeoProps {
+  title?: string;
+  description?: string;
+  path?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+}
+
+const SITE = 'https://ananthdev.lovable.app';
+const DEFAULT_IMG = 'https://storage.googleapis.com/gpt-engineer-file-uploads/pVRlcc1ueBZGUVdOd2L5tUw2IOX2/social-images/social-1760279829781-1740320840665.jpg';
+
+const Seo = memo(({
+  title = 'ANANTH.DEV | Full-Stack Developer & AI Engineer',
+  description = 'Ananth N — Full-stack developer & AI engineer crafting seamless web and AI solutions. Expert in Python, React, TypeScript, and prompt engineering.',
+  path = '/',
+  image = DEFAULT_IMG,
+  type = 'website',
+}: SeoProps) => {
+  const url = `${SITE}${path}`;
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': type === 'profile' ? 'Person' : 'WebPage',
+    name: title,
+    description,
+    url,
+    image,
+    author: {
+      '@type': 'Person',
+      name: 'Ananth N',
+      url: SITE,
+      jobTitle: 'Full-Stack Developer & AI Engineer',
+      sameAs: [
+        'https://www.linkedin.com/in/ananth-n-583036233',
+        'https://github.com/sparrow-003',
+      ],
+    },
+  };
+
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={url} />
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={image} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+    </Helmet>
+  );
+});
+
+Seo.displayName = 'Seo';
+export default Seo;

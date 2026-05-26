@@ -1,0 +1,16 @@
+# ANANTH.DEV
+> Full-stack developer and AI engineer
+
+## About
+Ananth N, Madurai, India. Python, React, TypeScript, AI/ML, Prompt Engineering.
+
+## Projects
+- DevMatch: Developer social platform
+- RAG Chat Bot: Document Q&A
+- Naan Mudhalvan: AI education 150+ students
+
+## Contact
+Email: thanan757@gmail.com
+LinkedIn: linkedin.com/in/ananth-n-583036233
+GitHub: github.com/sparrow-003
+Web: https://ananth-3d-genesis-folio.lovable.app

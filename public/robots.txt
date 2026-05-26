@@ -1,0 +1,35 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ananth-3d-genesis-folio.lovable.app/sitemap.xml
+Sitemap: https://ananth-3d-genesis-folio.lovable.app/sitemap-pages.xml
+Sitemap: https://ananth-3d-genesis-folio.lovable.app/sitemap-skills.xml
+
+Host: https://ananth-3d-genesis-folio.lovable.app

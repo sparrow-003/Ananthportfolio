@@ -1,0 +1,9 @@
+/* TEAM */
+Developer: Ananth N
+Role: Full-Stack Developer and AI Engineer
+Location: Madurai, Tamil Nadu, India
+LinkedIn: linkedin.com/in/ananth-n-583036233
+GitHub: github.com/sparrow-003
+
+/* SITE */
+React 18, TypeScript, Tailwind CSS, Three.js, Supabase

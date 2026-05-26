@@ -1,0 +1,6 @@
+domain: https://ananth-3d-genesis-folio.lovable.app
+owner: Ananth N
+type: Portfolio and Blog
+tech: React, TypeScript, Tailwind, Three.js, Supabase
+topics: Web Dev, AI, Python, React, Prompt Engineering
+location: Madurai, Tamil Nadu, India

@@ -1,0 +1,1 @@
+{"nodes": [{"id": "projects_page", "label": "Projects Page", "file_type": "document", "source_file": "public/projects.html", "source_location": null}], "edges": [{"source": "projects_page", "target": "ananth_dev_website", "relation": "part_of", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "public/projects.html", "weight": 1.0}], "hyperedges": []}

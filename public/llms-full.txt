@@ -1,0 +1,25 @@
+# ANANTH.DEV — Complete Profile
+
+Ananth N is a full-stack developer and AI engineer from Madurai, Tamil Nadu, India.
+
+## Skills
+Python (Django, FastAPI), React 18, TypeScript, Tailwind CSS, Three.js, Supabase, PostgreSQL, AI/ML, LLMs, RAG, Prompt Engineering, UI/UX Design.
+
+## Projects
+- DevMatch: Developer social platform
+- RAG Chat Bot: Retrieval-augmented generation document Q&A
+- Naan Mudhalvan: Teaching 150+ students AI and BI
+
+## Services
+Full-stack development, AI solutions, UI/UX design, consulting, prompt engineering.
+
+## FAQ
+Q: What is RAG?
+A: Retrieval-Augmented Generation combines document retrieval with LLM generation.
+
+Q: Available for remote work?
+A: Yes, worldwide.
+
+## Contact
+Email: thanan757@gmail.com
+https://ananth-3d-genesis-folio.lovable.app

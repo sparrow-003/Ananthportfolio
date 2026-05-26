@@ -1,0 +1,1 @@
+{"nodes": [{"id": "resume_pdf", "label": "Resume PDF", "file_type": "paper", "source_file": "public/resume.pdf", "source_location": null}], "edges": [{"source": "resume_pdf", "target": "ananth_n", "relation": "about", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "public/resume.pdf", "weight": 1.0}], "hyperedges": []}
