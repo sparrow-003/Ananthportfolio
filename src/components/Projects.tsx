@@ -1,9 +1,37 @@
-import { motion } from "framer-motion";
-import { useState, memo } from "react";
-import { useReveal } from "@/hooks/useReveal";
+import { useState, memo, useEffect, useRef } from "react";
 import { Code2, Users, Bot, ExternalLink, Github, Play } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const projectsData = [
+// Register ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+interface Project {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  technologies: string[];
+  features: string[];
+  category: string;
+  type: string;
+  icon: React.ReactNode;
+  gradient: string;
+  liveUrl: string;
+  githubUrl: string;
+}
+
+interface ProjectCardProps {
+  project: Project;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+interface ProjectDetailsProps {
+  project: Project;
+}
+
+const projectsData: Project[] = [
   {
     id: 1,
     title: "BOOKSTORE",
@@ -67,13 +95,11 @@ const projectsData = [
   }
 ];
 
-const ProjectCard = ({ project, isActive, onClick }: any) => {
+const ProjectCard = ({ project, isActive, onClick }: ProjectCardProps) => {
   return (
-    <motion.div
-      className={`relative cursor-pointer group transition-all duration-500 ${isActive ? 'scale-105' : 'scale-100 hover:scale-105'}`}
+    <div
+      className={`gsap-project-card relative cursor-pointer group transition-all duration-500 hover:-translate-y-2 active:scale-95 ${isActive ? 'scale-105' : 'scale-100 hover:scale-102'}`}
       onClick={onClick}
-      whileHover={{ y: -8, scale: 1.02 }}
-      whileTap={{ scale: 0.96 }}
     >
       <div className={`
         relative overflow-hidden rounded-3xl border backdrop-blur-xl
@@ -133,20 +159,23 @@ const ProjectCard = ({ project, isActive, onClick }: any) => {
           <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-const ProjectDetails = ({ project }: any) => {
+const ProjectDetails = ({ project }: ProjectDetailsProps) => {
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Elegant quick fade & slide reveal when activeProject changes
+    gsap.fromTo(detailsRef.current,
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+    );
+  }, [project]);
+
   return (
-    <motion.div
-      key={project.id}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="relative"
-    >
+    <div ref={detailsRef} className="relative gsap-project-details-inner">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 p-[1px] shadow-2xl shadow-primary/10">
         <div className="relative bg-card/95 rounded-3xl backdrop-blur-xl">
           {/* Background pattern */}
@@ -171,30 +200,26 @@ const ProjectDetails = ({ project }: any) => {
 
               {/* Action buttons */}
               <div className="flex flex-wrap gap-4">
-                <motion.a
+                <a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl font-semibold bg-primary text-primary-foreground shadow-lg transition-all duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl font-semibold bg-primary text-primary-foreground shadow-lg transition-all duration-300 hover:scale-105 active:scale-98"
                 >
                   <Play className="w-5 h-5" />
                   {project.type === 'coding' ? 'Live Demo' : 'Learn More'}
-                </motion.a>
+                </a>
 
                 {project.type === 'coding' && (
-                  <motion.a
+                  <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl font-semibold bg-muted text-foreground border border-border hover:bg-muted/80 transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl font-semibold bg-muted text-foreground border border-border hover:bg-muted/80 transition-all duration-300 hover:scale-105 active:scale-98"
                   >
                     <Github className="w-5 h-5" />
                     Source Code
-                  </motion.a>
+                  </a>
                 )}
               </div>
             </div>
@@ -209,15 +234,12 @@ const ProjectDetails = ({ project }: any) => {
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
                   {project.technologies.map((tech: string, i: number) => (
-                    <motion.span
+                    <span
                       key={i}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.1 }}
                       className="px-4 py-2 bg-muted rounded-xl text-muted-foreground text-sm font-medium text-center backdrop-blur-sm border border-border"
                     >
                       {tech}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -230,16 +252,13 @@ const ProjectDetails = ({ project }: any) => {
                 </h3>
                 <div className="space-y-3">
                   {project.features.map((feature: string, i: number) => (
-                    <motion.div
+                    <div
                       key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + i * 0.1 }}
                       className="flex items-start gap-3 group"
                     >
                       <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0 bg-primary group-hover:scale-125 transition-transform duration-300" />
                       <span className="text-muted-foreground leading-relaxed">{feature}</span>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -247,57 +266,94 @@ const ProjectDetails = ({ project }: any) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 const Projects = memo(() => {
-  const [ref, isInView] = useReveal<HTMLDivElement>(0.05);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState(projectsData[0]);
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // High-performance unified timeline triggered securely by the section ref
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        }
+      });
+
+      // Header animations
+      tl.from('.gsap-projects-header', {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
+
+      // Stagger selection cards pop-in
+      tl.from('.gsap-project-card', {
+        opacity: 0,
+        y: 35,
+        scale: 0.96,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power2.out',
+      }, '-=0.3');
+
+      // Bottom details panel fade-in
+      tl.from('.gsap-projects-details-container', {
+        opacity: 0,
+        y: 35,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.4');
+    }, sectionRef);
+
+    // Refresh ScrollTrigger to recalculate dynamic viewport measures
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="projects" ref={ref} className="section-container relative bg-transparent">
+    <section id="projects" ref={sectionRef} className="section-container relative bg-transparent">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent -z-10" />
       <div className="projects-section">
         {/* Enhanced background elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-delay" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-radial from-primary/5 via-transparent to-transparent rounded-full animate-pulse" />
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-radial from-primary/5 via-transparent to-transparent rounded-full opacity-20" />
         </div>
 
         <div className="relative z-10">
           {/* Header */}
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 mb-6"
-              whileHover={{ scale: 1.05 }}
-            >
+          <div className="text-center mb-16">
+            <div className="gsap-projects-header inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 mb-6 transition-all duration-300 hover:scale-105 hover:bg-primary/20 cursor-default">
               <Code2 className="w-5 h-5 text-primary" />
               <span className="text-primary font-bold uppercase tracking-widest text-xs">Featured Work</span>
-            </motion.div>
+            </div>
 
-            <h2 className="text-5xl lg:text-7xl font-bold bg-gradient-to-r from-foreground via-foreground/80 to-foreground/60 bg-clip-text text-transparent mb-6">
+            <h2 className="gsap-projects-header text-5xl lg:text-7xl font-bold bg-gradient-to-r from-foreground via-foreground/80 to-foreground/60 bg-clip-text text-transparent mb-6">
               My Portfolio
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="gsap-projects-header text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Showcasing my journey in development, education, and innovation. Each project represents
               a unique challenge solved through creativity and technical expertise.
             </p>
-          </motion.div>
+          </div>
 
           {/* Project navigation */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div className="gsap-projects-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {projectsData.map((project) => (
               <ProjectCard
                 key={project.id}
@@ -306,16 +362,12 @@ const Projects = memo(() => {
                 onClick={() => setActiveProject(project)}
               />
             ))}
-          </motion.div>
+          </div>
 
           {/* Active project details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+          <div className="gsap-projects-details-container">
             <ProjectDetails project={activeProject} />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

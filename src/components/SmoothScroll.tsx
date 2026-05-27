@@ -1,28 +1,26 @@
 import { useEffect, useState, useRef, useCallback, memo } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 interface SmoothScrollProps {
   children: React.ReactNode;
 }
 
 /**
- * Free, smooth scrolling — no section snap. Anchor clicks ease to target.
+ * High-performance scroll orchestration powered by GSAP & ScrollTrigger.
  */
 const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
   const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll();
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 22,
-    restDelta: 0.001,
-  });
 
   const smoothScrollTo = useCallback((target: number) => {
+    // Elegant cubic-out smooth scroll interpolation
     const start = window.scrollY;
     const change = target - start;
-    const duration = 700;
+    const duration = 750;
     const startTime = performance.now();
     const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -38,6 +36,7 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
     setMounted(true);
     document.documentElement.style.scrollBehavior = 'smooth';
 
+    // Statically handle anchor triggers
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -52,17 +51,34 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
     };
 
     document.addEventListener('click', handleAnchorClick);
+
+    // Setup high-performance GSAP Scroll Progress tracker
+    const ctx = gsap.context(() => {
+      gsap.to('#scroll-progress-bar', {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.documentElement,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.3,
+        },
+      });
+    });
+
     return () => {
       document.removeEventListener('click', handleAnchorClick);
       document.documentElement.style.scrollBehavior = '';
+      ctx.revert(); // clean up GSAP memory traces
     };
   }, [smoothScrollTo]);
 
   return (
     <>
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 z-[100] origin-left"
-        style={{ scaleX }}
+      {/* GSAP Powered Scroll Progress Bar */}
+      <div
+        id="scroll-progress-bar"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 z-[100] origin-left scale-x-0"
       />
 
       {mounted && (
@@ -87,7 +103,7 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
         </div>
       )}
 
-      <div ref={scrollRef} className="flex flex-col w-full">
+      <div ref={scrollRef} className="relative flex flex-col w-full">
         {children}
       </div>
     </>

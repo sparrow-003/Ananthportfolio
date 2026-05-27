@@ -1,8 +1,12 @@
-import { motion, useTransform, useScroll } from 'framer-motion';
 import AnimatedText from './AnimatedText';
 import AnimatedAvatar from './AnimatedAvatar';
 import { memo, useEffect, useState, useRef, useCallback } from 'react';
 import { Mail, ArrowRight, Briefcase, MapPin, Code } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
 const ROLES = [
   "Vibe Coder",
@@ -23,17 +27,8 @@ const HR_PICKUP_LINES = [
 ] as const;
 
 const Hero = memo(() => {
-  const [scrollY, setScrollY] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"]
-  });
-
-  const avatarY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const avatarRotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 1], [1, 1]);
+  const [currentPickupLine, setCurrentPickupLine] = useState<string>(HR_PICKUP_LINES[0]);
 
   const handleHireMe = useCallback(() => {
     const subject = "Project Inquiry - I'd Like to Hire You";
@@ -58,8 +53,6 @@ Best regards,
     window.location.href = `mailto:thanan757@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }, []);
 
-  const [currentPickupLine, setCurrentPickupLine] = useState<string>(HR_PICKUP_LINES[0]);
-
   useEffect(() => {
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * HR_PICKUP_LINES.length);
@@ -68,45 +61,114 @@ Best regards,
     return () => clearInterval(interval);
   }, []);
 
+  // Setup cinematic entrance and scroll parallax utilizing GSAP
   useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      if (Math.abs(window.scrollY - scrollY) > 5) {
-        setScrollY(window.scrollY);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollY]);
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      // Stagger entrance of left column elements
+      tl.from('.gsap-hero-left', {
+        opacity: 0,
+        scale: 0.8,
+        duration: 1.2,
+        ease: 'power4.out'
+      });
+
+      tl.from('.gsap-hero-social', {
+        opacity: 0,
+        y: 20,
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'back.out(1.5)'
+      }, '-=0.8');
+
+      // Stagger entrance of right content elements
+      tl.from('.gsap-hero-fade-in', {
+        opacity: 0,
+        y: 35,
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power3.out'
+      }, '-=0.9');
+
+      // Stagger info cards
+      tl.from('.gsap-hero-info-card', {
+        opacity: 0,
+        scale: 0.95,
+        y: 25,
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'back.out(1.2)'
+      }, '-=0.5');
+
+      // Floating indicator fade-in
+      tl.from('.gsap-hero-indicator', {
+        opacity: 0,
+        y: 20,
+        duration: 0.8
+      }, '-=0.2');
+
+      // Parallax scroll for Avatar
+      gsap.to('.gsap-hero-left', {
+        y: -60,
+        rotationZ: 3,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // Parallax scroll for text content
+      gsap.to('.gsap-hero-right', {
+        y: 80,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // Subtle slow looping float on background glows
+      gsap.to('.gsap-hero-glow-1', {
+        scale: 1.2,
+        opacity: 0.45,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      gsap.to('.gsap-hero-glow-2', {
+        scale: 1.2,
+        opacity: 0.45,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 4
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section ref={sectionRef} id="home" className="relative z-10 min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent" style={{ position: 'relative' }}>
+    <section ref={sectionRef} id="home" className="relative z-10 min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent">
       {/* Background glow - transparent center so space layer stays visible */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
 
       {/* Animated background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-primary/8 to-transparent rounded-full blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        />
+        <div className="gsap-hero-glow-1 absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl opacity-30" />
+        <div className="gsap-hero-glow-2 absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-primary/8 to-transparent rounded-full blur-3xl opacity-30" />
       </div>
 
       <div className="section-container flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 z-10">
         {/* Left Side: Avatar and Socials */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, type: "spring" }}
-          className="perspective z-10 flex flex-col items-center"
-          style={{ y: avatarY, rotateY: avatarRotate }}
-        >
+        <div className="gsap-hero-left perspective z-10 flex flex-col items-center">
           <AnimatedAvatar
             variant="hero"
             className="w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 lg:w-80 lg:h-[28rem]"
@@ -124,103 +186,66 @@ Best regards,
               { href: "https://www.instagram.com/_alexxz_0", icon: "M2 2h20v20H2z M17.5 6.5h.01 M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z", label: "Instagram" },
               { href: "https://api.whatsapp.com/send?phone=916384227309", icon: "M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z", label: "WhatsApp" }
             ].map((social, idx) => (
-              <motion.a
+              <a
                 key={idx}
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 hover:border-primary/50 transition-all group text-primary"
-                whileHover={{ scale: 1.15, rotate: idx % 2 === 0 ? 5 : -5, boxShadow: "0 0 20px hsl(var(--primary) / 0.3)" }}
-                whileTap={{ scale: 0.95 }}
+                className="gsap-hero-social w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 hover:border-primary/50 transition-all text-primary hover:scale-110 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)] duration-300"
                 aria-label={social.label}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d={social.icon} />
                 </svg>
-              </motion.a>
+              </a>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Right Side: Text Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{ y: contentY, opacity: contentOpacity }}
-          className="z-10 text-center lg:text-left flex-1"
-        >
-          <motion.h2
-            className="text-xl md:text-2xl mb-4 text-primary font-medium tracking-widest"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
+        <div className="gsap-hero-right z-10 text-center lg:text-left flex-1">
+          <h2 className="gsap-hero-fade-in text-xl md:text-2xl mb-4 text-primary font-medium tracking-widest">
             HELLO, I'M
-          </motion.h2>
-          <motion.h1
-            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 cinematic-text"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
+          </h2>
+          <h1 className="gsap-hero-fade-in text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 cinematic-text">
             <span className="text-gradient">ANANTH.N</span>
-          </motion.h1>
-          <motion.div
-            className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 sm:mb-8 min-h-12 sm:min-h-16 text-foreground"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
+          </h1>
+          <div className="gsap-hero-fade-in text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 sm:mb-8 min-h-12 sm:min-h-16 text-foreground">
             I'm a <AnimatedText texts={[...ROLES]} className="text-primary" interval={2500} />
-          </motion.div>
-          <motion.p
-            className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto lg:mx-0 mb-6 text-muted-foreground leading-relaxed font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
+          </div>
+          <p className="gsap-hero-fade-in text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto lg:mx-0 mb-6 text-muted-foreground leading-relaxed font-light">
             A dreamer who codes worlds beyond the ordinary, crafting futures where AI and imagination collide. Guiding 150+ minds to awaken their hidden genius, a voice of leadership turning sparks into fire.
-          </motion.p>
+          </p>
 
           {/* Cinematic HR pickup line */}
-          <motion.div
-            className="glass-card p-4 mb-12 relative overflow-hidden inline-block"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-          >
+          <div className="gsap-hero-fade-in glass-card p-4 mb-12 relative overflow-hidden inline-block">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/10" />
             <p className="text-primary/80 italic font-medium tracking-wide">"{currentPickupLine}"</p>
-          </motion.div>
+          </div>
 
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-            <motion.button
-              className="px-8 py-3 bg-primary hover:bg-primary/90 rounded-full font-bold text-primary-foreground shadow-lg transition-all group overflow-hidden relative"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
+          <div className="gsap-hero-fade-in flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+            <button
+              className="px-8 py-3 bg-primary hover:bg-primary/90 rounded-full font-bold text-primary-foreground shadow-lg transition-all group overflow-hidden relative active:scale-95 duration-200"
               onClick={handleHireMe}
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 <Mail size={18} />
                 Hire Me Now
-                <ArrowRight size={16} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                <ArrowRight size={16} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
               </span>
-            </motion.button>
+            </button>
 
-            <motion.a
+            <a
               href="#projects"
-              className="px-8 py-3 border border-primary/30 rounded-full font-bold text-foreground hover:bg-primary/10 transition-all flex items-center justify-center gap-2 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 border border-primary/30 rounded-full font-bold text-foreground hover:bg-primary/10 transition-all flex items-center justify-center gap-2 group active:scale-95 duration-200"
               onClick={(e) => {
                 e.preventDefault();
                 document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
               View My Work
-              <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
-            </motion.a>
+              <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform duration-300" />
+            </a>
           </div>
 
           {/* Information cards */}
@@ -230,10 +255,9 @@ Best regards,
               { label: "Location", value: "Madurai, Tamil Nadu", icon: MapPin },
               { label: "Vibe Skills", value: "AI, Python, React", icon: Code }
             ].map((card, i) => (
-              <motion.div
+              <div
                 key={i}
-                className="bg-card/50 backdrop-blur-sm p-4 rounded-2xl border border-border flex items-center gap-3 hover:border-primary/30 transition-colors"
-                whileHover={{ y: -5 }}
+                className="gsap-hero-info-card bg-card/50 backdrop-blur-sm p-4 rounded-2xl border border-border flex items-center gap-3 hover:border-primary/30 transition-all hover:-translate-y-1 duration-300"
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                   <card.icon size={20} />
@@ -242,26 +266,17 @@ Best regards,
                   <p className="text-xs text-muted-foreground uppercase tracking-widest">{card.label}</p>
                   <p className="text-sm font-bold text-foreground">{card.value}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Floating indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-      >
+      <div className="gsap-hero-indicator absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
         <span className="text-[10px] text-muted-foreground uppercase tracking-[0.3em]">Examine Depth</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-px h-12 bg-gradient-to-b from-primary to-transparent"
-        />
-      </motion.div>
+        <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent animate-pulse" />
+      </div>
     </section>
   );
 });

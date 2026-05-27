@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { memo, useState, useRef } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import heroAvatar from '@/assets/ananth-portrait.webp';
 import contactAvatar from '@/assets/ananth-contact.webp';
 import avatarImage3 from '@/assets/avatar-art-3.webp';
@@ -7,9 +7,10 @@ import avatarImage3 from '@/assets/avatar-art-3.webp';
 interface AnimatedAvatarProps {
   variant: 'hero' | 'about' | 'contact';
   className?: string;
+  isInView?: boolean;
 }
 
-const AnimatedAvatar = memo(({ variant, className = '' }: AnimatedAvatarProps) => {
+const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: AnimatedAvatarProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -51,6 +52,14 @@ const AnimatedAvatar = memo(({ variant, className = '' }: AnimatedAvatarProps) =
     }
   };
 
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current && variant === 'hero') {
+      imgRef.current.setAttribute('fetchpriority', 'high');
+    }
+  }, [variant]);
+
   return (
     <div
       ref={containerRef}
@@ -70,16 +79,16 @@ const AnimatedAvatar = memo(({ variant, className = '' }: AnimatedAvatarProps) =
           transformStyle: "preserve-3d",
         }}
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
         transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
         className="w-full h-full"
       >
         <img
+          ref={imgRef}
           src={getImage()}
           alt="Ananth N Portrait"
           loading="eager"
           decoding="async"
-          fetchPriority={variant === 'hero' ? 'high' : undefined}
           className="w-full h-full object-contain drop-shadow-[0_10px_40px_hsl(var(--primary)/0.35)]"
           style={{ background: 'transparent' }}
         />

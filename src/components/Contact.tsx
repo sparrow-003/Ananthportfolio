@@ -1,11 +1,14 @@
-import { motion } from 'framer-motion';
-import { useState, memo } from 'react';
-import { useReveal } from '@/hooks/useReveal';
+import { useState, memo, useEffect, useRef } from 'react';
 import { Mail, Phone, MapPin, Send, User, MessageSquare, Download } from 'lucide-react';
 import AnimatedAvatar from './AnimatedAvatar';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
 
 const Contact = memo(() => {
-  const [ref, isInView] = useReveal<HTMLDivElement>(0.05);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,12 +36,84 @@ const Contact = memo(() => {
     document.body.removeChild(link);
   };
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Fade in background grid securely triggering off section entry
+      gsap.fromTo('.gsap-contact-grid',
+        { opacity: 0 },
+        {
+          opacity: 0.15,
+          duration: 1.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          }
+        }
+      );
+
+      // High-performance unified timeline triggered securely by the section ref
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        }
+      });
+
+      // Slide-up reveal for Title/Header column
+      tl.from('.gsap-contact-header', {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
+
+      // Stagger reveal dynamic contact info cards & CTA
+      tl.from('.gsap-contact-cta', {
+        opacity: 0,
+        y: 25,
+        scale: 0.95,
+        duration: 0.7,
+        ease: 'back.out(1.2)',
+      }, '-=0.3');
+
+      // Left Column: Contact Form Slide in
+      tl.from('.gsap-contact-form-container', {
+        opacity: 0,
+        x: -40,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.4');
+
+      // Right Column: Details Stagger slide in
+      tl.from('.gsap-contact-details-container', {
+        opacity: 0,
+        x: 40,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.6');
+    }, sectionRef);
+
+    // Refresh ScrollTrigger to recalculate dynamic viewport measures
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-transparent" ref={ref}>
+    <section id="contact" className="py-24 relative overflow-hidden bg-transparent" ref={sectionRef}>
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 -z-10" />
       
       {/* Background elements */}
-      <motion.div className="absolute inset-0 -z-10" initial={{ opacity: 0 }} animate={{ opacity: 0.15 }} transition={{ duration: 2 }}>
+      <div className="gsap-contact-grid absolute inset-0 -z-10 opacity-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent shadow-inner" />
         <div className="grid grid-cols-6 grid-rows-8 h-full w-full">
           {Array.from({ length: 48 }).map((_, i) => (
@@ -48,7 +123,7 @@ const Contact = memo(() => {
         <div className="absolute top-1/4 left-1/4 w-16 h-16 border-2 border-border/30 rounded-full animate-float" />
         <div className="absolute bottom-1/4 right-1/3 w-24 h-24 border-2 border-border/30 rounded-full animate-float-delay" />
         <div className="absolute top-1/2 right-1/4 w-20 h-20 border-2 border-border/30 rounded-full animate-float-slow" />
-      </motion.div>
+      </div>
 
       <div className="section-container relative z-10">
         {/* Title with Avatar */}
@@ -57,50 +132,35 @@ const Contact = memo(() => {
             <AnimatedAvatar variant="contact" className="w-48 h-64 md:w-64 md:h-80 lg:w-72 lg:h-96" />
           </div>
 
-          <motion.div
-            className="text-center lg:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="section-title text-3xl md:text-5xl text-gradient uppercase italic tracking-tighter">
+          <div className="text-center lg:text-left">
+            <h2 className="gsap-contact-header section-title text-3xl md:text-5xl text-gradient uppercase italic tracking-tighter">
               Get In Touch
             </h2>
-            <p className="section-subtitle max-w-xl">
+            <p className="gsap-contact-header section-subtitle max-w-xl">
               Ready to turn your vision into reality? Let's create something extraordinary together
             </p>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          className="max-w-2xl mx-auto mb-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <motion.button
+        <div className="gsap-contact-cta max-w-2xl mx-auto mb-16 text-center">
+          <button
             onClick={handleHireMe}
-            className="px-10 py-5 bg-primary hover:bg-primary/90 rounded-3xl text-xl font-black text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group uppercase tracking-widest"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
+            className="px-10 py-5 bg-primary hover:bg-primary/90 rounded-3xl text-xl font-black text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group uppercase tracking-widest hover:scale-105 active:scale-98"
           >
             <span className="relative z-10 flex items-center justify-center gap-3">
               <Send className="h-5 w-5" />
               Hire Me Now
             </span>
-          </motion.button>
-          <motion.p className="text-muted-foreground mt-4 italic" initial={{ opacity: 0 }} animate={{ opacity: 0.8 }} transition={{ delay: 0.8 }}>
+          </button>
+          <p className="text-muted-foreground mt-4 italic opacity-80">
             *Opens your default email app with a pre-filled template
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact Form */}
-          <motion.div
-            className="bg-card/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 lg:col-span-3 border border-border shadow-xl"
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+          <div
+            className="gsap-contact-form-container bg-card/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 lg:col-span-3 border border-border shadow-xl"
           >
             <h3 className="text-2xl font-bold mb-6 text-foreground">Send Me a Message</h3>
             <form className="space-y-6" onSubmit={handleSubmit}>
@@ -131,11 +191,9 @@ const Contact = memo(() => {
                 <label htmlFor="message" className="text-foreground block text-sm font-medium">Message</label>
                 <textarea id="message" name="message" rows={6} required className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 text-foreground resize-none transition-all" placeholder="Tell me about your project..." />
               </div>
-              <motion.button
+              <button
                 type="submit"
-                className="px-8 py-3 bg-primary/10 rounded-xl font-bold text-foreground border border-primary/30 hover:bg-primary/20 transition-all w-full md:w-auto relative overflow-hidden group uppercase tracking-widest shadow-lg"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="px-8 py-3 bg-primary/10 rounded-xl font-bold text-foreground border border-primary/30 hover:bg-primary/20 transition-all w-full md:w-auto relative overflow-hidden group uppercase tracking-widest shadow-lg hover:scale-102 active:scale-98"
                 disabled={formStatus === 'submitting'}
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
@@ -144,27 +202,24 @@ const Contact = memo(() => {
                   {formStatus === 'success' && 'Message Sent!'}
                   {formStatus === 'error' && 'Please Try Again'}
                 </span>
-              </motion.button>
+              </button>
 
               {formStatus === 'success' && (
-                <motion.div className="text-primary mt-4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                <div className="text-primary mt-4 transition-all duration-300">
                   Thank you for reaching out! I'll get back to you soon.
-                </motion.div>
+                </div>
               )}
               {formStatus === 'error' && (
-                <motion.div className="text-destructive mt-4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                <div className="text-destructive mt-4 transition-all duration-300">
                   There was an error sending your message. Please try again.
-                </motion.div>
+                </div>
               )}
             </form>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div
-            className="bg-card/60 backdrop-blur-xl rounded-2xl p-8 lg:col-span-2 border border-border shadow-xl"
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+          <div
+            className="gsap-contact-details-container bg-card/60 backdrop-blur-xl rounded-2xl p-8 lg:col-span-2 border border-border shadow-xl"
           >
             <h3 className="text-2xl font-bold mb-6 text-foreground">Contact Information</h3>
             <div className="space-y-6">
@@ -173,23 +228,20 @@ const Contact = memo(() => {
                 { icon: Mail, label: "Email", value: "thanan757@gmail.com" },
                 { icon: MapPin, label: "Location", value: "Madurai, Tamil Nadu, India" },
               ].map((item, idx) => (
-                <motion.div
+                <div
                   key={idx}
-                  className="flex items-start gap-4"
-                  whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className="flex items-start gap-4 transition-transform duration-200 hover:translate-x-1.5"
                 >
-                  <motion.div
-                    className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 border border-primary/20"
-                    whileHover={{ scale: 1.1 }}
+                  <div
+                    className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 border border-primary/20 transition-transform duration-200 hover:scale-110"
                   >
                     <item.icon size={18} className="text-primary" />
-                  </motion.div>
+                  </div>
                   <div>
                     <h4 className="font-semibold text-foreground">{item.label}</h4>
                     <p className="text-muted-foreground">{item.value}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -202,36 +254,32 @@ const Contact = memo(() => {
                 { href: "https://www.instagram.com/_alexxz_0", icon: "M2 2h20v20H2z M17.5 6.5h.01 M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" },
                 { href: "https://api.whatsapp.com/send?phone=916384227309", icon: "M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" },
               ].map((social, idx) => (
-                <motion.a
+                <a
                   key={idx}
                   href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-10 h-10 bg-muted rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all border border-border"
-                  whileHover={{ scale: 1.2, rotate: idx % 2 === 0 ? 10 : -10 }}
-                  whileTap={{ scale: 0.9 }}
+                  className="w-10 h-10 bg-muted rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all border border-border duration-300 hover:scale-120 hover:rotate-6 active:scale-90"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d={social.icon} />
                   </svg>
-                </motion.a>
+                </a>
               ))}
             </div>
 
             {/* Resume Download */}
             <div className="mt-10">
-              <motion.button
+              <button
                 onClick={handleDownloadResume}
-                className="inline-flex items-center gap-2 px-6 py-3 border border-primary rounded-md font-medium text-foreground hover:bg-primary/10 transition-all group relative overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 px-6 py-3 border border-primary rounded-md font-medium text-foreground hover:bg-primary/10 transition-all group relative overflow-hidden duration-300 hover:scale-105 active:scale-95"
               >
                 <Download size={18} />
                 <span className="relative z-10">Download Resume</span>
-                <span className="absolute inset-0 bg-primary/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-              </motion.button>
+                <span className="absolute inset-0 bg-primary/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+              </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
