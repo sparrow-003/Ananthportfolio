@@ -10,6 +10,7 @@ const isVercel = typeof window !== 'undefined' && /\.vercel\.app$/.test(window.l
 const Analytics = isVercel ? lazy(() => import("@vercel/analytics/react").then(m => ({ default: m.Analytics }))) : () => null;
 const SpeedInsights = isVercel ? lazy(() => import("@vercel/speed-insights/react").then(m => ({ default: m.SpeedInsights }))) : () => null;
 import { ThemeProvider } from "@/components/theme-provider";
+import { AnimationProvider } from "@/contexts/AnimationContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -53,33 +54,35 @@ const App = memo(() => (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <TooltipProvider>
-            <div className="w-full min-h-screen bg-transparent text-foreground selection:bg-emerald-500/30 selection:text-emerald-200">
-              <Toaster />
-              <Sonner position="top-center" richColors closeButton />
-              <BrowserRouter>
-                <ScrollToTop />
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSpinner />}>
-                    <Routes>
-                      <Route element={<Layout />}>
-                        <Route path="/" element={<Index />} />
-                        <Route path="/blog" element={<Blog />} />
-                        <Route path="/blog/:slug" element={<Blog />} />
-                        <Route path="/blog-system-test" element={<BlogSystemTest />} />
-                        <Route path="*" element={<NotFound />} />
-                      </Route>
-                      <Route path="/genesis-node-control-x99-admin" element={<AdminPanel />} />
-                    </Routes>
-                  </Suspense>
-                </ErrorBoundary>
-              </BrowserRouter>
-              <Suspense fallback={null}>
-                <Analytics />
-                <SpeedInsights />
-              </Suspense>
-            </div>
-          </TooltipProvider>
+          <AnimationProvider>
+            <TooltipProvider>
+              <div className="w-full min-h-screen bg-transparent text-foreground selection:bg-primary/20 selection:text-foreground">
+                <Toaster />
+                <Sonner position="top-center" richColors closeButton />
+                <BrowserRouter>
+                  <ScrollToTop />
+                  <ErrorBoundary>
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <Routes>
+                        <Route element={<Layout />}>
+                          <Route path="/" element={<Index />} />
+                          <Route path="/blog" element={<Blog />} />
+                          <Route path="/blog/:slug" element={<Blog />} />
+                          <Route path="/blog-system-test" element={<BlogSystemTest />} />
+                          <Route path="*" element={<NotFound />} />
+                        </Route>
+                        <Route path="/genesis-node-control-x99-admin" element={<AdminPanel />} />
+                      </Routes>
+                    </Suspense>
+                  </ErrorBoundary>
+                </BrowserRouter>
+                <Suspense fallback={null}>
+                  <Analytics />
+                  <SpeedInsights />
+                </Suspense>
+              </div>
+            </TooltipProvider>
+          </AnimationProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </HelmetProvider>
