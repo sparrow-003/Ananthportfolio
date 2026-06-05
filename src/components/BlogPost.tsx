@@ -72,12 +72,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
     checkIfLiked()
     loadComments()
     window.scrollTo({ top: 0, behavior: 'smooth' })
-
-    // Generate short URL
-    fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
-      .then(res => res.ok ? res.text() : shareUrl)
-      .then(setShortUrl)
-      .catch(() => setShortUrl(shareUrl))
+    setShortUrl(shareUrl)
   }, [post.id, shareUrl])
 
   const loadComments = useCallback(async () => {
