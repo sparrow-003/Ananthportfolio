@@ -1,102 +1,73 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AnimatedAvatar from "./AnimatedAvatar";
+import { useReveal } from '@/hooks/useReveal';
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 const About = memo(() => {
-  const [isInView, setIsInView] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [sectionRef, isInView] = useReveal<HTMLDivElement>(0.08, 300);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Trigger avatar mount animation when section scrolls in
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top 85%',
-        onEnter: () => setIsInView(true),
-        once: true
-      });
+    if (!isInView || hasAnimatedRef.current || !sectionRef.current) return;
+    hasAnimatedRef.current = true;
 
-      // Stagger reveal Title and main paragraph
+    const ctx = gsap.context(() => {
       gsap.from('.gsap-about-text', {
         opacity: 0,
         y: 40,
-        duration: 1,
+        duration: 0.65,
         stagger: 0.2,
         ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.gsap-about-text',
-          start: 'top 85%'
-        }
       });
 
-      // Journey block slide-in left
       gsap.from('.gsap-about-journey', {
         opacity: 0,
-        x: -80,
-        duration: 1.1,
+        x: -36,
+        duration: 0.65,
         ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.gsap-about-journey',
-          start: 'top 85%'
-        }
       });
 
-      // What I Do block slide-in right + list item stagger pop
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.gsap-about-do',
-          start: 'top 85%'
-        }
+        defaults: { ease: 'power3.out' }
       });
 
       tl.from('.gsap-about-do', {
         opacity: 0,
-        x: 80,
-        duration: 1.1,
-        ease: 'power3.out'
+        x: 36,
+        duration: 0.65,
       }).from('.gsap-about-do-item', {
         opacity: 0,
         y: 20,
         stagger: 0.15,
-        duration: 0.6,
+        duration: 0.45,
         ease: 'power2.out'
       }, '-=0.5');
 
-      // Vision cards pop pop
       gsap.from('.gsap-about-vision-card', {
         opacity: 0,
         scale: 0.95,
         y: 35,
-        duration: 1,
+        duration: 0.55,
         stagger: 0.2,
-        ease: 'back.out(1.2)',
-        scrollTrigger: {
-          trigger: '.gsap-about-vision-container',
-          start: 'top 85%'
-        }
+        ease: 'back.out(1.1)',
       });
 
-      // Stats cards elastic bounce
       gsap.from('.gsap-about-stat-card', {
         opacity: 0,
         scale: 0.85,
         y: 35,
-        duration: 1.3,
+        duration: 0.65,
         stagger: 0.15,
-        ease: 'elastic.out(1, 0.75)',
-        scrollTrigger: {
-          trigger: '.gsap-about-stats-container',
-          start: 'top 85%'
-        }
+        ease: 'back.out(1.15)',
       });
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isInView, sectionRef]);
 
   return (
     <section
