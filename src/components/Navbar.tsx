@@ -3,6 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 
+type NavItem = {
+  name: string;
+  href: string;
+  isRoute?: boolean;
+  external?: boolean;
+  isHireMe?: boolean;
+};
+
  const Navbar = memo(() => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,7 +26,7 @@ import { ThemeToggle } from './ThemeToggle';
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
@@ -118,11 +126,11 @@ import { ThemeToggle } from './ThemeToggle';
                 }}
                 onClick={(e) => {
                   e.preventDefault();
-                  if ((item as any).isHireMe) {
+                   if (item.isHireMe) {
                     handleHireMe();
-                  } else if (!item.external && !(item as any).isRoute) {
+                   } else if (!item.external && !item.isRoute) {
                     scrollToSection(item.href);
-                  } else if ((item as any).isRoute) {
+                   } else if (item.isRoute) {
                     scrollToSection(item.href, false, true);
                   } else {
                     window.open(item.href, '_blank');
@@ -193,11 +201,11 @@ import { ThemeToggle } from './ThemeToggle';
                   className="text-foreground text-lg py-2"
                   onClick={(e) => {
                     e.preventDefault();
-                    if ((item as any).isHireMe) {
+                     if (item.isHireMe) {
                       handleHireMe();
-                    } else if (!item.external && !(item as any).isRoute) {
+                     } else if (!item.external && !item.isRoute) {
                       scrollToSection(item.href);
-                    } else if ((item as any).isRoute) {
+                     } else if (item.isRoute) {
                       scrollToSection(item.href, false, true);
                     } else {
                       window.open(item.href, '_blank');
