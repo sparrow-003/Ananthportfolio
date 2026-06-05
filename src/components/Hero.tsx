@@ -4,6 +4,7 @@ import { memo, useEffect, useState, useRef, useCallback } from 'react';
 import { Mail, ArrowRight, Briefcase, MapPin, Code } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useAnimationPreference } from '@/contexts/AnimationContext';
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -29,6 +30,7 @@ const HR_PICKUP_LINES = [
 const Hero = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
   const [currentPickupLine, setCurrentPickupLine] = useState<string>(HR_PICKUP_LINES[0]);
+  const { effectiveMode } = useAnimationPreference();
 
   const handleHireMe = useCallback(() => {
     const subject = "Project Inquiry - I'd Like to Hire You";
@@ -63,6 +65,8 @@ Best regards,
 
   // Setup cinematic entrance and scroll parallax utilizing GSAP
   useEffect(() => {
+    if (effectiveMode === 'off') return;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.15 });
 
@@ -70,7 +74,7 @@ Best regards,
       tl.from('.gsap-hero-left', {
         opacity: 0,
         scale: 0.8,
-        duration: 1.2,
+        duration: effectiveMode === 'reduced' ? 0.55 : 0.85,
         ease: 'power4.out'
       });
 
@@ -78,7 +82,7 @@ Best regards,
         opacity: 0,
         y: 20,
         stagger: 0.1,
-        duration: 0.7,
+        duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
         ease: 'back.out(1.5)'
       }, '-=0.8');
 
@@ -87,7 +91,7 @@ Best regards,
         opacity: 0,
         y: 35,
         stagger: 0.12,
-        duration: 0.9,
+        duration: effectiveMode === 'reduced' ? 0.4 : 0.6,
         ease: 'power3.out'
       }, '-=0.9');
 
@@ -97,7 +101,7 @@ Best regards,
         scale: 0.95,
         y: 25,
         stagger: 0.1,
-        duration: 0.7,
+        duration: effectiveMode === 'reduced' ? 0.35 : 0.5,
         ease: 'back.out(1.2)'
       }, '-=0.5');
 
@@ -109,33 +113,34 @@ Best regards,
       }, '-=0.2');
 
       // Parallax scroll for Avatar
-      gsap.to('.gsap-hero-left', {
-        y: -60,
-        rotationZ: 3,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
+      if (effectiveMode === 'full') {
+        gsap.to('.gsap-hero-left', {
+          y: -40,
+          rotationZ: 2,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
 
-      // Parallax scroll for text content
-      gsap.to('.gsap-hero-right', {
-        y: 80,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
+        gsap.to('.gsap-hero-right', {
+          y: 48,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      }
 
       // Subtle slow looping float on background glows
       gsap.to('.gsap-hero-glow-1', {
         scale: 1.2,
         opacity: 0.45,
-        duration: 8,
+        duration: effectiveMode === 'reduced' ? 12 : 8,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut'
@@ -144,7 +149,7 @@ Best regards,
       gsap.to('.gsap-hero-glow-2', {
         scale: 1.2,
         opacity: 0.45,
-        duration: 8,
+        duration: effectiveMode === 'reduced' ? 12 : 8,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
@@ -153,7 +158,7 @@ Best regards,
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [effectiveMode]);
 
   return (
     <section ref={sectionRef} id="home" className="relative z-10 min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent">
