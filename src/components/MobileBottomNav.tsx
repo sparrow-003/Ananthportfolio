@@ -12,20 +12,8 @@ const items = [
   { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
-// GSAP-powered smooth scroll with eased animation
-const smoothScrollTo = async (targetY: number) => {
-  try {
-    const { gsap } = await import('gsap');
-    const stp = await import('gsap/ScrollToPlugin');
-    gsap.registerPlugin((stp as any).ScrollToPlugin || (stp as any).default);
-    gsap.to(window, {
-      duration: 0.9,
-      scrollTo: { y: targetY, autoKill: true },
-      ease: 'power3.inOut',
-    });
-  } catch {
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
-  }
+const smoothScrollTo = (targetY: number) => {
+  window.scrollTo({ top: targetY, behavior: 'smooth' });
 };
 
 const MobileBottomNav = memo(() => {
@@ -55,7 +43,7 @@ const MobileBottomNav = memo(() => {
   }, [isMobile, location.pathname]);
 
   const go = useCallback(
-    async (sectionId: string) => {
+    (sectionId: string) => {
       const scrollToSection = () => {
         const el = document.getElementById(sectionId);
         if (!el) return;
@@ -65,7 +53,7 @@ const MobileBottomNav = memo(() => {
       };
       if (location.pathname !== '/') {
         navigate('/');
-        setTimeout(scrollToSection, 350);
+        setTimeout(scrollToSection, 180);
       } else {
         scrollToSection();
       }
