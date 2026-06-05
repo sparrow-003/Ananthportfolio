@@ -1,15 +1,47 @@
 import { memo, useEffect, useRef } from 'react';
-import { Code, BrainCircuit, Database, Globe, Layers, Cpu, PencilRuler, CheckCircle } from 'lucide-react';
+import { BrainCircuit, Globe, Layers, Cpu, PencilRuler, CheckCircle } from 'lucide-react';
+import {
+  SiPython,
+  SiJavascript,
+  SiTypescript,
+  SiReact,
+  SiNodedotjs,
+  SiNextdotjs,
+  SiHtml5,
+  SiTailwindcss,
+  SiOpenai,
+  SiLangchain,
+  SiHuggingface,
+  SiSupabase,
+  SiMongodb,
+  SiMysql,
+  SiDocker,
+  SiGithubactions,
+  SiExpress,
+  SiDjango,
+  SiFlask,
+  SiFigma,
+  SiGooglecolab,
+  SiTensorflow,
+  SiPandas,
+  SiNumpy,
+  SiScikitlearn,
+  SiFastapi,
+  SiGraphql,
+  SiPostgresql,
+  SiRedis,
+  SiVercel,
+  SiGit,
+  SiLinux,
+  SiVscodium,
+  SiPostman,
+  SiVite,
+  SiSocketdotio,
+  SiBlender,
+} from 'react-icons/si';
+import { Workflow, Sparkles, Rocket, MessageSquareQuote, Brain, Network, Plug, Search, Award, Crown, MessageCircle, Wrench, HeartHandshake, Microscope, BookOpen, PenTool, Telescope, Code2, Palette, Paintbrush, Database } from 'lucide-react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useAnimationPreference } from '@/contexts/AnimationContext';
-
-// Register ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
-
-const renderSkillBadge = (label: string) => (
-  <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wide text-primary">{label.slice(0, 3)}</span>
-);
 
 const Skills = memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -20,139 +52,191 @@ const Skills = memo(() => {
       title: "Vibe Coding Skills",
       icon: <BrainCircuit className="text-primary" size={28} />,
       skills: [
-        { name: "Flow State Programming", icon: renderSkillBadge('FLO') },
-        { name: "Creative Problem Solving", icon: renderSkillBadge('CPS') },
-        { name: "Intuitive Design", icon: renderSkillBadge('DES') },
-        { name: "Rapid Prototyping", icon: renderSkillBadge('RAP') },
+        { name: "Flow State Programming", icon: <Workflow className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "Creative Problem Solving", icon: <Sparkles className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+        { name: "Intuitive Design", icon: <PenTool className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "Rapid Prototyping", icon: <Rocket className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
       ]
     },
     {
       title: "Programming Languages",
-      icon: <Code className="text-primary" size={28} />,
+      icon: <Code2 className="text-primary" size={28} />,
       skills: [
-        { name: "Python", icon: renderSkillBadge('PY') },
-        { name: "JavaScript", icon: renderSkillBadge('JS') },
-        { name: "TypeScript", icon: renderSkillBadge('TS') },
+        { name: "Python", icon: <SiPython className="w-6 h-6 lg:w-7 lg:h-7 text-[#3776AB]" /> },
+        { name: "JavaScript", icon: <SiJavascript className="w-6 h-6 lg:w-7 lg:h-7 text-[#F7DF1E]" /> },
+        { name: "TypeScript", icon: <SiTypescript className="w-6 h-6 lg:w-7 lg:h-7 text-[#3178C6]" /> },
       ]
     },
     {
       title: "Web Development",
       icon: <Globe className="text-primary" size={28} />,
       skills: [
-        { name: "React", icon: renderSkillBadge('REA') },
-        { name: "Node.js", icon: renderSkillBadge('NOD') },
-        { name: "Next.js", icon: renderSkillBadge('NXT') },
-        { name: "HTML5", icon: renderSkillBadge('HTM') },
-        { name: "CSS3", icon: renderSkillBadge('CSS') },
-        { name: "TailwindCSS", icon: renderSkillBadge('TWL') },
+        { name: "React", icon: <SiReact className="w-6 h-6 lg:w-7 lg:h-7 text-[#61DAFB]" /> },
+        { name: "Node.js", icon: <SiNodedotjs className="w-6 h-6 lg:w-7 lg:h-7 text-[#339933]" /> },
+        { name: "Next.js", icon: <SiNextdotjs className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "HTML5", icon: <SiHtml5 className="w-6 h-6 lg:w-7 lg:h-7 text-[#E34F26]" /> },
+        { name: "CSS3", icon: <Palette className="w-6 h-6 lg:w-7 lg:h-7 text-[#1572B6]" /> },
+        { name: "TailwindCSS", icon: <SiTailwindcss className="w-6 h-6 lg:w-7 lg:h-7 text-[#06B6D4]" /> },
       ]
     },
     {
       title: "AI & Machine Learning",
-      icon: <BrainCircuit className="text-primary" size={28} />,
+      icon: <Brain className="text-primary" size={28} />,
       skills: [
-        { name: "Prompt Engineering", icon: renderSkillBadge('PRM') },
-        { name: "LLM", icon: renderSkillBadge('LLM') },
-        { name: "LangChain", icon: renderSkillBadge('LAN') },
-        { name: "Neural Network", icon: renderSkillBadge('NN') },
-        { name: "Hugging Face", icon: renderSkillBadge('HUG') },
-        { name: "API Integration", icon: renderSkillBadge('API') },
+        { name: "Prompt Engineering", icon: <MessageSquareQuote className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "OpenAI / LLMs", icon: <SiOpenai className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "LangChain", icon: <SiLangchain className="w-6 h-6 lg:w-7 lg:h-7 text-[#1C3C3C]" /> },
+        { name: "Hugging Face", icon: <SiHuggingface className="w-6 h-6 lg:w-7 lg:h-7 text-[#FFD21E]" /> },
+        { name: "TensorFlow", icon: <SiTensorflow className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF6F00]" /> },
+        { name: "Neural Networks", icon: <Network className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+      ]
+    },
+    {
+      title: "Data Science",
+      icon: <Microscope className="text-primary" size={28} />,
+      skills: [
+        { name: "Pandas", icon: <SiPandas className="w-6 h-6 lg:w-7 lg:h-7 text-[#150458]" /> },
+        { name: "NumPy", icon: <SiNumpy className="w-6 h-6 lg:w-7 lg:h-7 text-[#013243]" /> },
+        { name: "scikit-learn", icon: <SiScikitlearn className="w-6 h-6 lg:w-7 lg:h-7 text-[#F7931E]" /> },
+        { name: "Jupyter / Colab", icon: <SiGooglecolab className="w-6 h-6 lg:w-7 lg:h-7 text-[#F9AB00]" /> },
       ]
     },
     {
       title: "Databases",
       icon: <Database className="text-primary" size={28} />,
       skills: [
-        { name: "MongoDB", icon: renderSkillBadge('MON') },
-        { name: "SQL", icon: renderSkillBadge('SQL') },
-        { name: "Supabase", icon: renderSkillBadge('SUP') },
+        { name: "MongoDB", icon: <SiMongodb className="w-6 h-6 lg:w-7 lg:h-7 text-[#47A248]" /> },
+        { name: "PostgreSQL", icon: <SiPostgresql className="w-6 h-6 lg:w-7 lg:h-7 text-[#4169E1]" /> },
+        { name: "MySQL", icon: <SiMysql className="w-6 h-6 lg:w-7 lg:h-7 text-[#4479A1]" /> },
+        { name: "Supabase", icon: <SiSupabase className="w-6 h-6 lg:w-7 lg:h-7 text-[#3ECF8E]" /> },
+        { name: "Redis", icon: <SiRedis className="w-6 h-6 lg:w-7 lg:h-7 text-[#DC382D]" /> },
       ]
     },
     {
       title: "DevOps & Cloud",
       icon: <Layers className="text-primary" size={28} />,
       skills: [
-        { name: "Docker", icon: renderSkillBadge('DOC') },
-        { name: "GitHub Actions", icon: renderSkillBadge('GHA') },
+        { name: "Docker", icon: <SiDocker className="w-6 h-6 lg:w-7 lg:h-7 text-[#2496ED]" /> },
+        { name: "GitHub Actions", icon: <SiGithubactions className="w-6 h-6 lg:w-7 lg:h-7 text-[#2088FF]" /> },
+        { name: "Vercel", icon: <SiVercel className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "Git", icon: <SiGit className="w-6 h-6 lg:w-7 lg:h-7 text-[#F05032]" /> },
+        { name: "Linux", icon: <SiLinux className="w-6 h-6 lg:w-7 lg:h-7 text-[#FCC624]" /> },
       ]
     },
     {
       title: "Frameworks & Libraries",
       icon: <Cpu className="text-primary" size={28} />,
       skills: [
-        { name: "Express", icon: renderSkillBadge('EXP') },
-        { name: "Django", icon: renderSkillBadge('DJA') },
-        { name: "Flask", icon: renderSkillBadge('FLA') },
+        { name: "Express", icon: <SiExpress className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "Django", icon: <SiDjango className="w-6 h-6 lg:w-7 lg:h-7 text-[#092E20]" /> },
+        { name: "Flask", icon: <SiFlask className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "FastAPI", icon: <SiFastapi className="w-6 h-6 lg:w-7 lg:h-7 text-[#009688]" /> },
+        { name: "Socket.io", icon: <SiSocketdotio className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+      ]
+    },
+    {
+      title: "APIs & Tools",
+      icon: <Wrench className="text-primary" size={28} />,
+      skills: [
+        { name: "GraphQL", icon: <SiGraphql className="w-6 h-6 lg:w-7 lg:h-7 text-[#E10098]" /> },
+        { name: "REST APIs", icon: <Plug className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "VS Code", icon: <SiVscodium className="w-6 h-6 lg:w-7 lg:h-7 text-[#0078D7]" /> },
+        { name: "Postman", icon: <SiPostman className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF6C37]" /> },
+        { name: "Vite", icon: <SiVite className="w-6 h-6 lg:w-7 lg:h-7 text-[#646CFF]" /> },
       ]
     },
     {
       title: "Design & UI/UX",
       icon: <PencilRuler className="text-primary" size={28} />,
       skills: [
-        { name: "Figma", icon: renderSkillBadge('FIG') },
-        { name: "UI/UX Research", icon: renderSkillBadge('UX') },
+        { name: "Figma", icon: <SiFigma className="w-6 h-6 lg:w-7 lg:h-7 text-[#F24E1E]" /> },
+        { name: "UI/UX Research", icon: <Search className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+        { name: "Adobe Suite", icon: <Paintbrush className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF0000]" /> },
+        { name: "3D / Blender", icon: <SiBlender className="w-6 h-6 lg:w-7 lg:h-7 text-[#F5792A]" /> },
       ]
     },
     {
       title: "Teaching & Leadership",
       icon: <CheckCircle className="text-primary" size={28} />,
       skills: [
-        { name: "AI/BI Training", icon: renderSkillBadge('AIB') },
-        { name: "Campus Ambassador", icon: renderSkillBadge('CAM') },
-        { name: "Student Mentoring", icon: renderSkillBadge('MEN') },
-        { name: "Technical Communication", icon: renderSkillBadge('COM') },
-        { name: "Team Leadership", icon: renderSkillBadge('LEA') },
-        { name: "Problem Solving", icon: renderSkillBadge('SOL') },
+        { name: "AI/BI Training", icon: <BookOpen className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "Campus Ambassador", icon: <Award className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+        { name: "Student Mentoring", icon: <HeartHandshake className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "Technical Communication", icon: <MessageCircle className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+        { name: "Team Leadership", icon: <Crown className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
+        { name: "Problem Solving", icon: <Telescope className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
       ]
     }
   ];
 
   useEffect(() => {
     if (effectiveMode === 'off') return;
+    if (!sectionRef.current) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        }
-      });
+    // Use IntersectionObserver so the animation only plays when the section
+    // actually enters the viewport. This avoids the lazy-load race where
+    // ScrollTrigger fires before layout settles and leaves content at opacity 0.
+    let observer: IntersectionObserver | null = null;
+    let played = false;
 
-      tl.from('.gsap-skills-header', {
-        opacity: 0,
-        y: 30,
-        duration: effectiveMode === 'reduced' ? 0.35 : 0.5,
-        stagger: 0.15,
-        ease: 'power3.out',
-      });
+    const play = () => {
+      if (played) return;
+      played = true;
+      observer?.disconnect();
 
-      tl.from('.gsap-skills-category', {
-        opacity: 0,
-        y: 40,
-        scale: 0.96,
-        duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
-        stagger: 0.08,
-        ease: 'power2.out',
-      }, '-=0.3');
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline();
 
-      tl.from('.gsap-skills-footer', {
-        opacity: 0,
-        y: 35,
-        duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
-        ease: 'power3.out',
-      }, '-=0.4');
-    }, sectionRef);
+        tl.from('.gsap-skills-header', {
+          opacity: 0,
+          y: 30,
+          duration: effectiveMode === 'reduced' ? 0.35 : 0.5,
+          stagger: 0.15,
+          ease: 'power3.out',
+          immediateRender: false,
+        });
 
-    // Refresh ScrollTrigger to recalculate dynamic viewport measures
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+        tl.from('.gsap-skills-category', {
+          opacity: 0,
+          y: 40,
+          scale: 0.96,
+          duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
+          stagger: 0.08,
+          ease: 'power2.out',
+          immediateRender: false,
+        }, '-=0.3');
 
-    return () => {
-      clearTimeout(timer);
-      ctx.revert();
+        tl.from('.gsap-skills-footer', {
+          opacity: 0,
+          y: 35,
+          duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
+          ease: 'power3.out',
+          immediateRender: false,
+        }, '-=0.4');
+      }, sectionRef);
+
+      return () => ctx.revert();
     };
+
+    if (typeof IntersectionObserver === 'undefined') {
+      play();
+      return;
+    }
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            play();
+            break;
+          }
+        }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -10% 0px' }
+    );
+    observer.observe(sectionRef.current);
+
+    return () => observer?.disconnect();
   }, [effectiveMode]);
 
   return (
@@ -176,7 +260,7 @@ const Skills = memo(() => {
           A comprehensive toolbox of cutting-edge technologies I've mastered through continuous learning
         </p>
 
-        <div className="gsap-skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+        <div className="gsap-skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {skillCategories.map((category) => (
             <div
               key={category.title}
@@ -189,18 +273,18 @@ const Skills = memo(() => {
                 <h3 className="text-xl font-bold text-foreground">{category.title}</h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 lg:gap-4">
+              <div className="grid grid-cols-3 gap-3 lg:gap-4">
                 {category.skills.map((skill) => (
                   <div
                     key={skill.name}
                     className="flex flex-col items-center justify-center group/skill"
                   >
                     <div
-                      className="w-12 h-12 lg:w-16 lg:h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 hover:bg-primary/10 transition-all border border-border hover:border-primary/20 duration-300 hover:scale-105 hover:rotate-2"
+                      className="w-12 h-12 lg:w-16 lg:h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 hover:bg-primary/10 transition-all border border-border hover:border-primary/20 duration-300 hover:scale-110 hover:-rotate-3"
                     >
                       {skill.icon}
                     </div>
-                    <span className="text-center text-xs lg:text-sm text-muted-foreground group-hover/skill:text-foreground transition-colors duration-300">{skill.name}</span>
+                    <span className="text-center text-[11px] lg:text-xs text-muted-foreground group-hover/skill:text-foreground transition-colors duration-300 leading-tight">{skill.name}</span>
                   </div>
                 ))}
               </div>

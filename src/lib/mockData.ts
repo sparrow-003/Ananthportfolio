@@ -1,8 +1,9 @@
 // Mock data for testing the blog system without Supabase
 import { BlogPost, BlogComment } from './supabase'
-import blogCoverOne from '@/assets/avatar-art-1.webp'
-import blogCoverTwo from '@/assets/avatar-art-2.webp'
-import blogCoverThree from '@/assets/hero-avatar.webp'
+
+const blogCoverOne = '/placeholder.svg'
+const blogCoverTwo = '/placeholder.svg'
+const blogCoverThree = '/placeholder.svg'
 
 // Mock comments data
 export const mockBlogComments: BlogComment[] = [

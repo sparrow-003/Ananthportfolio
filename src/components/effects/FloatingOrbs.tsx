@@ -92,12 +92,12 @@ export function FloatingOrbs({
                 );
 
                 if (isDark) {
-                    gradient.addColorStop(0, 'hsla(199, 89%, 48%, 0.4)');
-                    gradient.addColorStop(0.5, 'hsla(175, 80%, 50%, 0.2)');
+                    gradient.addColorStop(0, 'hsla(199, 100%, 50%, 0.35)');
+                    gradient.addColorStop(0.5, 'hsla(199, 100%, 50%, 0.15)');
                     gradient.addColorStop(1, 'transparent');
                 } else {
-                    gradient.addColorStop(0, 'hsla(217, 91%, 50%, 0.3)');
-                    gradient.addColorStop(0.5, 'hsla(45, 100%, 51%, 0.15)');
+                    gradient.addColorStop(0, 'hsla(199, 100%, 40%, 0.22)');
+                    gradient.addColorStop(0.5, 'hsla(36, 100%, 57%, 0.10)');
                     gradient.addColorStop(1, 'transparent');
                 }
 
@@ -108,8 +108,8 @@ export function FloatingOrbs({
 
                 // Add rim highlight
                 ctx.strokeStyle = isDark
-                    ? 'hsla(199, 89%, 48%, 0.6)'
-                    : 'hsla(45, 100%, 51%, 0.4)';
+                    ? 'hsla(199, 100%, 50%, 0.5)'
+                    : 'hsla(36, 100%, 57%, 0.30)';
                 ctx.lineWidth = 2;
                 ctx.stroke();
             });

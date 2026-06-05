@@ -53,7 +53,7 @@ const App = memo(() => (
   <ErrorBoundary>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <AnimationProvider>
             <TooltipProvider>
               <div className="w-full min-h-screen bg-transparent text-foreground selection:bg-primary/20 selection:text-foreground">

@@ -1,41 +1,125 @@
-import { useState, memo, useEffect, useRef } from 'react';
-import { Mail, Phone, MapPin, Send, User, MessageSquare, Download } from 'lucide-react';
+import { useState, memo, useEffect, useRef, useCallback } from 'react';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  User,
+  MessageSquare,
+  Download,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  Copy,
+  Github,
+  Linkedin,
+  Instagram,
+  MessageCircle,
+  Briefcase,
+  Clock,
+  Globe2,
+  Sparkles,
+} from 'lucide-react';
 import AnimatedAvatar from './AnimatedAvatar';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useReveal } from '@/hooks/useReveal';
 
-// Register ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
+const YOUR_EMAIL = 'thanan757@gmail.com';
+const YOUR_NAME = 'Ananth N';
+
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 const Contact = memo(() => {
   const [sectionRef, inView] = useReveal<HTMLDivElement>(0.08, 350);
   const hasAnimatedRef = useRef(false);
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [form, setForm] = useState<FormData>({ name: '', email: '', subject: '', message: '' });
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [lastMailtoUrl, setLastMailtoUrl] = useState<string>('');
+  const [copied, setCopied] = useState(false);
+
+  const validate = (data: FormData): Partial<FormData> => {
+    const e: Partial<FormData> = {};
+    if (!data.name.trim()) e.name = 'Please enter your name';
+    if (!data.email.trim()) e.email = 'Please enter your email';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = 'Please enter a valid email';
+    if (!data.subject.trim()) e.subject = 'Please enter a subject';
+    if (!data.message.trim()) e.message = 'Please enter a message';
+    else if (data.message.trim().length < 10) e.message = 'Message should be at least 10 characters';
+    return e;
+  };
+
+  const buildEmailBody = (data: FormData) =>
+    `Hi ${YOUR_NAME},
+
+${data.message}
+
+---
+From: ${data.name} <${data.email}>
+Subject: ${data.subject}
+Sent from: ananth-3d-genesis-folio portfolio
+`;
+
+  const buildMailtoUrl = (data: FormData) => {
+    const subject = `[Portfolio] ${data.subject}`;
+    const body = buildEmailBody(data);
+    return `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const handleChange = (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormStatus('submitting');
+    const v = validate(form);
+    if (Object.keys(v).length > 0) {
+      setErrors(v);
+      return;
+    }
+
+    setStatus('submitting');
+    const url = buildMailtoUrl(form);
+    setLastMailtoUrl(url);
+
+    // Open the user's default mail client with the message pre-filled.
+    // The recipient is already set to YOUR_EMAIL.
+    const opened = window.open(url, '_self');
+
+    // After a short delay, mark as success.
     setTimeout(() => {
-      setFormStatus('success');
-      (e.target as HTMLFormElement).reset();
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
+      setStatus('success');
+      setForm({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setStatus('idle'), 6000);
+    }, 600);
   };
 
-  const handleHireMe = () => {
-    const subject = "Project Inquiry - I'd Like to Hire You";
-    const body = `Hello Ananth,\n\nI came across your impressive portfolio website and I'm interested in discussing a potential project with you.\n\nProject Overview:\n[Brief description of your project/requirements]\n\nTimeline:\n[Your expected timeline]\n\nBudget Range:\n[Your budget range if applicable]\n\nLooking forward to hearing from you soon!\n\nBest regards,\n[Your Name]`;
-    window.location.href = `mailto:thanan757@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
+  const handleCopyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(YOUR_EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* clipboard may be blocked */
+    }
+  }, []);
 
-  const handleDownloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/resume.pdf';
-    link.download = 'Ananth_Resume_Web_Developer.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleQuickHire = () => {
+    const url = buildMailtoUrl({
+      name: form.name || 'A visitor from your portfolio',
+      email: form.email || 'no-reply@example.com',
+      subject: form.subject || 'Project Inquiry',
+      message: form.message ||
+        `Hi ${YOUR_NAME},\n\nI came across your portfolio and I would like to discuss a potential project with you.\n\nProject Overview:\n[Tell me about your project]\n\nTimeline:\n[Your expected timeline]\n\nBudget:\n[Optional budget range]\n\nLooking forward to hearing from you.\n\nBest regards,`,
+    });
+    setLastMailtoUrl(url);
+    window.open(url, '_self');
   };
 
   useEffect(() => {
@@ -43,221 +127,409 @@ const Contact = memo(() => {
     hasAnimatedRef.current = true;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo('.gsap-contact-grid',
-        { opacity: 0 },
-        {
-          opacity: 0.15,
-          duration: 0.75,
-          ease: 'power2.out',
-        }
-      );
-
-      const tl = gsap.timeline({
-        defaults: { ease: 'power3.out' }
-      });
-
-      tl.from('.gsap-contact-header', {
-        opacity: 0,
-        y: 30,
-        duration: 0.45,
-        stagger: 0.15,
-      });
-
-      tl.from('.gsap-contact-cta', {
-        opacity: 0,
-        y: 25,
-        scale: 0.95,
-        duration: 0.5,
-        ease: 'back.out(1.2)',
-      }, '-=0.3');
-
-      tl.from('.gsap-contact-form-container', {
-        opacity: 0,
-        x: -24,
-        duration: 0.55,
-      }, '-=0.4');
-
-      tl.from('.gsap-contact-details-container', {
-        opacity: 0,
-        x: 24,
-        duration: 0.55,
-      }, '-=0.6');
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.from('.gsap-contact-header', { opacity: 0, y: 24, duration: 0.45, stagger: 0.12 });
+      tl.from('.gsap-contact-card', { opacity: 0, y: 24, duration: 0.5, stagger: 0.08 }, '-=0.3');
+      tl.from('.gsap-contact-form', { opacity: 0, y: 24, duration: 0.55 }, '-=0.4');
+      tl.from('.gsap-contact-info', { opacity: 0, x: 16, duration: 0.55, stagger: 0.06 }, '-=0.5');
     }, sectionRef);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, [inView, sectionRef]);
+
+  const inputClass = (hasError: boolean) =>
+    `w-full bg-background/60 border rounded-xl pl-11 pr-4 py-3 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 transition-all ${
+      hasError
+        ? 'border-destructive focus:ring-destructive/30 focus:border-destructive'
+        : 'border-border focus:ring-primary/30 focus:border-primary'
+    }`;
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden bg-transparent" ref={sectionRef}>
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 -z-10" />
-      
-      {/* Background elements */}
-      <div className="gsap-contact-grid absolute inset-0 -z-10 opacity-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent shadow-inner" />
-        <div className="grid grid-cols-6 grid-rows-8 h-full w-full">
-          {Array.from({ length: 48 }).map((_, i) => (
-            <div key={i} className="border-[0.5px] border-border/30" />
-          ))}
-        </div>
-        <div className="absolute top-1/4 left-1/4 w-16 h-16 border-2 border-border/30 rounded-full animate-float" />
-        <div className="absolute bottom-1/4 right-1/3 w-24 h-24 border-2 border-border/30 rounded-full animate-float-delay" />
-        <div className="absolute top-1/2 right-1/4 w-20 h-20 border-2 border-border/30 rounded-full animate-float-slow" />
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 -z-10" />
+      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary/10 blur-3xl -z-10" />
+      <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl -z-10" />
 
       <div className="section-container relative z-10">
         {/* Title with Avatar */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 mb-12">
-          <div className="flex-shrink-0">
-            <AnimatedAvatar variant="contact" className="w-48 h-64 md:w-64 md:h-80 lg:w-72 lg:h-96" />
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16 mb-12">
+          <div className="flex-shrink-0 gsap-contact-header">
+            <AnimatedAvatar variant="contact" className="w-44 h-60 md:w-56 md:h-72 lg:w-64 lg:h-80" />
           </div>
-
           <div className="text-center lg:text-left">
-            <h2 className="gsap-contact-header section-title text-3xl md:text-5xl text-gradient uppercase italic tracking-tighter">
+            <div className="gsap-contact-header inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-xs font-bold uppercase tracking-widest text-primary">
+                Let's Collaborate
+              </span>
+            </div>
+            <h2 className="gsap-contact-header text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-4 tracking-tight">
               Get In Touch
             </h2>
-            <p className="gsap-contact-header section-subtitle max-w-xl">
-              Ready to turn your vision into reality? Let's create something extraordinary together
+            <p className="gsap-contact-header text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
+              Have a project, a role, or just a wild idea? Drop a message and
+              I'll get back to you within 24 hours.
             </p>
           </div>
         </div>
 
-        <div className="gsap-contact-cta max-w-2xl mx-auto mb-16 text-center">
-          <button
-            onClick={handleHireMe}
-            className="px-10 py-5 bg-primary hover:bg-primary/90 rounded-3xl text-xl font-black text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group uppercase tracking-widest hover:scale-105 active:scale-98"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-3">
-              <Send className="h-5 w-5" />
-              Hire Me Now
-            </span>
-          </button>
-          <p className="text-muted-foreground mt-4 italic opacity-80">
-            *Opens your default email app with a pre-filled template
-          </p>
+        {/* Quick info cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 max-w-5xl mx-auto">
+          {[
+            {
+              icon: Briefcase,
+              label: 'Available for',
+              value: 'Freelance & Full-time',
+              accent: 'text-primary',
+            },
+            {
+              icon: Clock,
+              label: 'Response time',
+              value: 'Within 24 hours',
+              accent: 'text-accent',
+            },
+            {
+              icon: Globe2,
+              label: 'Timezone',
+              value: 'IST · UTC+5:30',
+              accent: 'text-primary',
+            },
+          ].map((c, i) => (
+            <div
+              key={c.label}
+              className="gsap-contact-card flex items-center gap-3 p-4 rounded-xl border border-border bg-card/70 backdrop-blur-md"
+            >
+              <div className={`p-2.5 rounded-lg bg-muted/60 ${c.accent}`}>
+                <c.icon className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {c.label}
+                </p>
+                <p className="text-sm font-semibold text-foreground">{c.value}</p>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {/* Contact Form */}
-          <div
-            className="gsap-contact-form-container bg-card/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 lg:col-span-3 border border-border shadow-xl"
-          >
-            <h3 className="text-2xl font-bold mb-6 text-foreground">Send Me a Message</h3>
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-foreground block text-sm font-medium">Your Name</label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><User size={18} /></div>
-                    <input type="text" id="name" name="name" required className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 text-foreground transition-all" placeholder="John Doe" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-foreground block text-sm font-medium">Email Address</label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><Mail size={18} /></div>
-                    <input type="email" id="email" name="email" required className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 text-foreground transition-all" placeholder="john@example.com" />
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-foreground block text-sm font-medium">Subject</label>
-                <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><MessageSquare size={18} /></div>
-                  <input type="text" id="subject" name="subject" required className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 text-foreground transition-all" placeholder="Project Inquiry" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-foreground block text-sm font-medium">Message</label>
-                <textarea id="message" name="message" rows={6} required className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 text-foreground resize-none transition-all" placeholder="Tell me about your project..." />
-              </div>
-              <button
-                type="submit"
-                className="px-8 py-3 bg-primary/10 rounded-xl font-bold text-foreground border border-primary/30 hover:bg-primary/20 transition-all w-full md:w-auto relative overflow-hidden group uppercase tracking-widest shadow-lg hover:scale-102 active:scale-98"
-                disabled={formStatus === 'submitting'}
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  {formStatus === 'idle' && (<><Send size={18} />Send Message</>)}
-                  {formStatus === 'submitting' && 'Sending...'}
-                  {formStatus === 'success' && 'Message Sent!'}
-                  {formStatus === 'error' && 'Please Try Again'}
+          <div className="gsap-contact-form lg:col-span-3 relative overflow-hidden rounded-2xl border border-border bg-card/85 backdrop-blur-xl shadow-xl p-6 md:p-8">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-2xl -z-0 pointer-events-none" />
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-foreground">Send a message</h3>
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                  To: {YOUR_EMAIL}
                 </span>
-              </button>
+              </div>
 
-              {formStatus === 'success' && (
-                <div className="text-primary mt-4 transition-all duration-300">
-                  Thank you for reaching out! I'll get back to you soon.
+              <form className="space-y-5" onSubmit={handleSubmit} noValidate>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label htmlFor="name" className="text-foreground block text-sm font-medium">
+                      Your Name <span className="text-destructive">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground">
+                        <User size={18} />
+                      </div>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        value={form.name}
+                        onChange={handleChange('name')}
+                        className={inputClass(!!errors.name)}
+                        placeholder="John Doe"
+                        autoComplete="name"
+                      />
+                    </div>
+                    {errors.name && (
+                      <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                        <AlertCircle className="w-3 h-3" /> {errors.name}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="email" className="text-foreground block text-sm font-medium">
+                      Email Address <span className="text-destructive">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground">
+                        <Mail size={18} />
+                      </div>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={form.email}
+                        onChange={handleChange('email')}
+                        className={inputClass(!!errors.email)}
+                        placeholder="john@example.com"
+                        autoComplete="email"
+                      />
+                    </div>
+                    {errors.email && (
+                      <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                        <AlertCircle className="w-3 h-3" /> {errors.email}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              )}
-              {formStatus === 'error' && (
-                <div className="text-destructive mt-4 transition-all duration-300">
-                  There was an error sending your message. Please try again.
+
+                <div className="space-y-1.5">
+                  <label htmlFor="subject" className="text-foreground block text-sm font-medium">
+                    Subject <span className="text-destructive">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground">
+                      <MessageSquare size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      required
+                      value={form.subject}
+                      onChange={handleChange('subject')}
+                      className={inputClass(!!errors.subject)}
+                      placeholder="Project Inquiry / Job Opportunity / Just saying hi…"
+                    />
+                  </div>
+                  {errors.subject && (
+                    <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                      <AlertCircle className="w-3 h-3" /> {errors.subject}
+                    </p>
+                  )}
                 </div>
-              )}
-            </form>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="message" className="text-foreground block text-sm font-medium">
+                    Message <span className="text-destructive">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    required
+                    value={form.message}
+                    onChange={handleChange('message')}
+                    className={`${inputClass(!!errors.message)} px-4 pl-4 resize-none`}
+                    placeholder="Tell me about your project, timeline, and budget. The more context the better!"
+                  />
+                  {errors.message && (
+                    <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                      <AlertCircle className="w-3 h-3" /> {errors.message}
+                    </p>
+                  )}
+                  <p className="text-[10px] text-muted-foreground text-right">
+                    {form.message.length} characters
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <button
+                    type="submit"
+                    disabled={status === 'submitting'}
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {status === 'submitting' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" /> Opening email client…
+                      </>
+                    ) : status === 'success' ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4" /> Ready to send
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" /> Send Message
+                      </>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleQuickHire}
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold bg-secondary text-secondary-foreground border border-border hover:border-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
+                    <Briefcase className="w-4 h-4" /> Quick Hire Template
+                  </button>
+                </div>
+
+                {/* Status messages */}
+                {status === 'success' && (
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                    <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm">
+                      <p className="font-semibold">Your email client should now be open.</p>
+                      <p className="opacity-90 mt-0.5">
+                        Review the pre-filled message and hit <strong>Send</strong>. It will be
+                        delivered to <span className="font-mono">{YOUR_EMAIL}</span>.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {status === 'error' && (
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-destructive/10 border border-destructive/30 text-destructive">
+                    <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm">
+                      Couldn't open your email client. Please email me directly at{' '}
+                      <span className="font-mono font-semibold">{YOUR_EMAIL}</span>.
+                    </p>
+                  </div>
+                )}
+
+                <p className="text-xs text-muted-foreground italic pt-1">
+                  ⓘ Submitting opens your default mail app (Gmail, Outlook, Apple Mail, etc.)
+                  with everything pre-filled. No data is sent through this site.
+                </p>
+              </form>
+            </div>
           </div>
 
           {/* Contact Info */}
-          <div
-            className="gsap-contact-details-container bg-card/60 backdrop-blur-xl rounded-2xl p-8 lg:col-span-2 border border-border shadow-xl"
-          >
-            <h3 className="text-2xl font-bold mb-6 text-foreground">Contact Information</h3>
-            <div className="space-y-6">
-              {[
-                { icon: Phone, label: "Phone", value: "+91 6384227309" },
-                { icon: Mail, label: "Email", value: "thanan757@gmail.com" },
-                { icon: MapPin, label: "Location", value: "Madurai, Tamil Nadu, India" },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-4 transition-transform duration-200 hover:translate-x-1.5"
-                >
-                  <div
-                    className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 border border-primary/20 transition-transform duration-200 hover:scale-110"
+          <div className="gsap-contact-info lg:col-span-2 flex flex-col gap-6">
+            <div className="rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold mb-4 text-foreground">Direct Contact</h3>
+              <div className="space-y-3">
+                {[
+                  {
+                    icon: Phone,
+                    label: 'Phone',
+                    value: '+91 6384227309',
+                    href: 'tel:+916384227309',
+                  },
+                  {
+                    icon: Mail,
+                    label: 'Email',
+                    value: YOUR_EMAIL,
+                    href: `mailto:${YOUR_EMAIL}`,
+                    copy: true,
+                  },
+                  {
+                    icon: MapPin,
+                    label: 'Location',
+                    value: 'Madurai, Tamil Nadu, India',
+                    href: 'https://maps.google.com/?q=Madurai+Tamil+Nadu+India',
+                  },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel="noreferrer"
+                    className="gsap-contact-info group flex items-center gap-3 p-3 rounded-xl border border-border/60 hover:border-primary/40 hover:bg-primary/5 transition-all"
                   >
-                    <item.icon size={18} className="text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">{item.label}</h4>
-                    <p className="text-muted-foreground">{item.value}</p>
-                  </div>
-                </div>
-              ))}
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary group-hover:scale-110 transition-transform">
+                      <item.icon size={18} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                        {item.label}
+                      </p>
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {item.value}
+                      </p>
+                    </div>
+                    {item.copy && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleCopyEmail();
+                        }}
+                        className="p-2 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                        title="Copy email"
+                        aria-label="Copy email"
+                      >
+                        {copied ? (
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                      </button>
+                    )}
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Social Links */}
-            <h3 className="text-xl font-bold mt-10 mb-6 text-foreground">Connect With Me</h3>
-            <div className="flex gap-4">
-              {[
-                { href: "https://www.linkedin.com/in/ananth-n-583036233", icon: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 4a2 2 0 1 0 0 4 2 2 0 1 0 0-4z" },
-                { href: "https://github.com/sparrow-003", icon: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" },
-                { href: "https://www.instagram.com/_alexxz_0", icon: "M2 2h20v20H2z M17.5 6.5h.01 M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" },
-                { href: "https://api.whatsapp.com/send?phone=916384227309", icon: "M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" },
-              ].map((social, idx) => (
-                <a
-                  key={idx}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-10 h-10 bg-muted rounded-full flex items-center justify-center text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all border border-border duration-300 hover:scale-120 hover:rotate-6 active:scale-90"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={social.icon} />
-                  </svg>
-                </a>
-              ))}
+            <div className="rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold mb-4 text-foreground">Connect With Me</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  {
+                    href: 'https://www.linkedin.com/in/ananth-n-583036233',
+                    icon: Linkedin,
+                    label: 'LinkedIn',
+                    color: 'hover:bg-[#0A66C2]/10 hover:text-[#0A66C2] hover:border-[#0A66C2]/40',
+                  },
+                  {
+                    href: 'https://github.com/sparrow-003',
+                    icon: Github,
+                    label: 'GitHub',
+                    color: 'hover:bg-foreground/10 hover:text-foreground hover:border-foreground/40',
+                  },
+                  {
+                    href: 'https://www.instagram.com/_alexxz_0',
+                    icon: Instagram,
+                    label: 'Instagram',
+                    color: 'hover:bg-[#E4405F]/10 hover:text-[#E4405F] hover:border-[#E4405F]/40',
+                  },
+                  {
+                    href: 'https://api.whatsapp.com/send?phone=916384227309',
+                    icon: MessageCircle,
+                    label: 'WhatsApp',
+                    color: 'hover:bg-[#25D366]/10 hover:text-[#25D366] hover:border-[#25D366]/40',
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className={`gsap-contact-info group flex items-center gap-2.5 p-3 rounded-xl border border-border bg-card/60 text-muted-foreground transition-all hover:scale-[1.03] active:scale-95 ${social.color}`}
+                  >
+                    <social.icon className="w-4 h-4" />
+                    <span className="text-sm font-medium">{social.label}</span>
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Resume Download */}
-            <div className="mt-10">
+            <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 p-6 shadow-xl">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <Download className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-foreground">My Resume</h3>
+                  <p className="text-xs text-muted-foreground">
+                    One-page overview of skills, projects, and experience.
+                  </p>
+                </div>
+              </div>
               <button
-                onClick={handleDownloadResume}
-                className="inline-flex items-center gap-2 px-6 py-3 border border-primary rounded-md font-medium text-foreground hover:bg-primary/10 transition-all group relative overflow-hidden duration-300 hover:scale-105 active:scale-95"
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/resume.pdf';
+                  link.download = 'Ananth_Resume_Web_Developer.pdf';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold bg-primary text-primary-foreground shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
               >
-                <Download size={18} />
-                <span className="relative z-10">Download Resume</span>
-                <span className="absolute inset-0 bg-primary/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                <Download className="w-4 h-4" />
+                Download Resume (PDF)
               </button>
             </div>
           </div>
