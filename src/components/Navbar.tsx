@@ -52,20 +52,21 @@ import { ThemeToggle } from './ThemeToggle';
     // If we're not on the home page, navigate there first then scroll
     if (location.pathname !== '/') {
       navigate('/');
-      // Wait for navigation then scroll
       setTimeout(() => {
         const element = document.querySelector(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          const top = (element as HTMLElement).offsetTop - 80;
+          window.scrollTo({ top, behavior: 'smooth' });
         }
-      }, 100);
+      }, 180);
       setMobileMenuOpen(false);
       return;
     }
 
     const element = document.querySelector(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const top = (element as HTMLElement).offsetTop - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
       setMobileMenuOpen(false);
     }
   };
