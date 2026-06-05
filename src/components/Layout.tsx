@@ -6,6 +6,8 @@ import MobileBottomNav from './MobileBottomNav';
 import DeveloperConsole from './effects/DeveloperConsole';
 
 const Layout = () => {
+  const showDeveloperConsole = /lovable\.app$|lovableproject\.com$|lovableproject-dev\.com$|beta\.lovable\.dev$/.test(window.location.hostname);
+
   return (
     <div className="relative min-h-screen">
       {/* Fixed background sits at z=0; content above at z=10+. No transforms on ancestors so -z does not get clipped. */}
@@ -16,7 +18,7 @@ const Layout = () => {
       </main>
       <Footer />
       <MobileBottomNav />
-      <DeveloperConsole />
+      {showDeveloperConsole ? <DeveloperConsole /> : null}
     </div>
   );
 };

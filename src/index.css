@@ -164,13 +164,14 @@
 
   /* Enhanced glass effects with 3D and vibrant colors */
   .glass-card {
-    background: var(--bg-glass);
-    backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card) / 0.72);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid hsl(var(--border) / 0.9);
     border-radius: 20px;
-    box-shadow: var(--glow-primary), 0 8px 32px hsla(217, 91%, 50%, 0.08);
+    box-shadow: 0 10px 30px hsl(var(--background) / 0.18);
     transform-style: preserve-3d;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
   }
 
   .glass-card:hover {
@@ -608,7 +609,7 @@
   /* Responsive 3D effects */
   @media (max-width: 768px) {
     .glass-card:hover {
-      transform: translateY(-4px) rotateX(2deg);
+      transform: translateY(-2px);
     }
 
     #root {
@@ -1048,21 +1049,6 @@ img[loading="lazy"].loaded {
   overflow: hidden;
 }
 
-/* Enhanced glass morphism effects for blog */
-.glass-nav {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
-}
-
-.glass-card {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
 /* Blog card hover effects */
 .blog-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1073,6 +1059,22 @@ img[loading="lazy"].loaded {
 .blog-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .glass-card:hover,
+  .blog-card:hover {
+    transform: none !important;
+  }
 }
 
 /* Scrollbar styling */

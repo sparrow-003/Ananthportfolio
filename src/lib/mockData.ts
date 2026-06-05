@@ -1,5 +1,8 @@
 // Mock data for testing the blog system without Supabase
 import { BlogPost, BlogComment } from './supabase'
+import blogCoverOne from '@/assets/avatar-art-1.webp'
+import blogCoverTwo from '@/assets/avatar-art-2.webp'
+import blogCoverThree from '@/assets/hero-avatar.webp'
 
 // Mock comments data
 export const mockBlogComments: BlogComment[] = [
@@ -80,7 +83,7 @@ const UserCard: React.FC<Props> = ({ name, age }) => {
 Happy coding! 🚀`,
     excerpt: 'Learn how to set up and use React with TypeScript for better development experience and code quality.',
     slug: 'getting-started-react-typescript',
-    featured_image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=400&fit=crop',
+    featured_image: blogCoverOne,
     tags: ['React', 'TypeScript', 'JavaScript', 'Web Development'],
     published: true,
     created_at: '2024-01-20T10:00:00Z',
@@ -165,7 +168,7 @@ The future of responsive design:
 These techniques will help you create more maintainable and flexible CSS. Start incorporating them into your projects today!`,
     excerpt: 'Discover modern CSS techniques including Grid, Flexbox, custom properties, and container queries for better UI development.',
     slug: 'modern-css-techniques-better-ui',
-    featured_image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop',
+    featured_image: blogCoverTwo,
     tags: ['CSS', 'Web Development', 'UI/UX', 'Frontend'],
     published: true,
     created_at: '2024-01-18T14:30:00Z',
@@ -258,7 +261,7 @@ observer.observe({ entryTypes: ['measure'] });
 Remember: **Measure first, optimize second**. Always profile your application before making performance improvements.`,
     excerpt: 'Learn essential strategies for building high-performance web applications, from code splitting to caching.',
     slug: 'building-performant-web-applications',
-    featured_image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop',
+    featured_image: blogCoverThree,
     tags: ['Performance', 'Web Development', 'Optimization', 'JavaScript'],
     published: true,
     created_at: '2024-01-15T09:15:00Z',

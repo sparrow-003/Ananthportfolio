@@ -78,6 +78,8 @@ function pushLog(type: 'log' | 'warn' | 'error', args: any[]) {
 // Intercept console streams
 export function initializeLogger() {
   if ((window as any).__telemetry_logger_active__) return;
+  const isLovableHost = /lovable\.app$|lovableproject\.com$|lovableproject-dev\.com$|beta\.lovable\.dev$/.test(window.location.hostname);
+  if (!isLovableHost) return;
   (window as any).__telemetry_logger_active__ = true;
 
   console.log = (...args: any[]) => {

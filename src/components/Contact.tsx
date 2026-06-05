@@ -3,12 +3,14 @@ import { Mail, Phone, MapPin, Send, User, MessageSquare, Download } from 'lucide
 import AnimatedAvatar from './AnimatedAvatar';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReveal } from '@/hooks/useReveal';
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = memo(() => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [sectionRef, inView] = useReveal<HTMLDivElement>(0.08, 350);
+  const hasAnimatedRef = useRef(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,76 +39,55 @@ const Contact = memo(() => {
   };
 
   useEffect(() => {
+    if (!inView || hasAnimatedRef.current || !sectionRef.current) return;
+    hasAnimatedRef.current = true;
+
     const ctx = gsap.context(() => {
-      // Fade in background grid securely triggering off section entry
       gsap.fromTo('.gsap-contact-grid',
         { opacity: 0 },
         {
           opacity: 0.15,
-          duration: 1.5,
+          duration: 0.75,
           ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          }
         }
       );
 
-      // High-performance unified timeline triggered securely by the section ref
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        }
+        defaults: { ease: 'power3.out' }
       });
 
-      // Slide-up reveal for Title/Header column
       tl.from('.gsap-contact-header', {
         opacity: 0,
         y: 30,
-        duration: 0.6,
+        duration: 0.45,
         stagger: 0.15,
-        ease: 'power3.out',
       });
 
-      // Stagger reveal dynamic contact info cards & CTA
       tl.from('.gsap-contact-cta', {
         opacity: 0,
         y: 25,
         scale: 0.95,
-        duration: 0.7,
+        duration: 0.5,
         ease: 'back.out(1.2)',
       }, '-=0.3');
 
-      // Left Column: Contact Form Slide in
       tl.from('.gsap-contact-form-container', {
         opacity: 0,
-        x: -40,
-        duration: 0.8,
-        ease: 'power3.out',
+        x: -24,
+        duration: 0.55,
       }, '-=0.4');
 
-      // Right Column: Details Stagger slide in
       tl.from('.gsap-contact-details-container', {
         opacity: 0,
-        x: 40,
-        duration: 0.8,
-        ease: 'power3.out',
+        x: 24,
+        duration: 0.55,
       }, '-=0.6');
     }, sectionRef);
 
-    // Refresh ScrollTrigger to recalculate dynamic viewport measures
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
-
     return () => {
-      clearTimeout(timer);
       ctx.revert();
     };
-  }, []);
+  }, [inView, sectionRef]);
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden bg-transparent" ref={sectionRef}>

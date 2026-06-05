@@ -2,6 +2,7 @@ import { useState, memo, useEffect, useRef } from "react";
 import { Code2, Users, Bot, ExternalLink, Github, Play } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useAnimationPreference } from '@/contexts/AnimationContext';
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -273,10 +274,12 @@ const ProjectDetails = ({ project }: ProjectDetailsProps) => {
 const Projects = memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState(projectsData[0]);
+  const { effectiveMode } = useAnimationPreference();
 
   useEffect(() => {
+    if (effectiveMode === 'off') return;
+
     const ctx = gsap.context(() => {
-      // High-performance unified timeline triggered securely by the section ref
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -285,30 +288,27 @@ const Projects = memo(() => {
         }
       });
 
-      // Header animations
       tl.from('.gsap-projects-header', {
         opacity: 0,
         y: 30,
-        duration: 0.6,
+        duration: effectiveMode === 'reduced' ? 0.35 : 0.5,
         stagger: 0.15,
         ease: 'power3.out',
       });
 
-      // Stagger selection cards pop-in
       tl.from('.gsap-project-card', {
         opacity: 0,
         y: 35,
         scale: 0.96,
-        duration: 0.7,
+        duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
         stagger: 0.1,
         ease: 'power2.out',
       }, '-=0.3');
 
-      // Bottom details panel fade-in
       tl.from('.gsap-projects-details-container', {
         opacity: 0,
         y: 35,
-        duration: 0.8,
+        duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
         ease: 'power3.out',
       }, '-=0.4');
     }, sectionRef);
@@ -322,7 +322,7 @@ const Projects = memo(() => {
       clearTimeout(timer);
       ctx.revert();
     };
-  }, []);
+  }, [effectiveMode]);
 
   return (
     <section id="projects" ref={sectionRef} className="section-container relative bg-transparent">

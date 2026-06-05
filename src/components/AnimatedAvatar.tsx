@@ -52,6 +52,12 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
     }
   };
 
+  const getAlt = () => {
+    if (variant === 'contact') return 'Portrait of Ananth N in the contact section';
+    if (variant === 'about') return 'Portrait of Ananth N in the about section';
+    return 'Portrait of Ananth N in the hero section';
+  };
+
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -69,7 +75,6 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
       onMouseLeave={handleMouseLeave}
       style={{ perspective: "1000px" }}
     >
-      {/* Clean Image - No Box, No Border */}
       <motion.div
         style={{
           rotateX,
@@ -80,15 +85,17 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
         }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-        transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
+        transition={{ duration: variant === 'hero' ? 0.7 : 0.45, ease: [0.23, 1, 0.32, 1] }}
         className="w-full h-full"
       >
         <img
           ref={imgRef}
           src={getImage()}
-          alt="Ananth N Portrait"
-          loading="eager"
+          alt={getAlt()}
+          loading={variant === 'hero' ? 'eager' : 'lazy'}
           decoding="async"
+          width={variant === 'hero' ? 640 : 512}
+          height={variant === 'hero' ? 768 : 512}
           className="w-full h-full object-contain drop-shadow-[0_10px_40px_hsl(var(--primary)/0.35)]"
           style={{ background: 'transparent' }}
         />
