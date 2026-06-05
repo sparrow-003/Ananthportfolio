@@ -7,6 +7,10 @@ import { useAnimationPreference } from '@/contexts/AnimationContext';
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
+const renderSkillBadge = (label: string) => (
+  <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wide text-primary">{label.slice(0, 3)}</span>
+);
+
 const Skills = memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { effectiveMode } = useAnimationPreference();
@@ -16,89 +20,89 @@ const Skills = memo(() => {
       title: "Vibe Coding Skills",
       icon: <BrainCircuit className="text-primary" size={28} />,
       skills: [
-        { name: "Flow State Programming", icon: "https://img.icons8.com/color/48/meditation.png" },
-        { name: "Creative Problem Solving", icon: "https://img.icons8.com/color/48/creative-thinking.png" },
-        { name: "Intuitive Design", icon: "https://img.icons8.com/color/48/design.png" },
-        { name: "Rapid Prototyping", icon: "https://img.icons8.com/color/48/prototype.png" },
+        { name: "Flow State Programming", icon: renderSkillBadge('FLO') },
+        { name: "Creative Problem Solving", icon: renderSkillBadge('CPS') },
+        { name: "Intuitive Design", icon: renderSkillBadge('DES') },
+        { name: "Rapid Prototyping", icon: renderSkillBadge('RAP') },
       ]
     },
     {
       title: "Programming Languages",
       icon: <Code className="text-primary" size={28} />,
       skills: [
-        { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+        { name: "Python", icon: renderSkillBadge('PY') },
+        { name: "JavaScript", icon: renderSkillBadge('JS') },
+        { name: "TypeScript", icon: renderSkillBadge('TS') },
       ]
     },
     {
       title: "Web Development",
       icon: <Globe className="text-primary" size={28} />,
       skills: [
-        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-        { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-        { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-        { name: "TailwindCSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" },
+        { name: "React", icon: renderSkillBadge('REA') },
+        { name: "Node.js", icon: renderSkillBadge('NOD') },
+        { name: "Next.js", icon: renderSkillBadge('NXT') },
+        { name: "HTML5", icon: renderSkillBadge('HTM') },
+        { name: "CSS3", icon: renderSkillBadge('CSS') },
+        { name: "TailwindCSS", icon: renderSkillBadge('TWL') },
       ]
     },
     {
       title: "AI & Machine Learning",
       icon: <BrainCircuit className="text-primary" size={28} />,
       skills: [
-        { name: "Prompt Engineering", icon: "https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-ai-industry-4-flaticons-flat-flat-icons.png" },
-        { name: "LLM", icon: "https://img.icons8.com/color/48/artificial-intelligence.png" },
-        { name: "LangChain", icon: "https://img.icons8.com/external-tal-revivo-color-tal-revivo/96/external-chainlink-is-a-blockchain-abstraction-layer-that-enables-universally-connected-smart-contracts-logo-color-tal-revivo.png" },
-        { name: "Neural Network", icon: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-neural-network-robotics-flaticons-lineal-color-flat-icons.png" },
-        { name: "Hugging Face", icon: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg" },
-        { name: "API Integration", icon: "https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-api-no-code-flaticons-flat-flat-icons.png" },
+        { name: "Prompt Engineering", icon: renderSkillBadge('PRM') },
+        { name: "LLM", icon: renderSkillBadge('LLM') },
+        { name: "LangChain", icon: renderSkillBadge('LAN') },
+        { name: "Neural Network", icon: renderSkillBadge('NN') },
+        { name: "Hugging Face", icon: renderSkillBadge('HUG') },
+        { name: "API Integration", icon: renderSkillBadge('API') },
       ]
     },
     {
       title: "Databases",
       icon: <Database className="text-primary" size={28} />,
       skills: [
-        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-        { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-        { name: "Supabase", icon: "https://seeklogo.com/images/S/supabase-logo-DCC676FFE2-seeklogo.com.png" },
+        { name: "MongoDB", icon: renderSkillBadge('MON') },
+        { name: "SQL", icon: renderSkillBadge('SQL') },
+        { name: "Supabase", icon: renderSkillBadge('SUP') },
       ]
     },
     {
       title: "DevOps & Cloud",
       icon: <Layers className="text-primary" size={28} />,
       skills: [
-        { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-        { name: "GitHub Actions", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+        { name: "Docker", icon: renderSkillBadge('DOC') },
+        { name: "GitHub Actions", icon: renderSkillBadge('GHA') },
       ]
     },
     {
       title: "Frameworks & Libraries",
       icon: <Cpu className="text-primary" size={28} />,
       skills: [
-        { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-        { name: "Django", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-        { name: "Flask", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" },
+        { name: "Express", icon: renderSkillBadge('EXP') },
+        { name: "Django", icon: renderSkillBadge('DJA') },
+        { name: "Flask", icon: renderSkillBadge('FLA') },
       ]
     },
     {
       title: "Design & UI/UX",
       icon: <PencilRuler className="text-primary" size={28} />,
       skills: [
-        { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-        { name: "UI/UX Research", icon: "https://img.icons8.com/fluency/48/test-lab.png" },
+        { name: "Figma", icon: renderSkillBadge('FIG') },
+        { name: "UI/UX Research", icon: renderSkillBadge('UX') },
       ]
     },
     {
       title: "Teaching & Leadership",
       icon: <CheckCircle className="text-primary" size={28} />,
       skills: [
-        { name: "AI/BI Training", icon: "https://img.icons8.com/color/48/artificial-intelligence.png" },
-        { name: "Campus Ambassador", icon: "https://img.icons8.com/color/48/ambassador.png" },
-        { name: "Student Mentoring", icon: "https://img.icons8.com/color/48/mentor.png" },
-        { name: "Technical Communication", icon: "https://img.icons8.com/color/48/communication--v1.png" },
-        { name: "Team Leadership", icon: "https://img.icons8.com/color/48/conference-call--v1.png" },
-        { name: "Problem Solving", icon: "https://img.icons8.com/color/48/solution.png" },
+        { name: "AI/BI Training", icon: renderSkillBadge('AIB') },
+        { name: "Campus Ambassador", icon: renderSkillBadge('CAM') },
+        { name: "Student Mentoring", icon: renderSkillBadge('MEN') },
+        { name: "Technical Communication", icon: renderSkillBadge('COM') },
+        { name: "Team Leadership", icon: renderSkillBadge('LEA') },
+        { name: "Problem Solving", icon: renderSkillBadge('SOL') },
       ]
     }
   ];
@@ -194,12 +198,7 @@ const Skills = memo(() => {
                     <div
                       className="w-12 h-12 lg:w-16 lg:h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 hover:bg-primary/10 transition-all border border-border hover:border-primary/20 duration-300 hover:scale-105 hover:rotate-2"
                     >
-                      <img
-                        src={skill.icon}
-                        alt={skill.name}
-                        className="w-6 h-6 lg:w-8 lg:h-8 object-contain opacity-80 group-hover/skill:opacity-100 transition-all dark:filter dark:brightness-110 duration-300"
-                        loading="lazy"
-                      />
+                      {skill.icon}
                     </div>
                     <span className="text-center text-xs lg:text-sm text-muted-foreground group-hover/skill:text-foreground transition-colors duration-300">{skill.name}</span>
                   </div>
