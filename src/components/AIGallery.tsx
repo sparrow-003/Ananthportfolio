@@ -2,6 +2,10 @@ import { memo, useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReveal } from '@/hooks/useReveal';
 import { Sparkles, Bot, Brain, Code2, Zap, ExternalLink } from 'lucide-react';
+import aiThumbOne from '@/assets/avatar-art-1.webp';
+import aiThumbTwo from '@/assets/avatar-art-2.webp';
+import aiThumbThree from '@/assets/avatar-art-3.webp';
+import aiThumbFour from '@/assets/hero-avatar.webp';
 
 type Category = 'All' | 'Beginner' | 'Intermediate' | 'NLP' | 'Vision';
 
@@ -29,7 +33,7 @@ const AI_PROJECTS: AIProject[] = [
     icon: <Brain className="w-6 h-6" />,
     tags: ['Python', 'Transformers', 'HuggingFace'],
     language: 'python',
-    thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=70&auto=format&fit=crop',
+    thumbnail: aiThumbOne,
     snippet: `from transformers import pipeline
 
 classifier = pipeline("sentiment-analysis")
@@ -46,7 +50,7 @@ print(result)
     icon: <Bot className="w-6 h-6" />,
     tags: ['React', 'TypeScript', 'LLM'],
     language: 'typescript',
-    thumbnail: 'https://images.unsplash.com/photo-1684369175809-f9642140a1bf?w=600&q=70&auto=format&fit=crop',
+    thumbnail: aiThumbTwo,
     snippet: `const res = await fetch("/api/chat", {
   method: "POST",
   body: JSON.stringify({ messages }),
@@ -67,7 +71,7 @@ while (true) {
     icon: <Sparkles className="w-6 h-6" />,
     tags: ['TensorFlow.js', 'MobileNet', 'Browser AI'],
     language: 'javascript',
-    thumbnail: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=70&auto=format&fit=crop',
+    thumbnail: aiThumbThree,
     snippet: `import * as mobilenet from "@tensorflow-models/mobilenet";
 
 const model = await mobilenet.load();
@@ -84,7 +88,7 @@ console.log(predictions);`,
     icon: <Zap className="w-6 h-6" />,
     tags: ['LangChain', 'Embeddings', 'Vector DB'],
     language: 'python',
-    thumbnail: 'https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=600&q=70&auto=format&fit=crop',
+    thumbnail: aiThumbFour,
     snippet: `from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 
@@ -218,18 +222,18 @@ const AIGallery = memo(() => {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="mt-3 rounded-lg bg-zinc-950 border border-zinc-800 overflow-hidden">
-                      <div className="flex items-center justify-between px-3 py-1.5 bg-zinc-900 border-b border-zinc-800">
+                     <div className="mt-3 rounded-lg bg-card border border-border overflow-hidden">
+                       <div className="flex items-center justify-between px-3 py-1.5 bg-muted border-b border-border">
                         <div className="flex gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                           <span className="w-2.5 h-2.5 rounded-full bg-primary/40" />
+                           <span className="w-2.5 h-2.5 rounded-full bg-primary/30" />
+                           <span className="w-2.5 h-2.5 rounded-full bg-primary/20" />
                         </div>
-                        <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-mono">
+                         <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-mono">
                           {p.language}
                         </span>
                       </div>
-                      <pre className="p-3 text-[11px] leading-relaxed text-zinc-100 overflow-x-auto font-mono">
+                       <pre className="p-3 text-[11px] leading-relaxed text-foreground overflow-x-auto font-mono">
                         <code>{p.snippet}</code>
                       </pre>
                     </div>
