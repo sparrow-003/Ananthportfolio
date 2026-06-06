@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from "react";
+import { memo, useState, useMemo, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReveal } from "@/hooks/useReveal";
 import {
@@ -139,28 +139,31 @@ const techLogo: Record<string, React.ReactNode> = {
   "Vector DB": <SiHuggingface className="w-3.5 h-3.5" style={{ color: "#FFD21E" }} />,
 };
 
-const AICard = ({
-  p,
-  isActive,
-  onClick,
-}: {
+type AICardProps = {
   p: AIProject;
   isActive: boolean;
   onClick: () => void;
-}) => (
-  <motion.article
-    layout
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, scale: 0.95 }}
-    transition={{ duration: 0.35 }}
-    className={`relative rounded-2xl border bg-card overflow-hidden cursor-pointer group transition-all duration-500 ${
-      isActive
-        ? "border-primary/50 shadow-2xl shadow-primary/10"
-        : "border-border hover:border-primary/30 hover:-translate-y-1"
-    }`}
-    onClick={onClick}
-  >
+};
+
+const AICard = forwardRef<HTMLElement, AICardProps>(function AICard(
+  { p, isActive, onClick },
+  ref
+) {
+  return (
+    <motion.article
+      ref={ref}
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.35 }}
+      className={`relative rounded-2xl border bg-card overflow-hidden cursor-pointer group transition-all duration-500 ${
+        isActive
+          ? "border-primary/50 shadow-2xl shadow-primary/10"
+          : "border-border hover:border-primary/30 hover:-translate-y-1"
+      }`}
+      onClick={onClick}
+    >
     {/* Visual header — gradient art */}
     <div
       className={`relative h-28 sm:h-32 bg-gradient-to-br ${p.gradient} overflow-hidden`}
@@ -256,9 +259,11 @@ const AICard = ({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
-  </motion.article>
-);
+    </motion.article>
+  );
+});
+
+AICard.displayName = "AICard";
 
 const AIGallery = memo(() => {
   const [ref, inView] = useReveal<HTMLDivElement>(0.05);
