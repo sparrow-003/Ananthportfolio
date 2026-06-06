@@ -199,7 +199,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
         toggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
-      <div className={`flex-1 flex flex-col transition-all duration-200 ${isSidebarCollapsed ? 'ml-[80px]' : 'ml-[280px]'}`}>
+      <div className={`flex min-w-0 flex-1 flex-col transition-all duration-200 ${isSidebarCollapsed ? 'md:ml-[80px]' : 'md:ml-[280px]'}`}>
         <AdminHeader
           toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           isSidebarCollapsed={isSidebarCollapsed}
@@ -207,7 +207,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
           onSearchChange={setSearchQuery}
         />
 
-        <main className="flex-1 overflow-y-auto p-8 relative">
+        <main className="relative flex-1 overflow-y-auto p-4 md:p-8">
           {/* Background */}
           <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 -z-20" />
 
