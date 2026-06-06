@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from "react";
+import { memo, useState, useMemo, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReveal } from "@/hooks/useReveal";
 import {
@@ -139,126 +139,131 @@ const techLogo: Record<string, React.ReactNode> = {
   "Vector DB": <SiHuggingface className="w-3.5 h-3.5" style={{ color: "#FFD21E" }} />,
 };
 
-const AICard = ({
-  p,
-  isActive,
-  onClick,
-}: {
+type AICardProps = {
   p: AIProject;
   isActive: boolean;
   onClick: () => void;
-}) => (
-  <motion.article
-    layout
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, scale: 0.95 }}
-    transition={{ duration: 0.35 }}
-    className={`relative rounded-2xl border bg-card overflow-hidden cursor-pointer group transition-all duration-500 ${
-      isActive
-        ? "border-primary/50 shadow-2xl shadow-primary/10"
-        : "border-border hover:border-primary/30 hover:-translate-y-1"
-    }`}
-    onClick={onClick}
-  >
-    {/* Visual header — gradient art */}
-    <div
-      className={`relative h-28 sm:h-32 bg-gradient-to-br ${p.gradient} overflow-hidden`}
+};
+
+const AICard = forwardRef<HTMLElement, AICardProps>(function AICard(
+  { p, isActive, onClick },
+  ref
+) {
+  return (
+    <motion.article
+      ref={ref}
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.35 }}
+      className={`relative rounded-2xl border bg-card overflow-hidden cursor-pointer group transition-all duration-500 ${
+        isActive
+          ? "border-primary/50 shadow-2xl shadow-primary/10"
+          : "border-border hover:border-primary/30 hover:-translate-y-1"
+      }`}
+      onClick={onClick}
     >
-      <div className="absolute inset-0 opacity-30 mix-blend-overlay">
-        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-white/20 blur-2xl" />
-        <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-black/30 blur-2xl" />
-      </div>
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:24px_24px]" />
-      <div className="relative h-full flex items-center justify-between p-4">
-        <div
-          className="p-2.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white"
-          style={{ boxShadow: `0 0 24px ${p.accent}55` }}
-        >
-          {p.icon}
+      <div
+        className={`relative h-28 sm:h-32 bg-gradient-to-br ${p.gradient} overflow-hidden`}
+      >
+        <div className="absolute inset-0 opacity-30 mix-blend-overlay">
+          <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-white/20 blur-2xl" />
+          <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-black/30 blur-2xl" />
         </div>
-        <span
-          className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full ${
-            p.difficulty === "Beginner"
-              ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-              : "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-          }`}
-        >
-          {p.difficulty}
-        </span>
-      </div>
-    </div>
-
-    <div className="p-5">
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-          {p.title}
-        </h3>
-        <span
-          className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-          style={{ color: p.accent, backgroundColor: `${p.accent}1A`, border: `1px solid ${p.accent}33` }}
-        >
-          {p.category}
-        </span>
-      </div>
-      <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">
-        {p.description}
-      </p>
-
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {p.tags.map((t) => (
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:24px_24px]" />
+        <div className="relative flex h-full items-center justify-between p-4">
+          <div
+            className="rounded-xl border border-white/20 bg-white/10 p-2.5 text-white backdrop-blur-md"
+            style={{ boxShadow: `0 0 24px ${p.accent}55` }}
+          >
+            {p.icon}
+          </div>
           <span
-            key={t}
-            className="inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-md bg-muted/60 border border-border text-foreground/80 font-medium"
+            className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-widest ${
+              p.difficulty === "Beginner"
+                ? "border border-emerald-500/30 bg-emerald-500/15 text-emerald-400"
+                : "border border-amber-500/30 bg-amber-500/15 text-amber-400"
+            }`}
           >
-            {techLogo[t] ?? <Tag className="w-3 h-3 text-muted-foreground" />}
-            {t}
+            {p.difficulty}
           </span>
-        ))}
+        </div>
       </div>
 
-      <div className="flex items-center justify-between text-xs">
-        <span className="inline-flex items-center gap-1.5 text-primary font-semibold">
-          <Code2 className="w-3.5 h-3.5" />
-          {isActive ? "Hide code" : "View snippet"}
-        </span>
-        <ChevronRight
-          className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${
-            isActive ? "rotate-90 text-primary" : "group-hover:translate-x-1"
-          }`}
-        />
-      </div>
-
-      <AnimatePresence initial={false}>
-        {isActive && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
+      <div className="p-5">
+        <div className="mb-2 flex items-start justify-between gap-2">
+          <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+            {p.title}
+          </h3>
+          <span
+            className="rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest"
+            style={{ color: p.accent, backgroundColor: `${p.accent}1A`, border: `1px solid ${p.accent}33` }}
           >
-            <div className="mt-4 rounded-xl border border-border bg-[#0A0A0F] overflow-hidden">
-              <div className="flex items-center justify-between px-3 py-2 border-b border-border/50 bg-card/30">
-                <div className="flex gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
+            {p.category}
+          </span>
+        </div>
+        <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+          {p.description}
+        </p>
+
+        <div className="mb-4 flex flex-wrap gap-1.5">
+          {p.tags.map((t) => (
+            <span
+              key={t}
+              className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/60 px-2 py-1 text-[10px] font-medium text-foreground/80"
+            >
+              {techLogo[t] ?? <Tag className="h-3 w-3 text-muted-foreground" />}
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between text-xs">
+          <span className="inline-flex items-center gap-1.5 font-semibold text-primary">
+            <Code2 className="h-3.5 w-3.5" />
+            {isActive ? "Hide code" : "View snippet"}
+          </span>
+          <ChevronRight
+            className={`h-4 w-4 text-muted-foreground transition-transform duration-300 ${
+              isActive ? "rotate-90 text-primary" : "group-hover:translate-x-1"
+            }`}
+          />
+        </div>
+
+        <AnimatePresence initial={false}>
+          {isActive && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-4 overflow-hidden rounded-xl border border-border bg-[#0A0A0F]">
+                <div className="flex items-center justify-between border-b border-border/50 bg-card/30 px-3 py-2">
+                  <div className="flex gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    {p.language}
+                  </span>
                 </div>
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-mono">
-                  {p.language}
-                </span>
+                <pre className="overflow-x-auto p-3 font-mono text-[11px] leading-relaxed text-foreground/90">
+                  <code>{p.snippet}</code>
+                </pre>
               </div>
-              <pre className="p-3 text-[11px] leading-relaxed text-foreground/90 overflow-x-auto font-mono">
-                <code>{p.snippet}</code>
-              </pre>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  </motion.article>
-);
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.article>
+  );
+});
+
+AICard.displayName = "AICard";
 
 const AIGallery = memo(() => {
   const [ref, inView] = useReveal<HTMLDivElement>(0.05);

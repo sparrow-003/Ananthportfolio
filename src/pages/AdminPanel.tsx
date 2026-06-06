@@ -125,6 +125,10 @@ const AdminPanel = () => {
     setMatrixDuration(3000)
   }, [])
 
+  const handleMatrixComplete = useCallback(() => {
+    setShowMatrix(false)
+  }, [])
+
   return (
     <>
       <AnimatePresence>
@@ -132,7 +136,7 @@ const AdminPanel = () => {
           <div className="relative z-[100]">
             <MatrixLoader 
               duration={matrixDuration} 
-              onComplete={() => setShowMatrix(false)} 
+              onComplete={handleMatrixComplete} 
             />
             <button 
               onClick={() => setShowMatrix(false)}
