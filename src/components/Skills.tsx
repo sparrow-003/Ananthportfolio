@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo } from 'react';
 import { BrainCircuit, Globe, Layers, Cpu, PencilRuler, CheckCircle } from 'lucide-react';
 import {
   SiPython,
@@ -40,12 +40,10 @@ import {
   SiBlender,
 } from 'react-icons/si';
 import { Workflow, Sparkles, Rocket, MessageSquareQuote, Brain, Network, Plug, Search, Award, Crown, MessageCircle, Wrench, HeartHandshake, Microscope, BookOpen, PenTool, Telescope, Code2, Palette, Paintbrush, Database } from 'lucide-react';
-import { gsap } from 'gsap';
-import { useAnimationPreference } from '@/contexts/AnimationContext';
+import { useReveal } from '@/hooks/useReveal';
 
 const Skills = memo(() => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { effectiveMode } = useAnimationPreference();
+  const [sectionRef, inView] = useReveal<HTMLDivElement>(0.08, 500);
 
   const skillCategories = [
     {
@@ -169,78 +167,17 @@ const Skills = memo(() => {
     }
   ];
 
-  useEffect(() => {
-    if (effectiveMode === 'off') return;
-    if (!sectionRef.current) return;
-
-    // Use IntersectionObserver so the animation only plays when the section
-    // actually enters the viewport. This avoids the lazy-load race where
-    // ScrollTrigger fires before layout settles and leaves content at opacity 0.
-    let observer: IntersectionObserver | null = null;
-    let played = false;
-
-    const play = () => {
-      if (played) return;
-      played = true;
-      observer?.disconnect();
-
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline();
-
-        tl.from('.gsap-skills-header', {
-          opacity: 0,
-          y: 30,
-          duration: effectiveMode === 'reduced' ? 0.35 : 0.5,
-          stagger: 0.15,
-          ease: 'power3.out',
-          immediateRender: false,
-        });
-
-        tl.from('.gsap-skills-category', {
-          opacity: 0,
-          y: 40,
-          scale: 0.96,
-          duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
-          stagger: 0.08,
-          ease: 'power2.out',
-          immediateRender: false,
-        }, '-=0.3');
-
-        tl.from('.gsap-skills-footer', {
-          opacity: 0,
-          y: 35,
-          duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
-          ease: 'power3.out',
-          immediateRender: false,
-        }, '-=0.4');
-      }, sectionRef);
-
-      return () => ctx.revert();
-    };
-
-    if (typeof IntersectionObserver === 'undefined') {
-      play();
-      return;
-    }
-
-    observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            play();
-            break;
-          }
-        }
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -10% 0px' }
-    );
-    observer.observe(sectionRef.current);
-
-    return () => observer?.disconnect();
-  }, [effectiveMode]);
+  // Reveal is handled by CSS (.is-revealed + .reveal-target) toggled via
+  // the inView flag from useReveal. The previous GSAP tl.from()
+  // implementation could leave elements stuck at opacity 0 after a
+  // context revert in React 18 strict mode.
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-transparent" ref={sectionRef}>
+    <section
+      id="skills"
+      className={`py-24 relative overflow-hidden bg-transparent reveal-stagger ${inView ? 'is-revealed' : ''}`}
+      ref={sectionRef}
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 -z-10" />
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-2xl" />
@@ -252,19 +189,19 @@ const Skills = memo(() => {
       </div>
 
       <div className="section-container relative z-content">
-        <h2 className="gsap-skills-header section-title text-3xl md:text-5xl text-center text-gradient">
+        <h2 className="reveal-target gsap-skills-header section-title text-3xl md:text-5xl text-center text-gradient">
           Technical Expertise
         </h2>
 
-        <p className="gsap-skills-header section-subtitle">
+        <p className="reveal-target gsap-skills-header section-subtitle">
           A comprehensive toolbox of cutting-edge technologies I've mastered through continuous learning
         </p>
 
-        <div className="gsap-skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+        <div className="gsap-skills-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 reveal-stagger">
           {skillCategories.map((category) => (
             <div
               key={category.title}
-              className="gsap-skills-category bg-card/60 backdrop-blur-sm p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1.5 h-full rounded-xl shadow-sm group/card"
+              className="reveal-target gsap-skills-category bg-card/60 backdrop-blur-sm p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1.5 h-full rounded-xl shadow-sm group/card"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 bg-primary/10 rounded-lg border border-border">
@@ -292,7 +229,7 @@ const Skills = memo(() => {
           ))}
         </div>
 
-        <div className="gsap-skills-footer mt-16 bg-card/60 backdrop-blur-md rounded-2xl p-8 text-center relative overflow-hidden border border-primary/10 shadow-xl">
+        <div className="reveal-target gsap-skills-footer mt-16 bg-card/60 backdrop-blur-md rounded-2xl p-8 text-center relative overflow-hidden border border-primary/10 shadow-xl">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 z-base" />
 
           <div className="relative z-content">

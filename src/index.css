@@ -632,6 +632,44 @@ select:focus-visible {
 
 .animate-accordion-down { animation: accordion-down 0.2s ease-out; }
 .animate-accordion-up { animation: accordion-up 0.2s ease-out; }
+
+/* =============================================================
+   In-view reveal — CSS-based replacement for GSAP tl.from()
+   Content is always visible by default; the .is-revealed class on
+   a section triggers the entrance animation. If JS/hydration
+   fails or inView never fires, content stays visible — never stuck
+   invisible the way GSAP `from()` animations can be after a
+   context revert.
+   ============================================================= */
+.reveal-target {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+.reveal-stagger > .reveal-target { transition-delay: 0ms; }
+.reveal-stagger > .reveal-target:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger > .reveal-target:nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger > .reveal-target:nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger > .reveal-target:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger > .reveal-target:nth-child(6) { transition-delay: 300ms; }
+.reveal-stagger > .reveal-target:nth-child(7) { transition-delay: 360ms; }
+.reveal-stagger > .reveal-target:nth-child(8) { transition-delay: 420ms; }
+
+.is-revealed .reveal-target {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-target,
+  .is-revealed .reveal-target {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-shimmer { animation: shimmer 3s ease-in-out infinite; }
 .animate-fade-in-up { animation: fadeInUp 0.6s ease-out; }

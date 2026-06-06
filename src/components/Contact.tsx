@@ -1,4 +1,4 @@
-import { useState, memo, useEffect, useRef, useCallback } from 'react';
+import { useState, memo, useCallback } from 'react';
 import {
   Mail,
   Phone,
@@ -21,7 +21,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 import AnimatedAvatar from './AnimatedAvatar';
-import { gsap } from 'gsap';
 import { useReveal } from '@/hooks/useReveal';
 
 const YOUR_EMAIL = 'thanan757@gmail.com';
@@ -36,7 +35,6 @@ interface FormData {
 
 const Contact = memo(() => {
   const [sectionRef, inView] = useReveal<HTMLDivElement>(0.08, 350);
-  const hasAnimatedRef = useRef(false);
   const [form, setForm] = useState<FormData>({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -122,21 +120,6 @@ Sent from: ananth-3d-genesis-folio portfolio
     window.open(url, '_self');
   };
 
-  useEffect(() => {
-    if (!inView || hasAnimatedRef.current || !sectionRef.current) return;
-    hasAnimatedRef.current = true;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.from('.gsap-contact-header', { opacity: 0, y: 24, duration: 0.45, stagger: 0.12 });
-      tl.from('.gsap-contact-card', { opacity: 0, y: 24, duration: 0.5, stagger: 0.08 }, '-=0.3');
-      tl.from('.gsap-contact-form', { opacity: 0, y: 24, duration: 0.55 }, '-=0.4');
-      tl.from('.gsap-contact-info', { opacity: 0, x: 16, duration: 0.55, stagger: 0.06 }, '-=0.5');
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [inView, sectionRef]);
-
   const inputClass = (hasError: boolean) =>
     `w-full bg-background/60 border rounded-xl pl-11 pr-4 py-3 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 transition-all ${
       hasError
@@ -145,7 +128,11 @@ Sent from: ananth-3d-genesis-folio portfolio
     }`;
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-transparent" ref={sectionRef}>
+    <section
+      id="contact"
+      className={`py-24 relative overflow-hidden bg-transparent reveal-stagger ${inView ? 'is-revealed' : ''}`}
+      ref={sectionRef}
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 -z-10" />
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary/10 blur-3xl -z-10" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl -z-10" />
@@ -153,20 +140,20 @@ Sent from: ananth-3d-genesis-folio portfolio
       <div className="section-container relative z-content">
         {/* Title with Avatar */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16 mb-12">
-          <div className="flex-shrink-0 gsap-contact-header">
+          <div className="flex-shrink-0 reveal-target gsap-contact-header">
             <AnimatedAvatar variant="contact" className="w-44 h-60 md:w-56 md:h-72 lg:w-64 lg:h-80" />
           </div>
           <div className="text-center lg:text-left">
-            <div className="gsap-contact-header inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+            <div className="reveal-target gsap-contact-header inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-xs font-bold uppercase tracking-widest text-primary">
                 Let's Collaborate
               </span>
             </div>
-            <h2 className="gsap-contact-header text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-4 tracking-tight">
+            <h2 className="reveal-target gsap-contact-header text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-4 tracking-tight">
               Get In Touch
             </h2>
-            <p className="gsap-contact-header text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
+            <p className="reveal-target gsap-contact-header text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
               Have a project, a role, or just a wild idea? Drop a message and
               I'll get back to you within 24 hours.
             </p>
@@ -174,7 +161,7 @@ Sent from: ananth-3d-genesis-folio portfolio
         </div>
 
         {/* Quick info cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 max-w-5xl mx-auto reveal-stagger">
           {[
             {
               icon: Briefcase,
@@ -197,7 +184,7 @@ Sent from: ananth-3d-genesis-folio portfolio
           ].map((c, i) => (
             <div
               key={c.label}
-              className="gsap-contact-card flex items-center gap-3 p-4 rounded-xl border border-border bg-card/70 backdrop-blur-md"
+              className="reveal-target gsap-contact-card flex items-center gap-3 p-4 rounded-xl border border-border bg-card/70 backdrop-blur-md"
             >
               <div className={`p-2.5 rounded-lg bg-muted/60 ${c.accent}`}>
                 <c.icon className="w-5 h-5" />
@@ -214,7 +201,7 @@ Sent from: ananth-3d-genesis-folio portfolio
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {/* Contact Form */}
-          <div className="gsap-contact-form lg:col-span-3 relative overflow-hidden rounded-2xl border border-border bg-card/85 backdrop-blur-xl shadow-xl p-6 md:p-8">
+          <div className="reveal-target gsap-contact-form lg:col-span-3 relative overflow-hidden rounded-2xl border border-border bg-card/85 backdrop-blur-xl shadow-xl p-6 md:p-8">
             <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-2xl -z-0 pointer-events-none" />
             <div className="relative z-content">
               <div className="flex items-center justify-between mb-6">
@@ -393,8 +380,8 @@ Sent from: ananth-3d-genesis-folio portfolio
           </div>
 
           {/* Contact Info */}
-          <div className="gsap-contact-info lg:col-span-2 flex flex-col gap-6">
-            <div className="rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 shadow-xl">
+          <div className="reveal-stagger lg:col-span-2 flex flex-col gap-6">
+            <div className="reveal-target rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 shadow-xl">
               <h3 className="text-lg font-bold mb-4 text-foreground">Direct Contact</h3>
               <div className="space-y-3">
                 {[
@@ -423,7 +410,7 @@ Sent from: ananth-3d-genesis-folio portfolio
                     href={item.href}
                     target={item.href.startsWith('http') ? '_blank' : undefined}
                     rel="noreferrer"
-                    className="gsap-contact-info group flex items-center gap-3 p-3 rounded-xl border border-border/60 hover:border-primary/40 hover:bg-primary/5 transition-all"
+                    className="reveal-target gsap-contact-info group flex items-center gap-3 p-3 rounded-xl border border-border/60 hover:border-primary/40 hover:bg-primary/5 transition-all"
                   >
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary group-hover:scale-110 transition-transform">
                       <item.icon size={18} />
@@ -460,7 +447,7 @@ Sent from: ananth-3d-genesis-folio portfolio
             </div>
 
             {/* Social Links */}
-            <div className="rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 shadow-xl">
+            <div className="reveal-target rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 shadow-xl">
               <h3 className="text-lg font-bold mb-4 text-foreground">Connect With Me</h3>
               <div className="grid grid-cols-2 gap-3">
                 {[
@@ -495,7 +482,7 @@ Sent from: ananth-3d-genesis-folio portfolio
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.label}
-                    className={`gsap-contact-info group flex items-center gap-2.5 p-3 rounded-xl border border-border bg-card/60 text-muted-foreground transition-all hover:scale-[1.03] active:scale-95 ${social.color}`}
+                    className={`reveal-target gsap-contact-info group flex items-center gap-2.5 p-3 rounded-xl border border-border bg-card/60 text-muted-foreground transition-all hover:scale-[1.03] active:scale-95 ${social.color}`}
                   >
                     <social.icon className="w-4 h-4" />
                     <span className="text-sm font-medium">{social.label}</span>
@@ -505,7 +492,7 @@ Sent from: ananth-3d-genesis-folio portfolio
             </div>
 
             {/* Resume Download */}
-            <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 p-6 shadow-xl">
+            <div className="reveal-target rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 p-6 shadow-xl">
               <div className="flex items-start gap-3 mb-4">
                 <div className="p-2 rounded-lg bg-primary/10 text-primary">
                   <Download className="w-5 h-5" />

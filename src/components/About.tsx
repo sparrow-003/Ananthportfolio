@@ -52,7 +52,6 @@ const whatIDo = [
 
 const About = memo(() => {
   const [sectionRef, isInView] = useReveal<HTMLDivElement>(0.08, 400);
-  const hasAnimatedRef = useRef(false);
   const photoRef = useRef<HTMLDivElement>(null);
   const [imgError, setImgError] = useState(false);
 
@@ -73,29 +72,17 @@ const About = memo(() => {
 
   // One-shot reveal animations when section enters view
   useEffect(() => {
-    if (!isInView || hasAnimatedRef.current || !sectionRef.current) return;
-    hasAnimatedRef.current = true;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      tl.from('.gsap-about-badge', { opacity: 0, y: 16, duration: 0.5 })
-        .from('.gsap-about-title', { opacity: 0, y: 28, duration: 0.6 }, '-=0.3')
-        .from('.gsap-about-sub', { opacity: 0, y: 20, duration: 0.5 }, '-=0.4')
-        .from('.gsap-about-photo', { opacity: 0, scale: 0.92, duration: 0.7, ease: 'back.out(1.2)' }, '-=0.7')
-        .from('.gsap-about-quote', { opacity: 0, x: -20, duration: 0.55 }, '-=0.5')
-        .from('.gsap-about-card', { opacity: 0, y: 30, duration: 0.55, stagger: 0.12 }, '-=0.4')
-        .from('.gsap-about-do-item', { opacity: 0, x: 20, duration: 0.4, stagger: 0.08 }, '-=0.4')
-        .from('.gsap-about-stat', { opacity: 0, y: 24, scale: 0.9, duration: 0.5, stagger: 0.1, ease: 'back.out(1.1)' }, '-=0.4');
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [isInView, sectionRef]);
+    // Intentionally empty: the reveal animation is handled by CSS
+    // (see .reveal-target / .is-revealed in index.css) toggled via
+    // the `is-revealed` class on the section below. The previous
+    // GSAP `tl.from()` implementation could leave elements stuck at
+    // opacity 0 after the context revert in React 18 strict mode.
+  }, [isInView]);
 
   return (
     <section
       id="about"
-      className="min-h-screen py-20 md:py-24 relative w-full bg-transparent"
+      className={`min-h-screen py-20 md:py-24 relative w-full bg-transparent reveal-stagger ${isInView ? 'is-revealed' : ''}`}
       ref={sectionRef}
     >
       {/* Decorative background */}
@@ -106,16 +93,16 @@ const About = memo(() => {
       <div className="section-container relative z-content">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <div className="gsap-about-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-5">
+          <div className="reveal-target gsap-about-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-5">
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-xs font-bold uppercase tracking-widest text-primary">
               Get to know me
             </span>
           </div>
-          <h2 className="gsap-about-title text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-5">
+          <h2 className="reveal-target gsap-about-title text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-5">
             About <span className="text-gradient">Me</span>
           </h2>
-          <p className="gsap-about-sub text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="reveal-target gsap-about-sub text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Developer, educator, and AI enthusiast — building digital experiences that feel
             human, accessible, and meaningful.
           </p>
@@ -125,7 +112,7 @@ const About = memo(() => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center mb-12">
           {/* Photo — displayed freely, no box */}
           <div className="lg:col-span-2 flex justify-center">
-            <div ref={photoRef} className="gsap-about-photo relative">
+            <div ref={photoRef} className="reveal-target gsap-about-photo relative">
               {/* Soft ambient glow behind the photo */}
               <div className="absolute -inset-10 bg-gradient-to-br from-primary/30 via-accent/20 to-primary/30 blur-3xl opacity-50 -z-10" />
 
@@ -172,7 +159,7 @@ const About = memo(() => {
 
           {/* Intro + Quote */}
           <div className="lg:col-span-3 space-y-6">
-            <div className="gsap-about-quote relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary/10 via-card/60 to-accent/10 border border-primary/20 backdrop-blur-md">
+            <div className="reveal-target gsap-about-quote relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary/10 via-card/60 to-accent/10 border border-primary/20 backdrop-blur-md">
               <Quote className="absolute top-4 right-4 w-10 h-10 text-primary/15" />
               <p className="text-lg md:text-xl text-foreground leading-relaxed italic mb-4">
                 "I'm a B.Com graduate turned full-stack developer and AI mentor — driven by
@@ -198,7 +185,7 @@ const About = memo(() => {
               ].map((fact) => (
                 <div
                   key={fact.label}
-                  className="gsap-about-card flex items-center gap-3 p-3 rounded-xl border border-border bg-card/60 backdrop-blur-sm"
+                  className="reveal-target gsap-about-card flex items-center gap-3 p-3 rounded-xl border border-border bg-card/60 backdrop-blur-sm"
                 >
                   <div className="p-2 rounded-lg bg-primary/10 text-primary">
                     <fact.icon className="w-4 h-4" />
@@ -218,7 +205,7 @@ const About = memo(() => {
         {/* My Journey + What I Do */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
           {/* My Journey */}
-          <div className="gsap-about-card relative overflow-hidden rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 md:p-8 shadow-xl">
+          <div className="reveal-target gsap-about-card relative overflow-hidden rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 md:p-8 shadow-xl">
             <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -z-0 pointer-events-none" />
             <div className="relative z-content">
               <div className="flex items-center gap-3 mb-5">
@@ -250,7 +237,7 @@ const About = memo(() => {
           </div>
 
           {/* What I Do */}
-          <div className="gsap-about-card relative overflow-hidden rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 md:p-8 shadow-xl">
+          <div className="reveal-target gsap-about-card relative overflow-hidden rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 md:p-8 shadow-xl">
             <div className="absolute top-0 left-0 w-40 h-40 bg-accent/5 rounded-full blur-3xl -z-0 pointer-events-none" />
             <div className="relative z-content">
               <div className="flex items-center gap-3 mb-5">
@@ -263,7 +250,7 @@ const About = memo(() => {
                 {whatIDo.map((item) => (
                   <div
                     key={item.title}
-                    className="gsap-about-do-item flex items-start gap-3 group"
+                     className="reveal-target gsap-about-do-item flex items-start gap-3 group"
                   >
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 border border-primary/20 flex items-center justify-center flex-shrink-0 text-primary group-hover:scale-110 group-hover:rotate-3 transition-transform">
                       <item.icon className="w-4.5 h-4.5" size={18} />
@@ -285,7 +272,7 @@ const About = memo(() => {
 
         {/* Vision + Beyond */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <div className="gsap-about-card group relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card/70 to-card/70 backdrop-blur-md p-6 md:p-8 shadow-xl hover:border-primary/40 transition-all">
+          <div className="reveal-target gsap-about-card group relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card/70 to-card/70 backdrop-blur-md p-6 md:p-8 shadow-xl hover:border-primary/40 transition-all">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
                 <Rocket className="w-5 h-5" />
@@ -298,7 +285,7 @@ const About = memo(() => {
             </p>
           </div>
 
-          <div className="gsap-about-card group relative overflow-hidden rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 via-card/70 to-card/70 backdrop-blur-md p-6 md:p-8 shadow-xl hover:border-accent/40 transition-all">
+          <div className="reveal-target gsap-about-card group relative overflow-hidden rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/5 via-card/70 to-card/70 backdrop-blur-md p-6 md:p-8 shadow-xl hover:border-accent/40 transition-all">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2.5 rounded-xl bg-accent/10 text-accent">
                 <Heart className="w-5 h-5" />
@@ -317,7 +304,7 @@ const About = memo(() => {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="gsap-about-stat group rounded-2xl p-5 md:p-6 border border-border bg-card/70 backdrop-blur-xl text-center shadow-xl hover:border-primary/40 hover:-translate-y-1 transition-all"
+              className="reveal-target gsap-about-stat group rounded-2xl p-5 md:p-6 border border-border bg-card/70 backdrop-blur-xl text-center shadow-xl hover:border-primary/40 hover:-translate-y-1 transition-all"
             >
               <div className={`inline-flex p-2.5 rounded-xl bg-muted/60 ${stat.tint} mb-3 group-hover:scale-110 transition-transform`}>
                 <stat.icon className="w-5 h-5" />

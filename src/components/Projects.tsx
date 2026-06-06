@@ -1,4 +1,4 @@
-import { useState, memo, useEffect, useRef } from "react";
+import { useState, memo } from "react";
 import {
   ArrowUpRight,
   Github,
@@ -12,8 +12,7 @@ import {
   Layers,
   Tag,
 } from "lucide-react";
-import { gsap } from "gsap";
-import { useAnimationPreference } from "@/contexts/AnimationContext";
+import { useReveal } from "@/hooks/useReveal";
 import {
   SiReact,
   SiNextdotjs,
@@ -386,103 +385,30 @@ const ProjectHero = ({ project }: { project: Project }) => {
 import { Code2 } from "lucide-react";
 
 const Projects = memo(() => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [sectionRef, inView] = useReveal<HTMLDivElement>(0.05, 500);
   const [activeId, setActiveId] = useState(projectsData[0].id);
-  const { effectiveMode } = useAnimationPreference();
   const activeProject = projectsData.find((p) => p.id === activeId) ?? projectsData[0];
-
-  useEffect(() => {
-    if (effectiveMode === "off") return;
-    if (!sectionRef.current) return;
-
-    let observer: IntersectionObserver | null = null;
-    let played = false;
-
-    const play = () => {
-      if (played) return;
-      played = true;
-      observer?.disconnect();
-
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline();
-        tl.from(".gsap-projects-header", {
-          opacity: 0,
-          y: 24,
-          duration: effectiveMode === "reduced" ? 0.35 : 0.5,
-          stagger: 0.1,
-          ease: "power3.out",
-          immediateRender: false,
-        });
-        tl.from(
-          ".gsap-project-card",
-          {
-            opacity: 0,
-            y: 24,
-            scale: 0.96,
-            duration: effectiveMode === "reduced" ? 0.35 : 0.55,
-            stagger: 0.08,
-            ease: "power2.out",
-            immediateRender: false,
-          },
-          "-=0.25"
-        );
-        tl.from(
-          ".gsap-projects-hero",
-          {
-            opacity: 0,
-            y: 24,
-            duration: effectiveMode === "reduced" ? 0.35 : 0.6,
-            ease: "power3.out",
-            immediateRender: false,
-          },
-          "-=0.3"
-        );
-      }, sectionRef);
-
-      return () => ctx.revert();
-    };
-
-    if (typeof IntersectionObserver === "undefined") {
-      play();
-      return;
-    }
-
-    observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            play();
-            break;
-          }
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -8% 0px" }
-    );
-    observer.observe(sectionRef.current);
-
-    return () => observer?.disconnect();
-  }, [effectiveMode]);
 
   return (
     <section
       id="projects"
       ref={sectionRef}
-      className="section-container relative bg-transparent"
+      className={`section-container relative bg-transparent reveal-stagger ${inView ? 'is-revealed' : ''}`}
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
       {/* Header */}
       <div className="text-center mb-12">
-        <div className="gsap-projects-header inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
+        <div className="reveal-target gsap-projects-header inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="text-xs font-bold uppercase tracking-widest text-primary">
             Featured Work
           </span>
         </div>
-        <h2 className="gsap-projects-header text-4xl sm:text-5xl lg:text-6xl font-bold text-gradient mb-4">
+          <h2 className="reveal-target gsap-projects-header text-4xl sm:text-5xl lg:text-6xl font-bold text-gradient mb-4">
           My Portfolio
         </h2>
-        <p className="gsap-projects-header text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="reveal-target gsap-projects-header text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           A curated collection of projects spanning full-stack engineering,
           applied AI, and education. Click any card to dive in.
         </p>
@@ -491,7 +417,7 @@ const Projects = memo(() => {
       {/* Project selector grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {projectsData.map((p, i) => (
-          <div key={p.id} className="gsap-project-card">
+          <div key={p.id} className="reveal-target gsap-project-card">
             <ProjectCard
               project={p}
               index={i}
@@ -503,7 +429,7 @@ const Projects = memo(() => {
       </div>
 
       {/* Featured project hero */}
-      <div key={activeProject.id} className="gsap-projects-hero">
+      <div key={activeProject.id} className="reveal-target gsap-projects-hero">
         <ProjectHero project={activeProject} />
       </div>
     </section>
