@@ -7,6 +7,8 @@ import { toast } from 'sonner'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { AlertCircle, RefreshCw } from 'lucide-react'
+import Seo from '@/components/Seo'
+import { Helmet } from 'react-helmet-async'
 
 // Lazy load components for better performance
 const BlogList = lazy(() => import('@/components/BlogList'))
