@@ -5,17 +5,17 @@ export const BlogListSkeleton = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
                 <div key={i} className="glass-card overflow-hidden">
-                    <Skeleton className="h-48 w-full rounded-t-2xl bg-emerald-500/5" />
+                    <Skeleton className="h-48 w-full rounded-t-2xl bg-muted-foreground/10" />
                     <div className="p-6 space-y-4">
                         <div className="flex gap-2">
-                            <Skeleton className="h-4 w-16 bg-emerald-500/10" />
-                            <Skeleton className="h-4 w-16 bg-emerald-500/10" />
+                            <Skeleton className="h-4 w-16 bg-muted-foreground/15" />
+                            <Skeleton className="h-4 w-16 bg-muted-foreground/15" />
                         </div>
-                        <Skeleton className="h-8 w-3/4 bg-emerald-500/10" />
-                        <Skeleton className="h-20 w-full bg-emerald-500/5" />
+                        <Skeleton className="h-8 w-3/4 bg-muted-foreground/15" />
+                        <Skeleton className="h-20 w-full bg-muted-foreground/10" />
                         <div className="flex justify-between items-center pt-4">
-                            <Skeleton className="h-4 w-24 bg-emerald-500/10" />
-                            <Skeleton className="h-4 w-12 bg-emerald-500/10" />
+                            <Skeleton className="h-4 w-24 bg-muted-foreground/15" />
+                            <Skeleton className="h-4 w-12 bg-muted-foreground/15" />
                         </div>
                     </div>
                 </div>
