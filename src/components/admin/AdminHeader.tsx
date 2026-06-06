@@ -1,4 +1,5 @@
 import React from 'react'
+import adminAvatar from '@/assets/ananth-portrait.webp'
 import { Search, Bell, Menu, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -52,7 +53,7 @@ export const AdminHeader = ({ toggleSidebar, isSidebarCollapsed, searchQuery = '
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-9 w-9 rounded-full">
               <Avatar className="h-9 w-9 border border-border">
-                <AvatarImage src="/assets/avatar-art-1.png" alt="Admin" />
+                <AvatarImage src={adminAvatar} alt="Admin" />
                 <AvatarFallback>AD</AvatarFallback>
               </Avatar>
             </Button>
