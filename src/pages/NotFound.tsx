@@ -1,5 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, memo } from "react";
+import { Helmet } from "react-helmet-async";
+
 
 const NotFound = memo(() => {
   const location = useLocation();
@@ -21,6 +23,10 @@ const NotFound = memo(() => {
   // Show a brief loading state while redirecting
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
+      <Helmet>
+        <title>Page Not Found | ANANTH.DEV</title>
+        <meta name="robots" content="noindex,follow" />
+      </Helmet>
       <div className="fixed inset-0 bg-gradient-to-br from-emerald-950/20 via-black to-teal-950/20 -z-10" />
       <div className="text-center">
         <div className="relative w-12 h-12 mx-auto mb-4">
