@@ -18,9 +18,15 @@ import Layout from "./components/Layout";
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const AdminPanel = lazy(() => import("./pages/AdminPanel"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogSystemTest = lazy(() => import("./components/BlogSystemTest"));
+// AdminPanel is imported eagerly (not lazy) so the admin route is always
+// available without relying on a dynamic import. Lazy loading the admin
+// route caused a 'Failed to fetch dynamically imported module' error on
+// Vercel when the browser's HTTP cache served a stale index.html that
+// referenced an older content-hashed chunk. Eager import adds ~32KB to
+// the initial bundle but eliminates the 404 risk entirely.
+import AdminPanel from "./pages/AdminPanel";
 
 // Optimized query client with better caching
 const queryClient = new QueryClient({

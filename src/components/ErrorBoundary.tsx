@@ -24,6 +24,14 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   private handleRetry = () => {
+    // For stale-chunk / dynamic-import failures, the only reliable
+    // recovery is a full page reload. The SW will fetch the latest
+    // index.html (cache: 'reload') which references the latest
+    // content-hashed chunks.
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+      return;
+    }
     this.setState({ hasError: false, error: undefined });
   };
 
