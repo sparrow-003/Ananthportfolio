@@ -12,33 +12,31 @@ const Contact = lazy(() => import("../components/Contact"));
 
 const Index = memo(() => {
   return (
-    <div className="relative z-[10] w-full min-h-screen overflow-x-hidden bg-transparent text-foreground">
+    <div className="relative w-full min-h-screen overflow-x-hidden bg-transparent text-foreground">
       <Seo
         title="ANANTH.DEV | Full-Stack Developer & AI Engineer Portfolio"
         description="Ananth N — Full-stack developer & AI engineer crafting seamless web and AI solutions. Python, React, TypeScript, prompt engineering. Hire me for your next project."
         path="/"
         type="profile"
       />
-      <main className="relative z-[10] w-full">
-        <SmoothScroll>
-          <Hero />
-          <Suspense fallback={<SectionSkeleton />}>
-            <About />
-          </Suspense>
-          <Suspense fallback={<SectionSkeleton />}>
-            <Skills />
-          </Suspense>
-          <Suspense fallback={<SectionSkeleton />}>
-            <AIGallery />
-          </Suspense>
-          <Suspense fallback={<SectionSkeleton />}>
-            <Projects />
-          </Suspense>
-          <Suspense fallback={<SectionSkeleton />}>
-            <Contact />
-          </Suspense>
-        </SmoothScroll>
-      </main>
+      <SmoothScroll>
+        <Hero />
+        <Suspense fallback={<SectionSkeleton />}>
+          <About />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <Skills />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <AIGallery />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <Projects />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <Contact />
+        </Suspense>
+      </SmoothScroll>
     </div>
   );
 });

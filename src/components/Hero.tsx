@@ -161,7 +161,7 @@ Best regards,
   }, [effectiveMode]);
 
   return (
-    <section ref={sectionRef} id="home" className="relative z-10 min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent">
+    <section ref={sectionRef} id="home" className="relative z-content min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent">
       {/* Background glow - transparent center so space layer stays visible */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
 
@@ -171,9 +171,9 @@ Best regards,
         <div className="gsap-hero-glow-2 absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-primary/8 to-transparent rounded-full blur-3xl opacity-30" />
       </div>
 
-      <div className="section-container flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 z-10">
+      <div className="section-container flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 z-content">
         {/* Left Side: Avatar and Socials */}
-        <div className="gsap-hero-left perspective z-10 flex flex-col items-center">
+        <div className="gsap-hero-left perspective z-content flex flex-col items-center">
           <AnimatedAvatar
             variant="hero"
             className="w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 lg:w-80 lg:h-[28rem]"
@@ -208,7 +208,7 @@ Best regards,
         </div>
 
         {/* Right Side: Text Content */}
-        <div className="gsap-hero-right z-10 text-center lg:text-left flex-1">
+        <div className="gsap-hero-right z-content text-center lg:text-left flex-1">
           <h2 className="gsap-hero-fade-in text-xl md:text-2xl mb-4 text-primary font-medium tracking-widest">
             HELLO, I'M
           </h2>
@@ -233,7 +233,7 @@ Best regards,
               className="px-8 py-3 bg-primary hover:bg-primary/90 rounded-full font-bold text-primary-foreground shadow-lg transition-all group overflow-hidden relative active:scale-95 duration-200"
               onClick={handleHireMe}
             >
-              <span className="relative z-10 flex items-center justify-center gap-2">
+              <span className="relative z-content flex items-center justify-center gap-2">
                 <Mail size={18} />
                 Hire Me Now
                 <ArrowRight size={16} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />

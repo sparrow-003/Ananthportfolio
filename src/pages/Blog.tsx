@@ -103,7 +103,7 @@ const Blog = memo(() => {
           </Helmet>
         </>
       )}
-      <main className="pt-24 pb-12 relative z-10 min-h-[80vh]">
+      <main className="pt-24 pb-12 relative z-content min-h-[80vh]">
         <AnimatePresence mode="wait">
           {isLoading ? (
             <motion.div

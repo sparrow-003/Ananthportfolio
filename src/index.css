@@ -79,6 +79,19 @@
     --glow-primary: 0 0 24px hsla(199, 100%, 40%, 0.10);
     --glow-secondary: 0 0 40px hsla(199, 100%, 40%, 0.06);
     --glow-accent: 0 0 32px hsla(36, 100%, 57%, 0.10);
+
+    /* Z-index scale (mirrors tailwind.config.ts zIndex theme) */
+    --z-behind: -1;
+    --z-base: 0;
+    --z-decor: 1;
+    --z-content: 10;
+    --z-elevated: 20;
+    --z-nav: 40;
+    --z-floating: 60;
+    --z-modal-bg: 90;
+    --z-modal: 100;
+    --z-toast: 110;
+    --z-critical: 120;
   }
 
   /* =============================================================

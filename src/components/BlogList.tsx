@@ -147,7 +147,7 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
           <span className="text-primary font-bold uppercase tracking-[0.4em] text-xs glow-text">The Journal</span>
           <span className="h-[1px] w-12 bg-gradient-to-l from-transparent to-primary/50" />
         </div>
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 sm:mb-8 text-foreground tracking-tighter uppercase relative z-10">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 sm:mb-8 text-foreground tracking-tighter uppercase relative z-content">
           <span className="bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">Blog</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-light tracking-wide px-4">

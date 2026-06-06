@@ -245,7 +245,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
           {/* Header */}
-          <header className="mb-12 relative z-10 border-b border-border pb-8">
+          <header className="mb-12 relative z-content border-b border-border pb-8">
             <div className="flex flex-wrap items-center gap-4 mb-6">
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
@@ -304,7 +304,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
           {/* Featured Image */}
           {post.featured_image && (
             <div className="relative aspect-video w-full overflow-hidden rounded-xl mb-12 group">
-              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent z-content" />
               <img
                 src={post.featured_image}
                 alt={post.title}

@@ -103,7 +103,7 @@ const About = memo(() => {
       <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full bg-primary/10 blur-3xl -z-10" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl -z-10" />
 
-      <div className="section-container relative z-10">
+      <div className="section-container relative z-content">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="gsap-about-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-5">
@@ -144,7 +144,7 @@ const About = memo(() => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
-                className="absolute -top-1 -right-1 sm:top-2 sm:right-2 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-primary/30 shadow-lg flex items-center gap-1.5 z-10"
+                className="absolute -top-1 -right-1 sm:top-2 sm:right-2 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-primary/30 shadow-lg flex items-center gap-1.5 z-content"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
@@ -160,7 +160,7 @@ const About = memo(() => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 1.1, type: 'spring', stiffness: 200 }}
-                className="absolute -bottom-1 -left-1 sm:bottom-2 sm:left-2 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-accent/30 shadow-lg flex items-center gap-1.5 z-10"
+                className="absolute -bottom-1 -left-1 sm:bottom-2 sm:left-2 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-accent/30 shadow-lg flex items-center gap-1.5 z-content"
               >
                 <Coffee className="w-3.5 h-3.5 text-accent" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-foreground">
@@ -220,7 +220,7 @@ const About = memo(() => {
           {/* My Journey */}
           <div className="gsap-about-card relative overflow-hidden rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 md:p-8 shadow-xl">
             <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -z-0 pointer-events-none" />
-            <div className="relative z-10">
+            <div className="relative z-content">
               <div className="flex items-center gap-3 mb-5">
                 <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
                   <Target className="w-5 h-5" />
@@ -252,7 +252,7 @@ const About = memo(() => {
           {/* What I Do */}
           <div className="gsap-about-card relative overflow-hidden rounded-2xl border border-border bg-card/70 backdrop-blur-xl p-6 md:p-8 shadow-xl">
             <div className="absolute top-0 left-0 w-40 h-40 bg-accent/5 rounded-full blur-3xl -z-0 pointer-events-none" />
-            <div className="relative z-10">
+            <div className="relative z-content">
               <div className="flex items-center gap-3 mb-5">
                 <div className="p-2.5 rounded-xl bg-accent/10 text-accent">
                   <Sparkles className="w-5 h-5" />

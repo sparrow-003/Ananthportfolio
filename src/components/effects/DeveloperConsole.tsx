@@ -94,7 +94,7 @@ export default function DeveloperConsole() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent
         side="right"
-        className="w-full sm:max-w-2xl bg-black/95 border-l border-primary/20 backdrop-blur-2xl text-foreground flex flex-col p-6 h-full shadow-[0_0_50px_rgba(var(--primary-rgb),0.15)] z-[110]"
+        className="w-full sm:max-w-2xl bg-black/95 border-l border-primary/20 backdrop-blur-2xl text-foreground flex flex-col p-6 h-full shadow-[0_0_50px_rgba(var(--primary-rgb),0.15)]"
       >
         <SheetHeader className="border-b border-primary/10 pb-4">
           <div className="flex items-center gap-3">

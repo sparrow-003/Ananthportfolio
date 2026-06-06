@@ -64,11 +64,11 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
     <>
       <div
         id="scroll-progress-bar"
-        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[100] origin-left scale-x-0 will-change-transform"
+        className="fixed top-0 left-0 right-0 h-1 bg-primary z-floating origin-left scale-x-0 will-change-transform pointer-events-none"
       />
 
       {mounted && (
-        <div className="fixed top-1/2 right-4 lg:right-8 transform -translate-y-1/2 z-50 hidden md:flex flex-col gap-3">
+        <div className="fixed top-1/2 right-4 lg:right-8 transform -translate-y-1/2 z-nav hidden md:flex flex-col gap-3">
           {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
             <a
               key={section}

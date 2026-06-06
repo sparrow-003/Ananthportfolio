@@ -133,14 +133,14 @@ const AdminPanel = () => {
     <>
       <AnimatePresence>
         {showMatrix && (
-          <div className="relative z-[100]">
-            <MatrixLoader 
-              duration={matrixDuration} 
-              onComplete={handleMatrixComplete} 
+          <div className="relative z-critical">
+            <MatrixLoader
+              duration={matrixDuration}
+              onComplete={handleMatrixComplete}
             />
-            <button 
+            <button
               onClick={() => setShowMatrix(false)}
-              className="fixed bottom-8 right-8 z-[110] px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-full text-emerald-500 text-xs font-mono tracking-widest uppercase transition-all"
+              className="fixed bottom-8 right-8 z-toast px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-full text-emerald-500 text-xs font-mono tracking-widest uppercase transition-all"
             >
               Skip Initialization
             </button>

@@ -90,7 +90,7 @@ type NavItem = {
           stiffness: 100,
           damping: 15
         }}
-       className={`fixed top-0 left-0 right-0 w-full z-40 px-4 sm:px-6 transition-all duration-500 ${isScrolled ? 'glass-nav py-3 backdrop-blur-xl shadow-xl shadow-primary/10 bg-background/80' : 'py-4 bg-background/20 backdrop-blur-sm'
+       className={`fixed top-0 left-0 right-0 w-full z-nav px-4 sm:px-6 transition-all duration-500 ${isScrolled ? 'glass-nav py-3 backdrop-blur-xl shadow-xl shadow-primary/10 bg-background/80' : 'py-4 bg-background/20 backdrop-blur-sm'
           }`}
         style={{
          borderBottom: isScrolled ? '1px solid hsl(var(--primary) / 0.1)' : '1px solid transparent',
@@ -100,7 +100,7 @@ type NavItem = {
           {/* Brand / Logo */}
           <a
             href="#home"
-           className="text-xl font-bold tracking-tighter text-foreground hover:text-primary transition-colors z-50 relative"
+           className="text-xl font-bold tracking-tighter text-foreground hover:text-primary transition-colors z-elevated relative"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('#home');
@@ -191,7 +191,7 @@ type NavItem = {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-14 sm:top-16 left-0 right-0 z-[45] glass-nav py-4 md:hidden bg-background/95 backdrop-blur-xl"
+            className="fixed top-14 sm:top-16 left-0 right-0 z-nav glass-nav py-4 md:hidden bg-background/95 backdrop-blur-xl"
           >
             <div className="flex flex-col items-center space-y-4 px-6">
               {navItems.map((item) => (
@@ -224,7 +224,7 @@ type NavItem = {
 
       {/* Scroll Indicator - Small arrow bouncing at bottom of viewport */}
       <motion.div
-        className="hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-30"
+        className="hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-elevated"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{

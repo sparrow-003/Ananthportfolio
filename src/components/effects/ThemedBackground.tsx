@@ -12,7 +12,7 @@ const ThemedBackground = memo(() => {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-0 transition-colors duration-500"
+      className="fixed inset-0 pointer-events-none z-base transition-colors duration-500"
       style={{
         background: isDark
           ? 'linear-gradient(160deg, hsl(240 20% 4%) 0%, hsl(199 50% 7%) 50%, hsl(240 20% 4%) 100%)'

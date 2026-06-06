@@ -148,7 +148,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
   // Show editor
   if (showEditor) {
     return (
-      <div className="fixed inset-0 z-50 bg-background">
+      <div className="fixed inset-0 z-modal bg-background">
         <Suspense fallback={
           <div className="flex items-center justify-center h-screen bg-background gap-4">
             <AdminTableSkeleton />
@@ -169,7 +169,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
   // Show CLI terminal
   if (activeView === 'cli') {
     return (
-      <div className="fixed inset-0 z-50 bg-black">
+      <div className="fixed inset-0 z-modal bg-black">
         <Suspense fallback={
           <div className="flex items-center justify-center h-screen bg-black text-green-500 font-mono">
             &gt; SYSTEM LOADING...
@@ -209,7 +209,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
 
         <main className="relative flex-1 overflow-y-auto p-4 md:p-8">
           {/* Background */}
-          <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 -z-20" />
+          <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 z-behind" />
 
           <div className="max-w-7xl mx-auto space-y-8">
             {/* Header Section */}

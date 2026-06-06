@@ -251,7 +251,7 @@ const Skills = memo(() => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-primary/10 rounded-full animate-reverse-pulse opacity-20" />
       </div>
 
-      <div className="section-container relative z-10">
+      <div className="section-container relative z-content">
         <h2 className="gsap-skills-header section-title text-3xl md:text-5xl text-center text-gradient">
           Technical Expertise
         </h2>
@@ -293,9 +293,9 @@ const Skills = memo(() => {
         </div>
 
         <div className="gsap-skills-footer mt-16 bg-card/60 backdrop-blur-md rounded-2xl p-8 text-center relative overflow-hidden border border-primary/10 shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 z-base" />
 
-          <div className="relative z-10">
+          <div className="relative z-content">
             <h3 className="text-2xl font-bold mb-4 text-foreground">Always Learning & Growing</h3>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               As a passionate technologist, I'm constantly expanding my skillset through continuous learning,

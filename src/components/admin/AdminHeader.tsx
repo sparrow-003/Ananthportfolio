@@ -22,7 +22,7 @@ interface AdminHeaderProps {
 
 export const AdminHeader = ({ toggleSidebar, isSidebarCollapsed, searchQuery = '', onSearchChange }: AdminHeaderProps) => {
   return (
-    <header className="h-16 bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-30 flex items-center justify-between px-6 transition-all duration-300">
+    <header className="h-16 bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-elevated flex items-center justify-between px-6 transition-all duration-300">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-muted-foreground hover:text-foreground">
           <Menu className="w-5 h-5" />

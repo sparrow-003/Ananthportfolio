@@ -23,6 +23,19 @@ export default {
 			},
 		},
 		extend: {
+			zIndex: {
+				behind: "-1",
+				base: "0",
+				decor: "1",
+				content: "10",
+				elevated: "20",
+				nav: "40",
+				floating: "60",
+				"modal-bg": "90",
+				modal: "100",
+				toast: "110",
+				critical: "120",
+			},
 			fontFamily: {
 				// Socia HRM font stacks
 				sans: ['"DM Sans"', "system-ui", "-apple-system", "sans-serif"],

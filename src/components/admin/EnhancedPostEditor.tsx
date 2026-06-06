@@ -439,7 +439,7 @@ export const PostEditor = ({ post, onSave, onClose, onDelete }: PostEditorProps)
 
   // Enhanced toolbar with more options
   const EnhancedToolbar = () => (
-    <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm py-2 border-b border-border">
+    <div className="sticky top-0 z-elevated bg-background/95 backdrop-blur-sm py-2 border-b border-border">
       <div className="flex items-center justify-between">
         <div className="flex flex-wrap gap-1">
           <TooltipProvider>
@@ -882,13 +882,12 @@ export const PostEditor = ({ post, onSave, onClose, onDelete }: PostEditorProps)
 
   return (
     <div className={cn(
-      "fixed inset-0 z-50 bg-background flex flex-col animate-in slide-in-from-bottom-4 duration-300",
-      isFullscreen ? "z-[100]" : "",
-      focusMode ? "bg-background" : ""
+      "fixed inset-0 z-modal bg-background flex flex-col animate-in slide-in-from-bottom-4 duration-300",
+      focusMode && "bg-background"
     )}>
       {/* Enhanced Top Bar */}
           <div className={cn(
-            "h-16 border-b border-border bg-background/95 backdrop-blur flex items-center justify-between px-4 lg:px-6 sticky top-0 z-10",
+            "h-16 border-b border-border bg-background/95 backdrop-blur flex items-center justify-between px-4 lg:px-6 sticky top-0 z-content",
             focusMode && "opacity-50 hover:opacity-100 transition-opacity"
           )}>
         <div className="flex items-center gap-4">

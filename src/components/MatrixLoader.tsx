@@ -84,12 +84,12 @@ const MatrixLoader = memo(({ onComplete, duration = 500 }: { onComplete?: () => 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
             transition={{ duration: 0.8, ease: 'easeInOut' }}
-            className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-critical bg-black flex items-center justify-center overflow-hidden"
         >
             <canvas ref={canvasRef} className="absolute inset-0 opacity-60" />
 
             {/* Central Genesis Logo/Text */}
-            <div className="relative z-10 flex flex-col items-center gap-6">
+            <div className="relative z-content flex flex-col items-center gap-6">
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}

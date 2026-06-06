@@ -150,7 +150,7 @@ Sent from: ananth-3d-genesis-folio portfolio
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary/10 blur-3xl -z-10" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-accent/10 blur-3xl -z-10" />
 
-      <div className="section-container relative z-10">
+      <div className="section-container relative z-content">
         {/* Title with Avatar */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16 mb-12">
           <div className="flex-shrink-0 gsap-contact-header">
@@ -216,7 +216,7 @@ Sent from: ananth-3d-genesis-folio portfolio
           {/* Contact Form */}
           <div className="gsap-contact-form lg:col-span-3 relative overflow-hidden rounded-2xl border border-border bg-card/85 backdrop-blur-xl shadow-xl p-6 md:p-8">
             <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-2xl -z-0 pointer-events-none" />
-            <div className="relative z-10">
+            <div className="relative z-content">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-bold text-foreground">Send a message</h3>
                 <span className="text-[10px] uppercase tracking-widest text-muted-foreground">

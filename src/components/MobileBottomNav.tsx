@@ -68,7 +68,7 @@ const MobileBottomNav = memo(() => {
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.4, type: 'spring', stiffness: 200, damping: 25 }}
-      className="fixed bottom-0 left-0 right-0 z-[50] md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-nav md:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label="Mobile navigation"
     >
@@ -96,8 +96,8 @@ const MobileBottomNav = memo(() => {
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
                   )}
-                  <Icon size={20} className="relative z-10" />
-                  <span className="text-[10px] font-medium relative z-10">{item.label}</span>
+                  <Icon size={20} className="relative z-content" />
+                  <span className="text-[10px] font-medium relative z-content">{item.label}</span>
                 </button>
               </li>
             );

@@ -73,7 +73,7 @@ export const AdminSidebar = ({ activeView, setActiveView, onLogout, isCollapsed,
   return (
     <motion.div 
       animate={{ width: isCollapsed ? 80 : 280 }}
-      className="h-screen bg-card/50 backdrop-blur-xl border-r border-border fixed left-0 top-0 z-40 flex flex-col transition-all duration-300 shadow-xl"
+      className="h-screen bg-card/50 backdrop-blur-xl border-r border-border fixed left-0 top-0 z-nav flex flex-col transition-all duration-300 shadow-xl"
     >
       {/* Logo Area */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-border/50">

@@ -132,7 +132,7 @@ const BlogCard = memo(({ post, onClick, featured = false }: BlogCardProps) => {
           
           {/* Category Badge over Image */}
           {post.tags && post.tags.length > 0 && (
-            <div className="absolute top-4 left-4 z-10">
+            <div className="absolute top-4 left-4 z-content">
               <Badge className="bg-background/80 hover:bg-background text-foreground backdrop-blur-md border border-border px-3 py-1 shadow-sm uppercase tracking-wider text-[10px]">
                 {post.tags[0]}
               </Badge>
@@ -142,7 +142,7 @@ const BlogCard = memo(({ post, onClick, featured = false }: BlogCardProps) => {
 
         {/* Content Section */}
         <div className={cn(
-          "relative flex flex-col p-6 z-10",
+          "relative flex flex-col p-6 z-content",
           featured ? "justify-center md:p-10 lg:p-14 bg-card/80 backdrop-blur-sm" : "flex-1"
         )}>
           {/* Meta Header */}
