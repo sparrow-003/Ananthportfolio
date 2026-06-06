@@ -75,6 +75,34 @@ const Blog = memo(() => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
+      {!slug && (
+        <>
+          <Seo
+            title="Blog | ANANTH.DEV — AI, Web Development & Engineering Insights"
+            description="Articles by Ananth N on AI engineering, full-stack web development, Python, React, TypeScript, and prompt engineering. Tutorials, deep dives, and project notes."
+            path="/blog"
+            type="website"
+          />
+          <Helmet>
+            <script type="application/ld+json">{JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Blog",
+              "name": "ANANTH.DEV Blog",
+              "url": "https://ananthdev.lovable.app/blog",
+              "author": { "@type": "Person", "name": "Ananth N" },
+              "description": "Articles on AI, web development, and engineering by Ananth N."
+            })}</script>
+            <script type="application/ld+json">{JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ananthdev.lovable.app/" },
+                { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ananthdev.lovable.app/blog" }
+              ]
+            })}</script>
+          </Helmet>
+        </>
+      )}
       <main className="pt-24 pb-12 relative z-10 min-h-[80vh]">
         <AnimatePresence mode="wait">
           {isLoading ? (
