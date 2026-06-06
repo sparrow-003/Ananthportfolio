@@ -129,7 +129,7 @@ const About = memo(() => {
               {/* Floating badge top-right of photo */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
                 className="absolute -top-1 -right-1 sm:top-2 sm:right-2 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-primary/30 shadow-lg flex items-center gap-1.5 z-content"
               >
@@ -145,7 +145,7 @@ const About = memo(() => {
               {/* Floating badge bottom-left of photo */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.1, type: 'spring', stiffness: 200 }}
                 className="absolute -bottom-1 -left-1 sm:bottom-2 sm:left-2 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-accent/30 shadow-lg flex items-center gap-1.5 z-content"
               >

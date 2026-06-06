@@ -266,7 +266,7 @@ const AICard = forwardRef<HTMLElement, AICardProps>(function AICard(
 AICard.displayName = "AICard";
 
 const AIGallery = memo(() => {
-  const [ref, inView] = useReveal<HTMLDivElement>(0.05);
+  const [ref] = useReveal<HTMLDivElement>(0.05);
   const [filter, setFilter] = useState<Category>("All");
   const [active, setActive] = useState<number | null>(null);
   const [query, setQuery] = useState("");
@@ -309,7 +309,7 @@ const AIGallery = memo(() => {
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
