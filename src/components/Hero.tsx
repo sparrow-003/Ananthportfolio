@@ -118,7 +118,7 @@ Best regards,
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [effectiveMode]);
+  }, [effectiveMode, sectionRef]);
 
   return (
     <section
