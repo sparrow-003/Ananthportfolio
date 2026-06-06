@@ -1,10 +1,11 @@
 import AnimatedText from './AnimatedText';
 import AnimatedAvatar from './AnimatedAvatar';
-import { memo, useEffect, useState, useRef, useCallback } from 'react';
+import { memo, useEffect, useState, useCallback } from 'react';
 import { Mail, ArrowRight, Briefcase, MapPin, Code } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useAnimationPreference } from '@/contexts/AnimationContext';
+import { useReveal } from '@/hooks/useReveal';
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -28,7 +29,7 @@ const HR_PICKUP_LINES = [
 ] as const;
 
 const Hero = memo(() => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [sectionRef, inView] = useReveal<HTMLElement>(0, 0);
   const [currentPickupLine, setCurrentPickupLine] = useState<string>(HR_PICKUP_LINES[0]);
   const { effectiveMode } = useAnimationPreference();
 
@@ -63,55 +64,14 @@ Best regards,
     return () => clearInterval(interval);
   }, []);
 
-  // Setup cinematic entrance and scroll parallax utilizing GSAP
+  // Scroll parallax + looping background glows. Entrance reveal is handled
+  // by CSS (.is-revealed + .reveal-target) toggled via useReveal; using
+  // GSAP tl.from() here could leave elements stuck at opacity 0 after a
+  // context revert in React 18 strict mode.
   useEffect(() => {
     if (effectiveMode === 'off') return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.15 });
-
-      // Stagger entrance of left column elements
-      tl.from('.gsap-hero-left', {
-        opacity: 0,
-        scale: 0.8,
-        duration: effectiveMode === 'reduced' ? 0.55 : 0.85,
-        ease: 'power4.out'
-      });
-
-      tl.from('.gsap-hero-social', {
-        opacity: 0,
-        y: 20,
-        stagger: 0.1,
-        duration: effectiveMode === 'reduced' ? 0.35 : 0.55,
-        ease: 'back.out(1.5)'
-      }, '-=0.8');
-
-      // Stagger entrance of right content elements
-      tl.from('.gsap-hero-fade-in', {
-        opacity: 0,
-        y: 35,
-        stagger: 0.12,
-        duration: effectiveMode === 'reduced' ? 0.4 : 0.6,
-        ease: 'power3.out'
-      }, '-=0.9');
-
-      // Stagger info cards
-      tl.from('.gsap-hero-info-card', {
-        opacity: 0,
-        scale: 0.95,
-        y: 25,
-        stagger: 0.1,
-        duration: effectiveMode === 'reduced' ? 0.35 : 0.5,
-        ease: 'back.out(1.2)'
-      }, '-=0.5');
-
-      // Floating indicator fade-in
-      tl.from('.gsap-hero-indicator', {
-        opacity: 0,
-        y: 20,
-        duration: 0.8
-      }, '-=0.2');
-
       // Parallax scroll for Avatar
       if (effectiveMode === 'full') {
         gsap.to('.gsap-hero-left', {
@@ -161,7 +121,11 @@ Best regards,
   }, [effectiveMode]);
 
   return (
-    <section ref={sectionRef} id="home" className="relative z-content min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent">
+    <section
+      ref={sectionRef}
+      id="home"
+      className={`relative z-content min-h-screen flex items-center justify-center pt-20 sm:pt-24 w-full overflow-hidden bg-transparent ${inView ? 'is-revealed' : ''}`}
+    >
       {/* Background glow - transparent center so space layer stays visible */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
 
@@ -173,7 +137,7 @@ Best regards,
 
       <div className="section-container flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 z-content">
         {/* Left Side: Avatar and Socials */}
-        <div className="gsap-hero-left perspective z-content flex flex-col items-center">
+        <div className="reveal-target gsap-hero-left perspective z-content flex flex-col items-center" style={{ transitionDelay: '0ms' }}>
           <AnimatedAvatar
             variant="hero"
             className="w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 lg:w-80 lg:h-[28rem]"
@@ -196,8 +160,9 @@ Best regards,
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="gsap-hero-social w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 hover:border-primary/50 transition-all text-primary hover:scale-110 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)] duration-300"
+                className="reveal-target gsap-hero-social w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 hover:border-primary/50 transition-all text-primary hover:scale-110 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)] duration-300"
                 aria-label={social.label}
+                style={{ transitionDelay: `${320 + idx * 60}ms` }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d={social.icon} />
@@ -208,27 +173,27 @@ Best regards,
         </div>
 
         {/* Right Side: Text Content */}
-        <div className="gsap-hero-right z-content text-center lg:text-left flex-1">
-          <h2 className="gsap-hero-fade-in text-xl md:text-2xl mb-4 text-primary font-medium tracking-widest">
+        <div className="reveal-target gsap-hero-right z-content text-center lg:text-left flex-1" style={{ transitionDelay: '80ms' }}>
+          <h2 className="reveal-target gsap-hero-fade-in text-xl md:text-2xl mb-4 text-primary font-medium tracking-widest" style={{ transitionDelay: '180ms' }}>
             HELLO, I'M
           </h2>
-          <h1 className="gsap-hero-fade-in text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 cinematic-text">
+          <h1 className="reveal-target gsap-hero-fade-in text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 cinematic-text" style={{ transitionDelay: '240ms' }}>
             <span className="text-gradient">ANANTH.N</span>
           </h1>
-          <div className="gsap-hero-fade-in text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 sm:mb-8 min-h-12 sm:min-h-16 text-foreground">
+          <div className="reveal-target gsap-hero-fade-in text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 sm:mb-8 min-h-12 sm:min-h-16 text-foreground" style={{ transitionDelay: '300ms' }}>
             I'm a <AnimatedText texts={[...ROLES]} className="text-primary" interval={2500} />
           </div>
-          <p className="gsap-hero-fade-in text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto lg:mx-0 mb-6 text-muted-foreground leading-relaxed font-light">
+          <p className="reveal-target gsap-hero-fade-in text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto lg:mx-0 mb-6 text-muted-foreground leading-relaxed font-light" style={{ transitionDelay: '360ms' }}>
             A dreamer who codes worlds beyond the ordinary, crafting futures where AI and imagination collide. Guiding 150+ minds to awaken their hidden genius, a voice of leadership turning sparks into fire.
           </p>
 
           {/* Cinematic HR pickup line */}
-          <div className="gsap-hero-fade-in glass-card p-4 mb-12 relative overflow-hidden inline-block">
+          <div className="reveal-target gsap-hero-fade-in glass-card p-4 mb-12 relative overflow-hidden inline-block" style={{ transitionDelay: '420ms' }}>
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/10" />
             <p className="text-primary/80 italic font-medium tracking-wide">"{currentPickupLine}"</p>
           </div>
 
-          <div className="gsap-hero-fade-in flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+          <div className="reveal-target gsap-hero-fade-in flex flex-col sm:flex-row justify-center lg:justify-start gap-4" style={{ transitionDelay: '480ms' }}>
             <button
               className="px-8 py-3 bg-primary hover:bg-primary/90 rounded-full font-bold text-primary-foreground shadow-lg transition-all group overflow-hidden relative active:scale-95 duration-200"
               onClick={handleHireMe}
@@ -262,7 +227,8 @@ Best regards,
             ].map((card, i) => (
               <div
                 key={i}
-                className="gsap-hero-info-card bg-card/50 backdrop-blur-sm p-4 rounded-2xl border border-border flex items-center gap-3 hover:border-primary/30 transition-all hover:-translate-y-1 duration-300"
+                className="reveal-target gsap-hero-info-card bg-card/50 backdrop-blur-sm p-4 rounded-2xl border border-border flex items-center gap-3 hover:border-primary/30 transition-all hover:-translate-y-1 duration-300"
+                style={{ transitionDelay: `${560 + i * 60}ms` }}
               >
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                   <card.icon size={20} />
@@ -278,7 +244,7 @@ Best regards,
       </div>
 
       {/* Floating indicator */}
-      <div className="gsap-hero-indicator absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
+      <div className="reveal-target gsap-hero-indicator absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2" style={{ transitionDelay: '800ms' }}>
         <span className="text-[10px] text-muted-foreground uppercase tracking-[0.3em]">Examine Depth</span>
         <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent animate-pulse" />
       </div>
