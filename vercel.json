@@ -1,7 +1,14 @@
 {
   "rewrites": [
     {
-      "source": "/((?!assets/|sw\\.js|favicon\\.ico|manifest\\.webmanifest|robots\\.txt|humans\\.txt|resume\\.pdf|placeholder\\.svg|pwa-.*\\.png|apple-touch-icon\\.png|.*\\.).*)",
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/html.*"
+        }
+      ],
       "destination": "/index.html"
     }
   ]
