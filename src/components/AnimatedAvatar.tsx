@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { memo, useState, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import heroAvatar from '@/assets/ananth-portrait.webp';
 import contactAvatar from '@/assets/ananth-contact.webp';
 import avatarImage3 from '@/assets/avatar-art-3.webp';
@@ -36,7 +36,6 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     mouseX.set(0);
     mouseY.set(0);
   };
