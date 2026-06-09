@@ -1,10 +1,17 @@
 import { useRef, useEffect, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAnimationPreference } from '@/contexts/AnimationContext';
 
 const MatrixLoader = memo(({ onComplete, duration = 500 }: { onComplete?: () => void, duration?: number }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const { effectiveMode } = useAnimationPreference();
 
     useEffect(() => {
+        if (effectiveMode !== 'full') {
+            const timer = window.setTimeout(() => onComplete?.(), Math.min(duration, 600));
+            return () => window.clearTimeout(timer);
+        }
+
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -28,8 +35,15 @@ const MatrixLoader = memo(({ onComplete, duration = 500 }: { onComplete?: () => 
         const fontSize = 16;
         const columns = Math.ceil(canvas.width / fontSize);
         const drops: number[] = new Array(columns).fill(0).map(() => Math.random() * -100);
+        let lastFrame = 0;
+        const frameInterval = 1000 / 24;
 
-        const draw = () => {
+        const draw = (timestamp = 0) => {
+            if (timestamp - lastFrame < frameInterval) {
+                animationFrameId = requestAnimationFrame(draw);
+                return;
+            }
+            lastFrame = timestamp;
             // Semi-transparent black to create trailing effect
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -76,7 +90,7 @@ const MatrixLoader = memo(({ onComplete, duration = 500 }: { onComplete?: () => 
             cancelAnimationFrame(animationFrameId);
             clearTimeout(timer);
         };
-    }, [onComplete, duration]);
+    }, [duration, effectiveMode, onComplete]);
 
     return (
         <motion.div
@@ -86,7 +100,7 @@ const MatrixLoader = memo(({ onComplete, duration = 500 }: { onComplete?: () => 
             transition={{ duration: 0.8, ease: 'easeInOut' }}
             className="fixed inset-0 z-critical bg-black flex items-center justify-center overflow-hidden"
         >
-            <canvas ref={canvasRef} className="absolute inset-0 opacity-60" />
+            {effectiveMode === 'full' ? <canvas ref={canvasRef} className="absolute inset-0 opacity-60" /> : null}
 
             {/* Central Genesis Logo/Text */}
             <div className="relative z-content flex flex-col items-center gap-6">
