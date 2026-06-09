@@ -13,15 +13,7 @@ import {
   Layers,
   Tag,
 } from "lucide-react";
-import {
-  SiPython,
-  SiOpenai,
-  SiLangchain,
-  SiHuggingface,
-  SiTypescript,
-  SiReact,
-  SiNodedotjs,
-} from "react-icons/si";
+import { TechGlyph } from "./TechGlyph";
 
 type Category = "All" | "Beginner" | "Intermediate" | "NLP";
 
@@ -126,17 +118,17 @@ const CATEGORIES: { id: Category; label: string; icon: React.ReactNode }[] = [
 ];
 
 const techLogo: Record<string, React.ReactNode> = {
-  Python: <SiPython className="w-3.5 h-3.5" style={{ color: "#3776AB" }} />,
-  Transformers: <SiHuggingface className="w-3.5 h-3.5" style={{ color: "#FFD21E" }} />,
-  HuggingFace: <SiHuggingface className="w-3.5 h-3.5" style={{ color: "#FFD21E" }} />,
-  LangChain: <SiLangchain className="w-3.5 h-3.5" style={{ color: "#1C3C3C" }} />,
-  React: <SiReact className="w-3.5 h-3.5" style={{ color: "#61DAFB" }} />,
-  TypeScript: <SiTypescript className="w-3.5 h-3.5" style={{ color: "#3178C6" }} />,
-  LLM: <SiOpenai className="w-3.5 h-3.5" />,
-  OpenAI: <SiOpenai className="w-3.5 h-3.5" />,
-  "Node.js": <SiNodedotjs className="w-3.5 h-3.5" style={{ color: "#339933" }} />,
-  Embeddings: <SiOpenai className="w-3.5 h-3.5" />,
-  "Vector DB": <SiHuggingface className="w-3.5 h-3.5" style={{ color: "#FFD21E" }} />,
+  Python: <TechGlyph name="Python" className="w-3.5 h-3.5 text-primary" />,
+  Transformers: <TechGlyph name="Transformers" className="w-3.5 h-3.5 text-accent" />,
+  HuggingFace: <TechGlyph name="HuggingFace" className="w-3.5 h-3.5 text-accent" />,
+  LangChain: <TechGlyph name="LangChain" className="w-3.5 h-3.5 text-primary" />,
+  React: <TechGlyph name="React" className="w-3.5 h-3.5 text-primary" />,
+  TypeScript: <TechGlyph name="TypeScript" className="w-3.5 h-3.5 text-primary" />,
+  LLM: <TechGlyph name="LLM" className="w-3.5 h-3.5 text-foreground" />,
+  OpenAI: <TechGlyph name="OpenAI" className="w-3.5 h-3.5 text-foreground" />,
+  "Node.js": <TechGlyph name="Node.js" className="w-3.5 h-3.5 text-primary" />,
+  Embeddings: <TechGlyph name="Embeddings" className="w-3.5 h-3.5 text-foreground" />,
+  "Vector DB": <TechGlyph name="Vector DB" className="w-3.5 h-3.5 text-primary" />,
 };
 
 type AICardProps = {
