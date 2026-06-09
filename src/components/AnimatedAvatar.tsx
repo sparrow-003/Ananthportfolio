@@ -12,7 +12,6 @@ interface AnimatedAvatarProps {
 }
 
 const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: AnimatedAvatarProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { effectiveMode } = useAnimationPreference();
 
@@ -74,7 +73,6 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
       ref={containerRef}
       className={`relative ${className}`}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => effectiveMode === 'full' && setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       style={{ perspective: "1000px" }}
     >
