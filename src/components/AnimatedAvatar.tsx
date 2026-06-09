@@ -1,8 +1,9 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { memo, useState, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import heroAvatar from '@/assets/ananth-portrait.webp';
 import contactAvatar from '@/assets/ananth-contact.webp';
 import avatarImage3 from '@/assets/avatar-art-3.webp';
+import { useAnimationPreference } from '@/contexts/AnimationContext';
 
 interface AnimatedAvatarProps {
   variant: 'hero' | 'about' | 'contact';
@@ -11,8 +12,8 @@ interface AnimatedAvatarProps {
 }
 
 const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: AnimatedAvatarProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { effectiveMode } = useAnimationPreference();
 
   // Magnetic Effect Values
   const mouseX = useMotionValue(0);
@@ -25,6 +26,7 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
   const translateY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-10, 10]), springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (effectiveMode !== 'full') return;
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -34,7 +36,6 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     mouseX.set(0);
     mouseY.set(0);
   };
@@ -71,21 +72,20 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
       ref={containerRef}
       className={`relative ${className}`}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       style={{ perspective: "1000px" }}
     >
       <motion.div
         style={{
-          rotateX,
-          rotateY,
-          x: translateX,
-          y: translateY,
+          rotateX: effectiveMode === 'full' ? rotateX : 0,
+          rotateY: effectiveMode === 'full' ? rotateY : 0,
+          x: effectiveMode === 'full' ? translateX : 0,
+          y: effectiveMode === 'full' ? translateY : 0,
           transformStyle: "preserve-3d",
         }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-        transition={{ duration: variant === 'hero' ? 0.7 : 0.45, ease: [0.23, 1, 0.32, 1] }}
+        transition={{ duration: effectiveMode === 'off' ? 0.01 : variant === 'hero' ? 0.45 : 0.3, ease: [0.23, 1, 0.32, 1] }}
         className="w-full h-full"
       >
         <img

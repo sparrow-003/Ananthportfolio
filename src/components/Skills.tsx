@@ -1,46 +1,8 @@
 import { memo } from 'react';
 import { BrainCircuit, Globe, Layers, Cpu, PencilRuler, CheckCircle } from 'lucide-react';
-import {
-  SiPython,
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiNodedotjs,
-  SiNextdotjs,
-  SiHtml5,
-  SiTailwindcss,
-  SiOpenai,
-  SiLangchain,
-  SiHuggingface,
-  SiSupabase,
-  SiMongodb,
-  SiMysql,
-  SiDocker,
-  SiGithubactions,
-  SiExpress,
-  SiDjango,
-  SiFlask,
-  SiFigma,
-  SiGooglecolab,
-  SiTensorflow,
-  SiPandas,
-  SiNumpy,
-  SiScikitlearn,
-  SiFastapi,
-  SiGraphql,
-  SiPostgresql,
-  SiRedis,
-  SiVercel,
-  SiGit,
-  SiLinux,
-  SiVscodium,
-  SiPostman,
-  SiVite,
-  SiSocketdotio,
-  SiBlender,
-} from 'react-icons/si';
 import { Workflow, Sparkles, Rocket, MessageSquareQuote, Brain, Network, Plug, Search, Award, Crown, MessageCircle, Wrench, HeartHandshake, Microscope, BookOpen, PenTool, Telescope, Code2, Palette, Paintbrush, Database } from 'lucide-react';
 import { useReveal } from '@/hooks/useReveal';
+import { TechGlyph } from './TechGlyph';
 
 const Skills = memo(() => {
   const [sectionRef, inView] = useReveal<HTMLDivElement>(0.08, 500);
@@ -60,21 +22,21 @@ const Skills = memo(() => {
       title: "Programming Languages",
       icon: <Code2 className="text-primary" size={28} />,
       skills: [
-        { name: "Python", icon: <SiPython className="w-6 h-6 lg:w-7 lg:h-7 text-[#3776AB]" /> },
-        { name: "JavaScript", icon: <SiJavascript className="w-6 h-6 lg:w-7 lg:h-7 text-[#F7DF1E]" /> },
-        { name: "TypeScript", icon: <SiTypescript className="w-6 h-6 lg:w-7 lg:h-7 text-[#3178C6]" /> },
+        { name: "Python", icon: <TechGlyph name="Python" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "JavaScript", icon: <TechGlyph name="JavaScript" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "TypeScript", icon: <TechGlyph name="TypeScript" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
       ]
     },
     {
       title: "Web Development",
       icon: <Globe className="text-primary" size={28} />,
       skills: [
-        { name: "React", icon: <SiReact className="w-6 h-6 lg:w-7 lg:h-7 text-[#61DAFB]" /> },
-        { name: "Node.js", icon: <SiNodedotjs className="w-6 h-6 lg:w-7 lg:h-7 text-[#339933]" /> },
-        { name: "Next.js", icon: <SiNextdotjs className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "HTML5", icon: <SiHtml5 className="w-6 h-6 lg:w-7 lg:h-7 text-[#E34F26]" /> },
+        { name: "React", icon: <TechGlyph name="React" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Node.js", icon: <TechGlyph name="Node.js" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Next.js", icon: <TechGlyph name="Next.js" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "HTML5", icon: <TechGlyph name="HTML5" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
         { name: "CSS3", icon: <Palette className="w-6 h-6 lg:w-7 lg:h-7 text-[#1572B6]" /> },
-        { name: "TailwindCSS", icon: <SiTailwindcss className="w-6 h-6 lg:w-7 lg:h-7 text-[#06B6D4]" /> },
+        { name: "TailwindCSS", icon: <TechGlyph name="TailwindCSS" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
       ]
     },
     {
@@ -82,10 +44,10 @@ const Skills = memo(() => {
       icon: <Brain className="text-primary" size={28} />,
       skills: [
         { name: "Prompt Engineering", icon: <MessageSquareQuote className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "OpenAI / LLMs", icon: <SiOpenai className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "LangChain", icon: <SiLangchain className="w-6 h-6 lg:w-7 lg:h-7 text-[#1C3C3C]" /> },
-        { name: "Hugging Face", icon: <SiHuggingface className="w-6 h-6 lg:w-7 lg:h-7 text-[#FFD21E]" /> },
-        { name: "TensorFlow", icon: <SiTensorflow className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF6F00]" /> },
+        { name: "OpenAI / LLMs", icon: <TechGlyph name="OpenAI" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "LangChain", icon: <TechGlyph name="LangChain" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Hugging Face", icon: <TechGlyph name="Hugging Face" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "TensorFlow", icon: <TechGlyph name="TensorFlow" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
         { name: "Neural Networks", icon: <Network className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
       ]
     },
@@ -93,64 +55,64 @@ const Skills = memo(() => {
       title: "Data Science",
       icon: <Microscope className="text-primary" size={28} />,
       skills: [
-        { name: "Pandas", icon: <SiPandas className="w-6 h-6 lg:w-7 lg:h-7 text-[#150458]" /> },
-        { name: "NumPy", icon: <SiNumpy className="w-6 h-6 lg:w-7 lg:h-7 text-[#013243]" /> },
-        { name: "scikit-learn", icon: <SiScikitlearn className="w-6 h-6 lg:w-7 lg:h-7 text-[#F7931E]" /> },
-        { name: "Jupyter / Colab", icon: <SiGooglecolab className="w-6 h-6 lg:w-7 lg:h-7 text-[#F9AB00]" /> },
+        { name: "Pandas", icon: <TechGlyph name="Pandas" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "NumPy", icon: <TechGlyph name="NumPy" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "scikit-learn", icon: <TechGlyph name="scikit-learn" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "Jupyter / Colab", icon: <TechGlyph name="Jupyter / Colab" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
       ]
     },
     {
       title: "Databases",
       icon: <Database className="text-primary" size={28} />,
       skills: [
-        { name: "MongoDB", icon: <SiMongodb className="w-6 h-6 lg:w-7 lg:h-7 text-[#47A248]" /> },
-        { name: "PostgreSQL", icon: <SiPostgresql className="w-6 h-6 lg:w-7 lg:h-7 text-[#4169E1]" /> },
-        { name: "MySQL", icon: <SiMysql className="w-6 h-6 lg:w-7 lg:h-7 text-[#4479A1]" /> },
-        { name: "Supabase", icon: <SiSupabase className="w-6 h-6 lg:w-7 lg:h-7 text-[#3ECF8E]" /> },
-        { name: "Redis", icon: <SiRedis className="w-6 h-6 lg:w-7 lg:h-7 text-[#DC382D]" /> },
+        { name: "MongoDB", icon: <TechGlyph name="MongoDB" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "PostgreSQL", icon: <TechGlyph name="PostgreSQL" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "MySQL", icon: <TechGlyph name="MySQL" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "Supabase", icon: <TechGlyph name="Supabase" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Redis", icon: <TechGlyph name="Redis" className="w-6 h-6 lg:w-7 lg:h-7 text-destructive" /> },
       ]
     },
     {
       title: "DevOps & Cloud",
       icon: <Layers className="text-primary" size={28} />,
       skills: [
-        { name: "Docker", icon: <SiDocker className="w-6 h-6 lg:w-7 lg:h-7 text-[#2496ED]" /> },
-        { name: "GitHub Actions", icon: <SiGithubactions className="w-6 h-6 lg:w-7 lg:h-7 text-[#2088FF]" /> },
-        { name: "Vercel", icon: <SiVercel className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "Git", icon: <SiGit className="w-6 h-6 lg:w-7 lg:h-7 text-[#F05032]" /> },
-        { name: "Linux", icon: <SiLinux className="w-6 h-6 lg:w-7 lg:h-7 text-[#FCC624]" /> },
+        { name: "Docker", icon: <TechGlyph name="Docker" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "GitHub Actions", icon: <TechGlyph name="GitHub Actions" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Vercel", icon: <TechGlyph name="Vercel" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "Git", icon: <TechGlyph name="Git" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "Linux", icon: <TechGlyph name="Linux" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
       ]
     },
     {
       title: "Frameworks & Libraries",
       icon: <Cpu className="text-primary" size={28} />,
       skills: [
-        { name: "Express", icon: <SiExpress className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "Django", icon: <SiDjango className="w-6 h-6 lg:w-7 lg:h-7 text-[#092E20]" /> },
-        { name: "Flask", icon: <SiFlask className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "FastAPI", icon: <SiFastapi className="w-6 h-6 lg:w-7 lg:h-7 text-[#009688]" /> },
-        { name: "Socket.io", icon: <SiSocketdotio className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "Express", icon: <TechGlyph name="Express" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "Django", icon: <TechGlyph name="Django" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Flask", icon: <TechGlyph name="Flask" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
+        { name: "FastAPI", icon: <TechGlyph name="FastAPI" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Socket.io", icon: <TechGlyph name="Socket.io" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
       ]
     },
     {
       title: "APIs & Tools",
       icon: <Wrench className="text-primary" size={28} />,
       skills: [
-        { name: "GraphQL", icon: <SiGraphql className="w-6 h-6 lg:w-7 lg:h-7 text-[#E10098]" /> },
+        { name: "GraphQL", icon: <TechGlyph name="GraphQL" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
         { name: "REST APIs", icon: <Plug className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "VS Code", icon: <SiVscodium className="w-6 h-6 lg:w-7 lg:h-7 text-[#0078D7]" /> },
-        { name: "Postman", icon: <SiPostman className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF6C37]" /> },
-        { name: "Vite", icon: <SiVite className="w-6 h-6 lg:w-7 lg:h-7 text-[#646CFF]" /> },
+        { name: "VS Code", icon: <TechGlyph name="VS Code" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Postman", icon: <TechGlyph name="Postman" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "Vite", icon: <TechGlyph name="Vite" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
       ]
     },
     {
       title: "Design & UI/UX",
       icon: <PencilRuler className="text-primary" size={28} />,
       skills: [
-        { name: "Figma", icon: <SiFigma className="w-6 h-6 lg:w-7 lg:h-7 text-[#F24E1E]" /> },
+        { name: "Figma", icon: <TechGlyph name="Figma" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
         { name: "UI/UX Research", icon: <Search className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
         { name: "Adobe Suite", icon: <Paintbrush className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF0000]" /> },
-        { name: "3D / Blender", icon: <SiBlender className="w-6 h-6 lg:w-7 lg:h-7 text-[#F5792A]" /> },
+        { name: "3D / Blender", icon: <TechGlyph name="3D / Blender" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
       ]
     },
     {

@@ -3,8 +3,6 @@
    Tokens mirror UIUX.md (Light + Dark mode)
    ============================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
-
 @import "./styles/theme.css";
 @import "./styles/animations-3d.css";
 
@@ -642,6 +640,10 @@ select:focus-visible {
    context revert.
    ============================================================= */
 .reveal-target {
+  opacity: 1;
+  transform: none;
+}
+.js-enhanced .reveal-target {
   opacity: 0;
   transform: translateY(20px);
   will-change: opacity, transform;
@@ -655,7 +657,7 @@ select:focus-visible {
 .reveal-stagger > .reveal-target:nth-child(7) { transition-delay: 360ms; }
 .reveal-stagger > .reveal-target:nth-child(8) { transition-delay: 420ms; }
 
-.is-revealed .reveal-target {
+.js-enhanced .is-revealed .reveal-target {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1033,7 +1035,7 @@ select:focus-visible {
 }
 
 /* Lazy images */
-img[loading="lazy"] { opacity: 0; transition: opacity 0.3s; }
+img[loading="lazy"] { opacity: 1; transition: opacity 0.3s; }
 img[loading="lazy"].loaded { opacity: 1; }
 
 /* Reduced motion */

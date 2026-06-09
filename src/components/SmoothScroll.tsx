@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef, useCallback, memo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAnimationPreference } from '@/contexts/AnimationContext';
 
 interface SmoothScrollProps {
   children: React.ReactNode;
@@ -7,8 +9,15 @@ interface SmoothScrollProps {
 const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
   const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { effectiveMode } = useAnimationPreference();
 
   const smoothScrollTo = useCallback((target: number) => {
+    if (effectiveMode === 'off') {
+      window.scrollTo(0, target);
+      return;
+    }
     const start = window.scrollY;
     const change = target - start;
     const duration = 520;
@@ -21,11 +30,11 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
       if (p < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  }, []);
+  }, [effectiveMode]);
 
   useEffect(() => {
     setMounted(true);
-    document.documentElement.style.scrollBehavior = 'smooth';
+    document.documentElement.style.scrollBehavior = effectiveMode === 'off' ? 'auto' : 'smooth';
 
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -33,11 +42,22 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
       if (!anchor) return;
       const id = anchor.getAttribute('href')?.slice(1);
       if (!id) return;
-      const el = document.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        smoothScrollTo(el.offsetTop - 80);
+      e.preventDefault();
+
+      const scrollAfterRoute = () => {
+        window.requestAnimationFrame(() => {
+          const el = document.getElementById(id);
+          if (el) smoothScrollTo(el.offsetTop - 80);
+        });
+      };
+
+      if (location.pathname !== '/') {
+        navigate(`/#${id}`);
+        window.setTimeout(scrollAfterRoute, 120);
+        return;
       }
+
+      scrollAfterRoute();
     };
 
     document.addEventListener('click', handleAnchorClick);
@@ -58,7 +78,19 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
       window.removeEventListener('scroll', updateProgress);
       document.documentElement.style.scrollBehavior = '';
     };
-  }, [smoothScrollTo]);
+  }, [effectiveMode, location.pathname, navigate, smoothScrollTo]);
+
+  useEffect(() => {
+    const hash = window.location.hash?.slice(1);
+    if (!hash || location.pathname !== '/') return;
+
+    const timer = window.setTimeout(() => {
+      const el = document.getElementById(hash);
+      if (el) smoothScrollTo(el.offsetTop - 80);
+    }, 120);
+
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, smoothScrollTo]);
 
   return (
     <>

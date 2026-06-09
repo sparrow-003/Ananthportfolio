@@ -4,6 +4,8 @@ import App from './App.tsx'
 import './index.css'
 import { initializeLogger } from './utils/logger'
 
+document.documentElement.classList.add('js-enhanced');
+
 // Initialize client-side ring-buffered logging telemetry
 initializeLogger();
 

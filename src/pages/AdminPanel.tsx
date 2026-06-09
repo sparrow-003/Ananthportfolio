@@ -5,12 +5,14 @@ import AdminLogin from '@/components/AdminLogin'
 import AdminDashboard from '@/components/AdminDashboard'
 import MatrixLoader from '@/components/MatrixLoader'
 import { AnimatePresence } from 'framer-motion'
+import { useAnimationPreference } from '@/contexts/AnimationContext'
 
 const AdminPanel = () => {
+  const { effectiveMode } = useAnimationPreference()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [showMatrix, setShowMatrix] = useState(false) // Start false, show only if needed
-  const [matrixDuration, setMatrixDuration] = useState(4000) // Default 4s instead of 10s
+  const [showMatrix, setShowMatrix] = useState(false)
+  const [matrixDuration, setMatrixDuration] = useState(1200)
   const lastUserIdRef = useRef<string | null>(null)
   const initialCheckDone = useRef(false)
 
@@ -44,7 +46,7 @@ const AdminPanel = () => {
         setLoading(false)
         // Show matrix only if not already checked and not authenticated
         if (!initialCheckDone.current) {
-          setShowMatrix(true)
+          setShowMatrix(effectiveMode === 'full')
           initialCheckDone.current = true
         }
         return
@@ -62,7 +64,7 @@ const AdminPanel = () => {
         setShowMatrix(false)
         initialCheckDone.current = true
       } else if (!initialCheckDone.current) {
-        setShowMatrix(true)
+        setShowMatrix(effectiveMode === 'full')
         initialCheckDone.current = true
       }
     }
@@ -75,7 +77,7 @@ const AdminPanel = () => {
         if (mounted) {
           setIsAuthenticated(false)
           setLoading(false)
-          setShowMatrix(true)
+          setShowMatrix(effectiveMode === 'full')
         }
       }
     }
@@ -89,13 +91,13 @@ const AdminPanel = () => {
         setIsAuthenticated(false)
         setLoading(false)
         lastUserIdRef.current = null
-        setShowMatrix(true)
+        setShowMatrix(effectiveMode === 'full')
         return
       }
 
       if (event === 'SIGNED_IN') {
-        setMatrixDuration(2000) // Faster transition on successful login
-        setShowMatrix(true)
+        setMatrixDuration(effectiveMode === 'full' ? 1200 : 250)
+        setShowMatrix(effectiveMode === 'full')
       }
 
       if (event !== 'TOKEN_REFRESHED' && event !== 'INITIAL_SESSION') {
@@ -110,20 +112,20 @@ const AdminPanel = () => {
       mounted = false
       subscription?.unsubscribe()
     }
-  }, [checkAdminRole])
+  }, [checkAdminRole, effectiveMode])
 
   const handleLogin = useCallback(() => {
     setIsAuthenticated(true)
-    setMatrixDuration(2000)
-    setShowMatrix(true)
-  }, [])
+    setMatrixDuration(effectiveMode === 'full' ? 1200 : 250)
+    setShowMatrix(effectiveMode === 'full')
+  }, [effectiveMode])
 
   const handleLogout = useCallback(async () => {
     await supabase.auth.signOut()
     setIsAuthenticated(false)
-    setShowMatrix(true)
-    setMatrixDuration(3000)
-  }, [])
+    setShowMatrix(effectiveMode === 'full')
+    setMatrixDuration(effectiveMode === 'full' ? 900 : 250)
+  }, [effectiveMode])
 
   const handleMatrixComplete = useCallback(() => {
     setShowMatrix(false)

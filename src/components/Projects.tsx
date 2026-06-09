@@ -13,23 +13,7 @@ import {
   Tag,
 } from "lucide-react";
 import { useReveal } from "@/hooks/useReveal";
-import {
-  SiReact,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiExpress,
-  SiMongodb,
-  SiSocketdotio,
-  SiTypescript,
-  SiTailwindcss,
-  SiPython,
-  SiJupyter,
-  SiTensorflow,
-  SiOpenai,
-  SiLangchain,
-  SiVercel,
-  SiGooglecolab,
-} from "react-icons/si";
+import { TechGlyph } from "./TechGlyph";
 
 interface Project {
   id: number;
@@ -59,13 +43,13 @@ const projectsData: Project[] = [
     longDescription:
       "BOOK_STORE is a production-grade full-stack web application. It features a React/Next.js front-end, a Node.js/Express REST API, MongoDB persistence, and a real-time socket layer for live cart updates. The platform includes secure auth, admin dashboards, and a TensorFlow-based recommender that suggests books based on browsing history.",
     technologies: [
-      { name: "React", icon: <SiReact className="w-4 h-4" />, color: "#61DAFB" },
-      { name: "Next.js", icon: <SiNextdotjs className="w-4 h-4" />, color: "#FFFFFF" },
-      { name: "Node.js", icon: <SiNodedotjs className="w-4 h-4" />, color: "#339933" },
-      { name: "Express", icon: <SiExpress className="w-4 h-4" />, color: "#FFFFFF" },
-      { name: "MongoDB", icon: <SiMongodb className="w-4 h-4" />, color: "#47A248" },
-      { name: "Socket.io", icon: <SiSocketdotio className="w-4 h-4" />, color: "#FFFFFF" },
-      { name: "TypeScript", icon: <SiTypescript className="w-4 h-4" />, color: "#3178C6" },
+      { name: "React", icon: <TechGlyph name="React" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "Next.js", icon: <TechGlyph name="Next.js" className="w-4 h-4" />, color: "hsl(var(--foreground))" },
+      { name: "Node.js", icon: <TechGlyph name="Node.js" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "Express", icon: <TechGlyph name="Express" className="w-4 h-4" />, color: "hsl(var(--foreground))" },
+      { name: "MongoDB", icon: <TechGlyph name="MongoDB" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "Socket.io", icon: <TechGlyph name="Socket.io" className="w-4 h-4" />, color: "hsl(var(--foreground))" },
+      { name: "TypeScript", icon: <TechGlyph name="TypeScript" className="w-4 h-4" />, color: "hsl(var(--primary))" },
     ],
     features: [
       "AI-powered book recommendation system",
@@ -96,12 +80,12 @@ const projectsData: Project[] = [
     longDescription:
       "As a mentor under Tamil Nadu's flagship Naan Mudhalvan initiative, I designed and delivered a 12-week curriculum covering Python, data analysis, machine learning, and Power BI. I personally coached 150+ students through real industry case studies, culminating in capstone projects that were demoed to academic evaluators.",
     technologies: [
-      { name: "Python", icon: <SiPython className="w-4 h-4" />, color: "#3776AB" },
-      { name: "Jupyter", icon: <SiJupyter className="w-4 h-4" />, color: "#F37726" },
-      { name: "TensorFlow", icon: <SiTensorflow className="w-4 h-4" />, color: "#FF6F00" },
-      { name: "OpenAI", icon: <SiOpenai className="w-4 h-4" />, color: "#FFFFFF" },
-      { name: "LangChain", icon: <SiLangchain className="w-4 h-4" />, color: "#1C3C3C" },
-      { name: "Colab", icon: <SiGooglecolab className="w-4 h-4" />, color: "#F9AB00" },
+      { name: "Python", icon: <TechGlyph name="Python" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "Jupyter", icon: <TechGlyph name="Jupyter" className="w-4 h-4" />, color: "hsl(var(--accent))" },
+      { name: "TensorFlow", icon: <TechGlyph name="TensorFlow" className="w-4 h-4" />, color: "hsl(var(--accent))" },
+      { name: "OpenAI", icon: <TechGlyph name="OpenAI" className="w-4 h-4" />, color: "hsl(var(--foreground))" },
+      { name: "LangChain", icon: <TechGlyph name="LangChain" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "Colab", icon: <TechGlyph name="Colab" className="w-4 h-4" />, color: "hsl(var(--accent))" },
     ],
     features: [
       "12-week structured AI/BI curriculum",
@@ -132,11 +116,11 @@ const projectsData: Project[] = [
     longDescription:
       "A production-quality ChatGPT clone built with React, TypeScript, and Tailwind. The UI streams responses from OpenAI-compatible APIs, supports markdown rendering, code highlighting, conversation history, and dark/light themes. Designed for sub-100ms perceived latency with optimistic UI updates.",
     technologies: [
-      { name: "React", icon: <SiReact className="w-4 h-4" />, color: "#61DAFB" },
-      { name: "TypeScript", icon: <SiTypescript className="w-4 h-4" />, color: "#3178C6" },
-      { name: "Tailwind", icon: <SiTailwindcss className="w-4 h-4" />, color: "#06B6D4" },
-      { name: "OpenAI", icon: <SiOpenai className="w-4 h-4" />, color: "#FFFFFF" },
-      { name: "Vercel", icon: <SiVercel className="w-4 h-4" />, color: "#FFFFFF" },
+      { name: "React", icon: <TechGlyph name="React" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "TypeScript", icon: <TechGlyph name="TypeScript" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "Tailwind", icon: <TechGlyph name="Tailwind" className="w-4 h-4" />, color: "hsl(var(--primary))" },
+      { name: "OpenAI", icon: <TechGlyph name="OpenAI" className="w-4 h-4" />, color: "hsl(var(--foreground))" },
+      { name: "Vercel", icon: <TechGlyph name="Vercel" className="w-4 h-4" />, color: "hsl(var(--foreground))" },
     ],
     features: [
       "Streaming responses with optimistic UI",
