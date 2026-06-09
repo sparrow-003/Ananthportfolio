@@ -78,16 +78,19 @@ const SmoothScroll = memo(({ children }: SmoothScrollProps) => {
       window.removeEventListener('scroll', updateProgress);
       document.documentElement.style.scrollBehavior = '';
     };
-    const hash = window.location.hash?.slice(1);
-    if (hash && location.pathname === '/') {
-      const timer = window.setTimeout(() => {
-        const el = document.getElementById(hash);
-        if (el) smoothScrollTo(el.offsetTop - 80);
-      }, 120);
-      return () => window.clearTimeout(timer);
-    }
-
   }, [effectiveMode, location.pathname, navigate, smoothScrollTo]);
+
+  useEffect(() => {
+    const hash = window.location.hash?.slice(1);
+    if (!hash || location.pathname !== '/') return;
+
+    const timer = window.setTimeout(() => {
+      const el = document.getElementById(hash);
+      if (el) smoothScrollTo(el.offsetTop - 80);
+    }, 120);
+
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, smoothScrollTo]);
 
   return (
     <>
