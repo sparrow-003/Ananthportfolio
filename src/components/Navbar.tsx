@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
+import { useAnimationPreference } from '@/contexts/AnimationContext';
 
 type NavItem = {
   name: string;
@@ -16,6 +17,7 @@ type NavItem = {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { effectiveMode } = useAnimationPreference();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,12 +61,12 @@ type NavItem = {
 
     // If we're not on the home page, navigate there first then scroll
     if (location.pathname !== '/') {
-      navigate('/');
+      navigate(`/${id}`);
       setTimeout(() => {
         const element = document.querySelector(id);
         if (element) {
           const top = (element as HTMLElement).offsetTop - 80;
-          window.scrollTo({ top, behavior: 'smooth' });
+          window.scrollTo({ top, behavior: effectiveMode === 'off' ? 'auto' : 'smooth' });
         }
       }, 180);
       setMobileMenuOpen(false);
@@ -74,7 +76,7 @@ type NavItem = {
     const element = document.querySelector(id);
     if (element) {
       const top = (element as HTMLElement).offsetTop - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top, behavior: effectiveMode === 'off' ? 'auto' : 'smooth' });
       setMobileMenuOpen(false);
     }
   };
@@ -85,7 +87,7 @@ type NavItem = {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
-          duration: 0.8,
+          duration: effectiveMode === 'off' ? 0.01 : 0.5,
           type: "spring",
           stiffness: 100,
           damping: 15
@@ -116,13 +118,13 @@ type NavItem = {
                 key={item.name}
                 href={item.href}
                className="text-sm lg:text-base text-foreground opacity-80 hover:opacity-100 hover:text-primary font-medium transition-all"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={effectiveMode === 'full' ? { scale: 1.1, y: -2 } : undefined}
+                whileTap={effectiveMode !== 'off' ? { scale: 0.95 } : undefined}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { delay: 0.1 * index, duration: 0.5 }
+                  transition: { delay: effectiveMode === 'off' ? 0 : 0.06 * index, duration: effectiveMode === 'off' ? 0.01 : 0.35 }
                 }}
                 onClick={(e) => {
                   e.preventDefault();
@@ -226,11 +228,11 @@ type NavItem = {
       <motion.div
         className="hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-elevated"
         initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
+        animate={{ opacity: 1, y: effectiveMode === 'off' ? 0 : [0, 10, 0] }}
         transition={{
-          delay: 2,
-          duration: 1.5,
-          repeat: Infinity,
+          delay: effectiveMode === 'off' ? 0 : 1.2,
+          duration: effectiveMode === 'off' ? 0.01 : 1.5,
+          repeat: effectiveMode === 'off' ? 0 : Infinity,
           repeatType: "loop"
         }}
       >
