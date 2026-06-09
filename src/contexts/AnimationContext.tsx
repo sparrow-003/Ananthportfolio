@@ -15,16 +15,29 @@ const AnimationContext = createContext<AnimationContextType | undefined>(undefin
 
 const STORAGE_KEY = 'animation-preference';
 
+const getDefaultPreference = (): AnimationPreference => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY) as AnimationPreference | null;
+    if (stored === 'full' || stored === 'reduced' || stored === 'off') return stored;
+
+    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 4;
+    const cores = navigator.hardwareConcurrency ?? 4;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+
+    if (saveData || memory <= 2 || cores <= 4) return 'reduced';
+    return 'full';
+  } catch {
+    return 'reduced';
+  }
+};
+
 export function AnimationProvider({ children }: { children: ReactNode }) {
   const [capabilities] = useState(() => getDeviceCapabilities());
   const [reducedMotion, setReducedMotion] = useState(() => 
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
   
-  const [userPreference, setUserPreferenceState] = useState<AnimationPreference>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return (stored as AnimationPreference) || 'full';
-  });
+  const [userPreference, setUserPreferenceState] = useState<AnimationPreference>(getDefaultPreference);
 
   // Listen for OS preference changes
   useEffect(() => {
@@ -48,8 +61,12 @@ export function AnimationProvider({ children }: { children: ReactNode }) {
     if (userPreference === 'reduced') return 'reduced';
     
     // Auto-disable animations for devices with <= 1.5GB RAM, <= 2 CPU cores, or low GPU tier
-    if (capabilities.deviceMemory <= 1.5 || capabilities.hardwareConcurrency <= 2 || capabilities.gpuTier === 'low') {
+    if (capabilities.deviceMemory <= 1 || capabilities.hardwareConcurrency <= 2 || capabilities.gpuTier === 'low') {
       return 'off';
+    }
+
+    if (capabilities.deviceMemory <= 2 || capabilities.hardwareConcurrency <= 4 || capabilities.isMobile) {
+      return 'reduced';
     }
     
     return 'full';
