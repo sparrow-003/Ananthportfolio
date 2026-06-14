@@ -166,7 +166,7 @@ const Skills = memo(() => {
               className="reveal-target gsap-skills-category bg-card/60 backdrop-blur-sm p-6 border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1.5 h-full rounded-xl shadow-sm group/card"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-primary/10 rounded-lg border border-border">
+                <div className="p-2 bg-primary/10 rounded-lg border border-border skill-category-icon">
                   {category.icon}
                 </div>
                 <h3 className="text-xl font-bold text-foreground">{category.title}</h3>
@@ -179,9 +179,9 @@ const Skills = memo(() => {
                     className="flex flex-col items-center justify-center group/skill"
                   >
                     <div
-                      className="w-12 h-12 lg:w-16 lg:h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 hover:bg-primary/10 transition-all border border-border hover:border-primary/20 duration-300 hover:scale-110 hover:-rotate-3"
+                      className="skill-tile w-12 h-12 lg:w-16 lg:h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 hover:bg-primary/10 border border-border hover:border-primary/30"
                     >
-                      {skill.icon}
+                      <span className="skill-icon">{skill.icon}</span>
                     </div>
                     <span className="text-center text-[11px] lg:text-xs text-muted-foreground group-hover/skill:text-foreground transition-colors duration-300 leading-tight">{skill.name}</span>
                   </div>

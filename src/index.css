@@ -1053,3 +1053,89 @@ img[loading="lazy"].loaded { opacity: 1; }
   .image-3d:hover,
   .flip-card:hover .flip-card-inner { transform: none !important; }
 }
+
+/* =============================================================
+   Skill Icon Animations — Technical Expertise section
+   ============================================================= */
+@keyframes skill-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes skill-wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25%      { transform: rotate(-12deg) scale(1.12); }
+  50%      { transform: rotate(0deg)   scale(1.18); }
+  75%      { transform: rotate(12deg)  scale(1.12); }
+}
+@keyframes skill-spin {
+  0%   { transform: rotate(0deg)   scale(1); }
+  100% { transform: rotate(360deg) scale(1.12); }
+}
+@keyframes skill-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 hsl(var(--primary) / 0)); }
+  50%      { transform: scale(1.2); filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.55)); }
+}
+@keyframes skill-bounce {
+  0%, 100% { transform: translateY(0)    scale(1); }
+  40%      { transform: translateY(-6px) scale(1.12); }
+  70%      { transform: translateY(-2px) scale(1.05); }
+}
+@keyframes skill-tile-glow {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0); }
+  50%      { box-shadow: 0 6px 22px -6px hsl(var(--primary) / 0.45); }
+}
+
+.skill-tile {
+  animation: skill-float 5s ease-in-out infinite;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+.skill-tile:hover {
+  animation: skill-tile-glow 1.4s ease-in-out infinite;
+  transform: translateY(-4px) scale(1.06);
+}
+
+.skill-icon {
+  display: inline-flex;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s ease, filter 0.3s ease;
+  will-change: transform;
+}
+
+.skill-tile:nth-child(6n+1):hover .skill-icon { animation: skill-wiggle 0.7s ease-in-out infinite; }
+.skill-tile:nth-child(6n+2):hover .skill-icon { animation: skill-spin   1.2s linear      infinite; }
+.skill-tile:nth-child(6n+3):hover .skill-icon { animation: skill-pulse  1.0s ease-in-out infinite; }
+.skill-tile:nth-child(6n+4):hover .skill-icon { animation: skill-bounce 0.8s ease-in-out infinite; }
+.skill-tile:nth-child(6n+5):hover .skill-icon { animation: skill-wiggle 0.6s ease-in-out infinite; }
+.skill-tile:nth-child(6n+6):hover .skill-icon { animation: skill-pulse  1.2s ease-in-out infinite; }
+
+.skill-tile:nth-child(6n+1) { animation-delay: 0s; }
+.skill-tile:nth-child(6n+2) { animation-delay: 0.4s; }
+.skill-tile:nth-child(6n+3) { animation-delay: 0.8s; }
+.skill-tile:nth-child(6n+4) { animation-delay: 1.2s; }
+.skill-tile:nth-child(6n+5) { animation-delay: 1.6s; }
+.skill-tile:nth-child(6n+6) { animation-delay: 2.0s; }
+
+.skill-category-icon {
+  display: inline-flex;
+  animation: skill-float 4s ease-in-out infinite;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group\/card:hover .skill-category-icon {
+  animation: skill-wiggle 0.9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-tile,
+  .skill-tile:hover,
+  .skill-icon,
+  .skill-tile:hover .skill-icon,
+  .skill-category-icon,
+  .group\/card:hover .skill-category-icon {
+    animation: none !important;
+    transform: none !important;
+  }
+}
