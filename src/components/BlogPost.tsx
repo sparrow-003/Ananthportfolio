@@ -19,6 +19,8 @@ import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { Helmet } from 'react-helmet-async'
 
+const SITE_URL = 'https://ananthdev.lovable.app'
+
 interface BlogPostProps {
   post: BlogPostType
   onBack: () => void
@@ -37,7 +39,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
   // Get display views count
   const displayViews = post.display_views_count ?? post.views_count ?? 0
 
-  const shareUrl = `${window.location.origin}/blog/${post.slug}`
+  const shareUrl = `${SITE_URL}/blog/${post.slug}`
   const [shortUrl, setShortUrl] = useState(shareUrl)
 
   // JSON-LD structured data for SEO - use display counts for public
@@ -58,7 +60,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
     "publisher": {
       "@type": "Organization",
       "name": "ANANTH.DEV",
-      "url": window.location.origin
+      "url": SITE_URL
     },
     "keywords": (post.tags || []).join(', '),
     "interactionStatistic": [
@@ -68,7 +70,6 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
   }
 
   useEffect(() => {
-    blogAPI.incrementViews(post.id)
     checkIfLiked()
     loadComments()
     window.scrollTo({ top: 0, behavior: 'smooth' })

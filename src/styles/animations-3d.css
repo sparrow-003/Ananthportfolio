@@ -1,269 +1,89 @@
-/* =============================================================
-   3D Animation Effects — routed through Socia HRM tokens
-   ============================================================= */
-
-/* ============================================
-   EFFECT 1: Soft 3D Card Tilt + Multi-Layer Shadow
-   ============================================ */
+/* Lightweight compatibility layer for optional 3D/effect components. */
+.card-tilt-3d-container { perspective: 900px; }
 
 .card-tilt-3d {
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
-.card-tilt-3d-container { perspective: 1000px; }
-
-/* Light theme variant — uses Socia HRM surface tokens */
-.card-tilt-3d-light {
-  background: hsl(0, 0%, 100%);
-  border: 1px solid hsl(240 6% 90%);
-  box-shadow:
-    0 8px 32px hsl(199 100% 40% / 0.06),
-    0 2px 8px hsl(199 100% 40% / 0.04);
-}
-
-.card-tilt-3d-light:hover {
-  border-color: hsl(36 100% 57% / 0.4);
-  box-shadow:
-    0 12px 48px hsl(199 100% 40% / 0.10),
-    0 4px 12px hsl(199 100% 40% / 0.06),
-    inset 0 0 0 1px hsl(36 100% 57% / 0.15);
-}
-
-/* Dark theme variant */
+.card-tilt-3d-light,
 .card-tilt-3d-dark {
-  background: hsl(240 20% 7%);
-  border: 1px solid hsl(240 12% 14%);
-  box-shadow:
-    0 8px 32px hsl(199 100% 50% / 0.10),
-    0 2px 8px hsl(199 100% 50% / 0.06);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  box-shadow: var(--shadow-card);
 }
 
-.card-tilt-3d-dark:hover {
-  border-color: hsl(199 100% 50% / 0.4);
-  box-shadow:
-    0 12px 48px hsl(199 100% 50% / 0.20),
-    0 4px 12px hsl(199 100% 50% / 0.10),
-    0 0 60px hsl(199 100% 50% / 0.15);
-}
-
-/* Sheen layer */
-.card-tilt-3d::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    hsl(0 0% 100% / 0.10) 50%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  transform: translateZ(1px);
-}
-
-.card-tilt-3d:hover::before { opacity: 1; }
-
-@media (prefers-reduced-motion: reduce) {
-  .card-tilt-3d { transform: none !important; }
-  .card-tilt-3d:hover { transform: translateY(-2px) !important; }
-}
-
-/* ============================================
-   EFFECT 2: Glass Plane / Light Refraction
-   ============================================ */
+.card-tilt-3d:hover { box-shadow: var(--shadow-elevated); }
 
 .glass-plane {
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
   position: relative;
   overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
 }
 
-.glass-plane-light {
-  background: hsl(0 0% 100% / 0.7);
-  border: 1px solid hsl(199 100% 40% / 0.15);
-  box-shadow:
-    0 8px 32px hsl(199 100% 40% / 0.06),
-    inset 0 1px 0 hsl(0 0% 100% / 0.6);
-}
-
+.glass-plane-light,
 .glass-plane-dark {
-  background: hsl(240 20% 10% / 0.7);
-  border: 1px solid hsl(199 100% 50% / 0.15);
-  box-shadow:
-    0 8px 32px hsl(199 100% 50% / 0.10),
-    inset 0 1px 0 hsl(199 100% 50% / 0.08);
+  background: hsl(var(--card) / 0.78);
+  box-shadow: var(--shadow-card);
 }
 
-.glass-plane::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    hsl(199 100% 50% / 0.03) 25%,
-    hsl(36 100% 57% / 0.03) 50%,
-    hsl(199 100% 50% / 0.03) 75%,
-    transparent 100%
-  );
-  animation: glass-sheen 8s linear infinite;
-  pointer-events: none;
-}
+.glass-plane::after { content: none; }
 
 @keyframes glass-sheen {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
-
-/* ============================================
-   EFFECT 5: 3D Typographic Extrusion
-   ============================================ */
 
 .typography-3d {
-  position: relative;
-  font-weight: 700;
-  transform-style: preserve-3d;
   font-family: "Space Grotesk", "DM Sans", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
-.typography-3d-light {
-  color: hsl(240 20% 6%);
-  text-shadow:
-    1px 1px 0 hsl(240 6% 85%),
-    2px 2px 0 hsl(240 6% 80%),
-    3px 3px 0 hsl(240 6% 75%),
-    4px 4px 0 hsl(240 6% 70%),
-    5px 5px 0 hsl(240 6% 65%),
-    6px 6px 0 hsl(240 6% 60%),
-    7px 7px 20px hsl(199 100% 40% / 0.18),
-    8px 8px 30px hsl(36 100% 57% / 0.12);
+.typography-3d-light { color: hsl(var(--foreground)); text-shadow: 0 1px 0 hsl(var(--border)); }
+.typography-3d-dark { color: hsl(var(--foreground)); text-shadow: 0 0 18px hsl(var(--primary) / 0.18); }
+.typography-3d-animated { animation: typographySoft 6s ease-in-out infinite; }
+
+@keyframes typographySoft {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.08); }
 }
 
-.typography-3d-dark {
-  color: hsl(0 0% 96%);
-  text-shadow:
-    1px 1px 0 hsl(240 20% 6%),
-    2px 2px 0 hsl(240 12% 10%),
-    3px 3px 0 hsl(240 12% 12%),
-    4px 4px 0 hsl(240 12% 14%),
-    5px 5px 0 hsl(240 12% 16%),
-    6px 6px 0 hsl(240 12% 18%),
-    7px 7px 20px hsl(199 100% 50% / 0.35),
-    8px 8px 30px hsl(199 100% 50% / 0.25);
-}
-
-@keyframes typography-light-rotate {
-  0%, 100% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(15deg); }
-}
-
-.typography-3d-animated { animation: typography-light-rotate 8s ease-in-out infinite; }
-
-/* ============================================
-   EFFECT 7: Parallax Layers
-   ============================================ */
-
-.parallax-layer { will-change: transform; transition: transform 0.1s ease-out; }
-.parallax-layer-1 { transform: translateZ(0); }
-.parallax-layer-2 { transform: translateZ(20px); }
-.parallax-layer-3 { transform: translateZ(40px); }
-
-/* ============================================
-   FLOATING ORB STYLES
-   ============================================ */
-
-.floating-orb {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform, opacity;
-  animation: float-organic 15s ease-in-out infinite;
-}
-
-.floating-orb-light {
-  background: radial-gradient(
-    circle at 30% 30%,
-    hsl(0 0% 100% / 0.35),
-    hsl(199 100% 40% / 0.15)
-  );
-  box-shadow:
-    inset 0 0 20px hsl(0 0% 100% / 0.30),
-    0 0 30px hsl(199 100% 40% / 0.20),
-    inset -10px -10px 30px hsl(36 100% 57% / 0.20);
-}
-
-.floating-orb-dark {
-  background: radial-gradient(
-    circle at 30% 30%,
-    hsl(199 100% 50% / 0.4),
-    hsl(199 100% 50% / 0.15)
-  );
-  box-shadow:
-    inset 0 0 20px hsl(199 100% 50% / 0.4),
-    0 0 40px hsl(199 100% 50% / 0.25),
-    inset -10px -10px 30px hsl(199 100% 50% / 0.25);
-}
-
-@keyframes float-organic {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-  25% { transform: translate(20px, -30px) scale(1.1); opacity: 0.8; }
-  50% { transform: translate(-10px, 20px) scale(0.9); opacity: 0.7; }
-  75% { transform: translate(30px, 10px) scale(1.05); opacity: 0.75; }
-}
-
-/* ============================================
-   CINEMATIC VIGNETTE
-   ============================================ */
+.parallax-layer { transition: transform 80ms linear; }
+.parallax-layer-1,
+.parallax-layer-2,
+.parallax-layer-3 { transform: translateZ(0); }
 
 .cinematic-vignette { position: relative; }
-
-.cinematic-vignette::before {
-  content: '';
+.cinematic-vignette::before,
+.cinematic-vignette-light::before {
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, hsl(0 0% 0% / 0.30) 100%);
   pointer-events: none;
-  z-index: 1;
+  background: radial-gradient(ellipse at center, transparent 55%, hsl(var(--background) / 0.24) 100%);
 }
 
-.cinematic-vignette-light::before {
-  background: radial-gradient(ellipse at center, transparent 50%, hsl(199 100% 40% / 0.05) 100%);
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-
-.preserve-3d { transform-style: preserve-3d; }
-.backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.gpu-accelerate { transform: translateZ(0); will-change: transform; }
-.smooth-transform { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-
-/* Animation state classes */
 .animation-full {}
-.animation-reduced * {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-}
+.animation-reduced *,
 .animation-off * {
-  animation: none !important;
-  transition: none !important;
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
 }
+
+.animation-off * { animation: none !important; transition: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .card-tilt-3d,
+  .glass-plane,
+  .typography-3d,
+  .typography-3d-animated,
+  .parallax-layer {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
