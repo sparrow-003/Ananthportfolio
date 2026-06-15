@@ -8,7 +8,6 @@ import {
   Settings,
   LogOut,
   Palette,
-  Globe,
   Terminal
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -73,12 +72,13 @@ export const AdminSidebar = ({ activeView, setActiveView, onLogout, isCollapsed,
   return (
     <motion.div 
       animate={{ width: isCollapsed ? 80 : 280 }}
-      className="h-screen bg-card/50 backdrop-blur-xl border-r border-border fixed left-0 top-0 z-nav flex flex-col transition-all duration-300 shadow-xl"
+      transition={{ duration: 0.18, ease: 'easeOut' }}
+      className="h-screen bg-card/95 backdrop-blur-md border-r border-border fixed left-0 top-0 z-nav flex flex-col shadow-xl"
     >
       {/* Logo Area */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-border/50">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-primary-foreground font-bold flex-shrink-0 shadow-lg shadow-primary/20">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold flex-shrink-0 shadow-lg shadow-primary/20">
             G
           </div>
           {!isCollapsed && (
@@ -138,11 +138,7 @@ export const AdminSidebar = ({ activeView, setActiveView, onLogout, isCollapsed,
                 label={item.label}
                 isActive={activeView === item.id}
                 onClick={() => {
-                  if (item.id === 'view-site') {
-                    window.open('/', '_blank');
-                  } else {
-                    setActiveView(item.id);
-                  }
+                  setActiveView(item.id);
                 }}
                 isCollapsed={isCollapsed}
               />

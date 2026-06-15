@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo, lazy, Suspense, useMemo } from 'react'
+import React, { useState, useCallback, memo, lazy, Suspense, useMemo, useEffect } from 'react'
 import { BlogPost as BlogPostType } from '@/lib/supabase'
 import { adminAuth } from '@/lib/auth'
 import { useBlogOperations } from '@/hooks/useBlogOperations'
@@ -27,10 +27,20 @@ interface AdminDashboardProps {
 
 const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
   const [activeView, setActiveView] = useState('dashboard')
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => window.innerWidth < 1024)
   const [showEditor, setShowEditor] = useState(false)
   const [editingPost, setEditingPost] = useState<BlogPostType | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+
+  useEffect(() => {
+    const syncSidebarForViewport = () => {
+      if (window.innerWidth < 1024) setIsSidebarCollapsed(true)
+    }
+
+    syncSidebarForViewport()
+    window.addEventListener('resize', syncSidebarForViewport, { passive: true })
+    return () => window.removeEventListener('resize', syncSidebarForViewport)
+  }, [])
 
   // Use optimized data hook
   const {
@@ -199,7 +209,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
         toggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
-      <div className={`flex min-w-0 flex-1 flex-col transition-all duration-200 ${isSidebarCollapsed ? 'md:ml-[80px]' : 'md:ml-[280px]'}`}>
+      <div className={`flex min-w-0 flex-1 flex-col transition-all duration-200 ${isSidebarCollapsed ? 'ml-20' : 'ml-20 md:ml-[280px]'}`}>
         <AdminHeader
           toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           isSidebarCollapsed={isSidebarCollapsed}
@@ -207,13 +217,13 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
           onSearchChange={setSearchQuery}
         />
 
-        <main className="relative flex-1 overflow-y-auto p-4 md:p-8">
+        <main className="relative flex-1 overflow-y-auto p-3 sm:p-4 md:p-8">
           {/* Background */}
           <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 z-behind" />
 
           <div className="max-w-7xl mx-auto space-y-8">
             {/* Header Section */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h1 className="text-3xl font-bold tracking-tight">
                   {viewTitles[activeView] || activeView.charAt(0).toUpperCase() + activeView.slice(1)}
