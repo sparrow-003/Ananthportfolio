@@ -16,7 +16,7 @@
 //     of what the HTTP cache has stored.
 //  3. Skip waiting + claim clients on activate so the new SW takes
 //     control immediately.
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const CACHE_NAME = `ananthdev-shell-${CACHE_VERSION}`;
 
 const APP_SHELL = [
