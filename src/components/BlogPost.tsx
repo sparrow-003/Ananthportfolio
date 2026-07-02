@@ -211,19 +211,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
         style={{ scaleX }}
       />
 
-      <motion.article
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-              delayChildren: 0.2
-            }
-          }
-        }}
+      <article
         className="max-w-5xl mx-auto px-4 sm:px-6 pb-12 font-sans relative"
       >
         {/* Back Button */}
@@ -438,7 +426,7 @@ const BlogPost = memo(({ post, onBack }: BlogPostProps) => {
             </div>
           </div>
         )}
-      </motion.article>
+      </article>
 
       {/* Share Dialog */}
       <Dialog open={showShareDialog} onOpenChange={setShowShareDialog}>

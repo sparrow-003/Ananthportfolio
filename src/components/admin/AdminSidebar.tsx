@@ -42,7 +42,6 @@ const SidebarItem = ({ icon: Icon, label, isActive, onClick, isCollapsed }: Side
         <motion.div
           layoutId="activeTab"
           className="absolute left-0 w-1 h-6 bg-primary rounded-r-full"
-          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         />
@@ -83,7 +82,6 @@ export const AdminSidebar = ({ activeView, setActiveView, onLogout, isCollapsed,
           </div>
           {!isCollapsed && (
             <motion.span 
-              initial={{ opacity: 0 }} 
               animate={{ opacity: 1 }} 
               className="font-bold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70"
             >

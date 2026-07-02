@@ -83,8 +83,7 @@ const AnimatedAvatar = memo(({ variant, className = '', isInView = true }: Anima
           y: effectiveMode === 'full' ? translateY : 0,
           transformStyle: "preserve-3d",
         }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
         transition={{ duration: effectiveMode === 'off' ? 0.01 : variant === 'hero' ? 0.45 : 0.3, ease: [0.23, 1, 0.32, 1] }}
         className="w-full h-full"
       >

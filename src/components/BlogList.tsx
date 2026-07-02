@@ -136,7 +136,6 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         className="text-center mb-16 md:mb-24 relative"
@@ -170,7 +169,6 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
 
       {/* Filters */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="mb-8 space-y-4"
@@ -288,7 +286,6 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
       {/* Posts Grid */}
       {filteredPosts.length === 0 ? (
         <motion.div
-          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center py-12"
         >
@@ -313,7 +310,6 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
           {/* Featured Post Section */}
           {!searchTerm && !selectedTag && sortBy === 'newest' && filteredPosts.length > 0 && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
               className="mb-16"
@@ -333,7 +329,6 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={{
-              hidden: { opacity: 0 },
               show: {
                 opacity: 1,
                 transition: {
@@ -341,14 +336,12 @@ const BlogList = memo(({ onPostSelect }: BlogListProps) => {
                 }
               }
             }}
-            initial="hidden"
             animate="show"
           >
             {filteredPosts.slice(!searchTerm && !selectedTag && sortBy === 'newest' ? 1 : 0).map((post) => (
               <motion.div
                 key={post.id}
                 variants={{
-                  hidden: { opacity: 0, y: 30 },
                   show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50, damping: 20 } }
                 }}
               >

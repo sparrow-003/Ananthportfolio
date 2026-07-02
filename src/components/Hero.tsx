@@ -181,7 +181,7 @@ Best regards,
             <span className="text-gradient">ANANTH.N</span>
           </h1>
           <div className="reveal-target gsap-hero-fade-in text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 sm:mb-8 min-h-12 sm:min-h-16 text-foreground" style={{ transitionDelay: '300ms' }}>
-            I'm a <AnimatedText texts={[...ROLES]} className="text-primary" interval={2500} />
+            I'm a <AnimatedText texts={ROLES} className="text-primary" interval={2500} />
           </div>
           <p className="reveal-target gsap-hero-fade-in text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto lg:mx-0 mb-6 text-muted-foreground leading-relaxed font-light" style={{ transitionDelay: '360ms' }}>
             A dreamer who codes worlds beyond the ordinary, crafting futures where AI and imagination collide. Guiding 150+ minds to awaken their hidden genius, a voice of leadership turning sparks into fire.

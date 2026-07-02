@@ -1,8 +1,6 @@
 import { memo } from 'react';
-import { BrainCircuit, Globe, Layers, Cpu, PencilRuler, CheckCircle } from 'lucide-react';
-import { Workflow, Sparkles, Rocket, MessageSquareQuote, Brain, Network, Plug, Search, Award, Crown, MessageCircle, Wrench, HeartHandshake, Microscope, BookOpen, PenTool, Telescope, Code2, Palette, Paintbrush, Database } from 'lucide-react';
+import { BrainCircuit, Globe, Layers, Cpu, PencilRuler, CheckCircle, Code, Database } from 'lucide-react';
 import { useReveal } from '@/hooks/useReveal';
-import { TechGlyph } from './TechGlyph';
 
 const Skills = memo(() => {
   const [sectionRef, inView] = useReveal<HTMLDivElement>(0.08, 500);
@@ -12,119 +10,89 @@ const Skills = memo(() => {
       title: "Vibe Coding Skills",
       icon: <BrainCircuit className="text-primary" size={28} />,
       skills: [
-        { name: "Flow State Programming", icon: <Workflow className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "Creative Problem Solving", icon: <Sparkles className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
-        { name: "Intuitive Design", icon: <PenTool className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "Rapid Prototyping", icon: <Rocket className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+        { name: "Flow State Programming", icon: "https://img.icons8.com/color/48/meditation.png" },
+        { name: "Creative Problem Solving", icon: "https://img.icons8.com/color/48/creative-thinking.png" },
+        { name: "Intuitive Design", icon: "https://img.icons8.com/color/48/design.png" },
+        { name: "Rapid Prototyping", icon: "https://img.icons8.com/color/48/prototype.png" },
       ]
     },
     {
       title: "Programming Languages",
-      icon: <Code2 className="text-primary" size={28} />,
+      icon: <Code className="text-primary" size={28} />,
       skills: [
-        { name: "Python", icon: <TechGlyph name="Python" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "JavaScript", icon: <TechGlyph name="JavaScript" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "TypeScript", icon: <TechGlyph name="TypeScript" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
       ]
     },
     {
       title: "Web Development",
       icon: <Globe className="text-primary" size={28} />,
       skills: [
-        { name: "React", icon: <TechGlyph name="React" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Node.js", icon: <TechGlyph name="Node.js" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Next.js", icon: <TechGlyph name="Next.js" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "HTML5", icon: <TechGlyph name="HTML5" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "CSS3", icon: <Palette className="w-6 h-6 lg:w-7 lg:h-7 text-[#1572B6]" /> },
-        { name: "TailwindCSS", icon: <TechGlyph name="TailwindCSS" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+        { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+        { name: "TailwindCSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" },
       ]
     },
     {
       title: "AI & Machine Learning",
-      icon: <Brain className="text-primary" size={28} />,
+      icon: <BrainCircuit className="text-primary" size={28} />,
       skills: [
-        { name: "Prompt Engineering", icon: <MessageSquareQuote className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "OpenAI / LLMs", icon: <TechGlyph name="OpenAI" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "LangChain", icon: <TechGlyph name="LangChain" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Hugging Face", icon: <TechGlyph name="Hugging Face" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "TensorFlow", icon: <TechGlyph name="TensorFlow" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "Neural Networks", icon: <Network className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
-      ]
-    },
-    {
-      title: "Data Science",
-      icon: <Microscope className="text-primary" size={28} />,
-      skills: [
-        { name: "Pandas", icon: <TechGlyph name="Pandas" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "NumPy", icon: <TechGlyph name="NumPy" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "scikit-learn", icon: <TechGlyph name="scikit-learn" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "Jupyter / Colab", icon: <TechGlyph name="Jupyter / Colab" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Prompt Engineering", icon: "https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-ai-industry-4-flaticons-flat-flat-icons.png" },
+        { name: "LLM", icon: "https://img.icons8.com/color/48/artificial-intelligence.png" },
+        { name: "LangChain", icon: "https://img.icons8.com/external-tal-revivo-color-tal-revivo/96/external-chainlink-is-a-blockchain-abstraction-layer-that-enables-universally-connected-smart-contracts-logo-color-tal-revivo.png" },
+        { name: "Neural Network", icon: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-neural-network-robotics-flaticons-lineal-color-flat-icons.png" },
+        { name: "Hugging Face", icon: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg" },
+        { name: "API Integration", icon: "https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-api-no-code-flaticons-flat-flat-icons.png" },
       ]
     },
     {
       title: "Databases",
       icon: <Database className="text-primary" size={28} />,
       skills: [
-        { name: "MongoDB", icon: <TechGlyph name="MongoDB" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "PostgreSQL", icon: <TechGlyph name="PostgreSQL" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "MySQL", icon: <TechGlyph name="MySQL" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "Supabase", icon: <TechGlyph name="Supabase" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Redis", icon: <TechGlyph name="Redis" className="w-6 h-6 lg:w-7 lg:h-7 text-destructive" /> },
+        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+        { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+        { name: "Supabase", icon: "https://seeklogo.com/images/S/supabase-logo-DCC676FFE2-seeklogo.com.png" },
       ]
     },
     {
       title: "DevOps & Cloud",
       icon: <Layers className="text-primary" size={28} />,
       skills: [
-        { name: "Docker", icon: <TechGlyph name="Docker" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "GitHub Actions", icon: <TechGlyph name="GitHub Actions" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Vercel", icon: <TechGlyph name="Vercel" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "Git", icon: <TechGlyph name="Git" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "Linux", icon: <TechGlyph name="Linux" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+        { name: "GitHub Actions", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
       ]
     },
     {
       title: "Frameworks & Libraries",
       icon: <Cpu className="text-primary" size={28} />,
       skills: [
-        { name: "Express", icon: <TechGlyph name="Express" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "Django", icon: <TechGlyph name="Django" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Flask", icon: <TechGlyph name="Flask" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-        { name: "FastAPI", icon: <TechGlyph name="FastAPI" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Socket.io", icon: <TechGlyph name="Socket.io" className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" /> },
-      ]
-    },
-    {
-      title: "APIs & Tools",
-      icon: <Wrench className="text-primary" size={28} />,
-      skills: [
-        { name: "GraphQL", icon: <TechGlyph name="GraphQL" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "REST APIs", icon: <Plug className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "VS Code", icon: <TechGlyph name="VS Code" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
-        { name: "Postman", icon: <TechGlyph name="Postman" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "Vite", icon: <TechGlyph name="Vite" className="w-6 h-6 lg:w-7 lg:h-7 text-primary" /> },
+        { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "Django", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
+        { name: "Flask", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" },
       ]
     },
     {
       title: "Design & UI/UX",
       icon: <PencilRuler className="text-primary" size={28} />,
       skills: [
-        { name: "Figma", icon: <TechGlyph name="Figma" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
-        { name: "UI/UX Research", icon: <Search className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
-        { name: "Adobe Suite", icon: <Paintbrush className="w-6 h-6 lg:w-7 lg:h-7 text-[#FF0000]" /> },
-        { name: "3D / Blender", icon: <TechGlyph name="3D / Blender" className="w-6 h-6 lg:w-7 lg:h-7 text-accent" /> },
+        { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+        { name: "UI/UX Research", icon: "https://img.icons8.com/fluency/48/test-lab.png" },
       ]
     },
     {
       title: "Teaching & Leadership",
       icon: <CheckCircle className="text-primary" size={28} />,
       skills: [
-        { name: "AI/BI Training", icon: <BookOpen className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "Campus Ambassador", icon: <Award className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
-        { name: "Student Mentoring", icon: <HeartHandshake className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "Technical Communication", icon: <MessageCircle className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
-        { name: "Team Leadership", icon: <Crown className="w-6 h-6 lg:w-7 lg:h-7 text-[#0077CC]" /> },
-        { name: "Problem Solving", icon: <Telescope className="w-6 h-6 lg:w-7 lg:h-7 text-[#E89122]" /> },
+        { name: "AI/BI Training", icon: "https://img.icons8.com/color/48/artificial-intelligence.png" },
+        { name: "Campus Ambassador", icon: "https://img.icons8.com/color/48/ambassador.png" },
+        { name: "Student Mentoring", icon: "https://img.icons8.com/color/48/mentor.png" },
+        { name: "Technical Communication", icon: "https://img.icons8.com/color/48/communication--v1.png" },
+        { name: "Team Leadership", icon: "https://img.icons8.com/color/48/conference-call--v1.png" },
+        { name: "Problem Solving", icon: "https://img.icons8.com/color/48/solution.png" },
       ]
     }
   ];
@@ -181,7 +149,7 @@ const Skills = memo(() => {
                     <div
                       className="skill-tile w-12 h-12 lg:w-16 lg:h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 hover:bg-primary/10 border border-border hover:border-primary/30"
                     >
-                      <span className="skill-icon">{skill.icon}</span>
+                      <span className="skill-icon"><img src={skill.icon} alt={skill.name} className="w-6 h-6 lg:w-7 lg:h-7 object-contain" /></span>
                     </div>
                     <span className="text-center text-[11px] lg:text-xs text-muted-foreground group-hover/skill:text-foreground transition-colors duration-300 leading-tight">{skill.name}</span>
                   </div>

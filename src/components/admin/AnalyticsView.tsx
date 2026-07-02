@@ -675,7 +675,6 @@ export const AnalyticsView = memo(({ posts, comments }: AnalyticsViewProps) => {
                       <motion.div 
                         key={post.id} 
                         className="flex items-center justify-between py-2 border-b border-border/30 last:border-0"
-                        initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.1 }}
                       >
@@ -708,7 +707,6 @@ export const AnalyticsView = memo(({ posts, comments }: AnalyticsViewProps) => {
                       <motion.div 
                         key={post.id} 
                         className="flex items-center justify-between py-2 border-b border-border/30 last:border-0"
-                        initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.1 }}
                       >

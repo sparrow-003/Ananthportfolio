@@ -1027,7 +1027,6 @@ export const PostEditor = ({ post, onSave, onClose, onDelete }: PostEditorProps)
       <AnimatePresence>
         {Object.keys(validationErrors).length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
           >
@@ -1053,7 +1052,6 @@ export const PostEditor = ({ post, onSave, onClose, onDelete }: PostEditorProps)
               {(activeTab === 'write' || showPreviewSplit) && (
                 <motion.div 
                   className="flex flex-col h-full"
-                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -1100,7 +1098,6 @@ export const PostEditor = ({ post, onSave, onClose, onDelete }: PostEditorProps)
                     "prose dark:prose-invert prose-lg max-w-none overflow-y-auto h-full pr-4",
                     showPreviewSplit ? "border-l border-border pl-8" : ""
                   )}
-                  initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                 >

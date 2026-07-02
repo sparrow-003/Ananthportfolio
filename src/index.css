@@ -180,6 +180,8 @@
 @layer components {
   .section-container {
     @apply mx-auto w-full max-w-[1400px] px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-20;
+    position: relative;
+    z-index: 10;
   }
 
   .section-title {
@@ -340,17 +342,6 @@
   .reveal-target {
     opacity: 1;
     transform: none;
-  }
-
-  .js-enhanced .reveal-target {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  .js-enhanced .is-revealed .reveal-target {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 420ms ease, transform 420ms ease;
   }
 
   .skeleton {
@@ -576,8 +567,6 @@
     transition-duration: 0.001ms !important;
   }
 
-  .js-enhanced .reveal-target,
-  .js-enhanced .is-revealed .reveal-target,
   .glass-card:hover,
   .blog-card:hover,
   .skill-tile:hover,

@@ -32,7 +32,6 @@ const StatCard = memo(({
   index: number
 }) => (
   <motion.div
-    initial={{ y: 20, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.4, delay: index * 0.1 }}
   >
@@ -63,7 +62,6 @@ const StatCard = memo(({
         </motion.div>
         <div className="flex items-center gap-1 mt-1">
           <motion.div
-            initial={{ x: -10, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.3, delay: index * 0.1 + 0.3 }}
             className={`flex items-center gap-1 text-xs ${

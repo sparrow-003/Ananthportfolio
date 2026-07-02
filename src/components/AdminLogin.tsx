@@ -52,7 +52,6 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.05),transparent_50%)] -z-10" />
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-md relative"
