@@ -24,7 +24,7 @@ const Blog = memo(() => {
   // Fetch single post when slug is provided
   const {
     data: fetchedPost,
-    isLoading,
+    isFetching,
     isError,
     error,
     refetch
@@ -37,6 +37,11 @@ const Blog = memo(() => {
     retry: 1,
     retryDelay: 1000
   })
+
+  // Only treat as loading when we actually have a slug and are fetching.
+  // React Query reports status=pending for disabled queries, which previously
+  // trapped the list view behind a skeleton on non-Lovable hosts.
+  const isLoading = !!slug && isFetching && !fetchedPost
 
   // Handle post data and view tracking
   useEffect(() => {
