@@ -27,19 +27,25 @@ interface AdminDashboardProps {
 
 const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
   const [activeView, setActiveView] = useState('dashboard')
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => window.innerWidth < 1024)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  )
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  )
   const [showEditor, setShowEditor] = useState(false)
   const [editingPost, setEditingPost] = useState<BlogPostType | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
-    const syncSidebarForViewport = () => {
-      if (window.innerWidth < 1024) setIsSidebarCollapsed(true)
+    const syncForViewport = () => {
+      const mobile = window.innerWidth < 1024
+      setIsMobile(mobile)
+      if (mobile) setIsSidebarCollapsed(true)
     }
-
-    syncSidebarForViewport()
-    window.addEventListener('resize', syncSidebarForViewport, { passive: true })
-    return () => window.removeEventListener('resize', syncSidebarForViewport)
+    syncForViewport()
+    window.addEventListener('resize', syncForViewport, { passive: true })
+    return () => window.removeEventListener('resize', syncForViewport)
   }, [])
 
   // Use optimized data hook
