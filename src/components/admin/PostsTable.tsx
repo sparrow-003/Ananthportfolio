@@ -456,14 +456,15 @@ export const PostsTable = memo(({ posts, onEdit, onDelete, onView, onUpdateStats
       animate="show"
       className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden shadow-sm"
     >
+      <div className="overflow-x-auto">
       <Table>
         <TableHeader className="bg-muted/50">
           <TableRow>
-            <TableHead className="w-[45%]">Post Details</TableHead>
-            <TableHead className="w-[15%]">Status</TableHead>
-            <TableHead className="w-[20%]">Publication</TableHead>
-            <TableHead className="w-[10%] text-right">Stats (Display/Real)</TableHead>
-            <TableHead className="w-[10%] text-right">Actions</TableHead>
+            <TableHead className="min-w-[240px]">Post Details</TableHead>
+            <TableHead className="hidden md:table-cell w-[15%]">Status</TableHead>
+            <TableHead className="hidden lg:table-cell w-[20%]">Publication</TableHead>
+            <TableHead className="hidden sm:table-cell w-[15%] text-right">Stats</TableHead>
+            <TableHead className="w-[60px] text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
