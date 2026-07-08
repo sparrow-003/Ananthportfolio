@@ -493,6 +493,7 @@ export const PostsTable = memo(({ posts, onEdit, onDelete, onView, onUpdateStats
           )}
         </TableBody>
       </Table>
+      </div>
     </motion.div>
   )
 })
