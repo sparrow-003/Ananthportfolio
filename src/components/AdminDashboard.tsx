@@ -215,7 +215,7 @@ const AdminDashboard = memo(({ onLogout }: AdminDashboardProps) => {
         toggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
-      <div className={`flex min-w-0 flex-1 flex-col transition-all duration-200 ${isSidebarCollapsed ? 'ml-20' : 'ml-20 md:ml-[280px]'}`}>
+      <div className={`flex min-w-0 flex-1 flex-col transition-all duration-200 ${isMobile ? 'ml-0' : isSidebarCollapsed ? 'ml-20' : 'ml-[280px]'}`}>
         <AdminHeader
           toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           isSidebarCollapsed={isSidebarCollapsed}
