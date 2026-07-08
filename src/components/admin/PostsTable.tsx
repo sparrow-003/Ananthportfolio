@@ -321,7 +321,7 @@ const PostRow = memo(({ post, onEdit, onDelete, onView, onUpdateStats }: {
 
   return (
     <TableRow className="group hover:bg-muted/50 transition-colors">
-      <TableCell>
+      <TableCell className="align-top">
         <div className="flex flex-col gap-2">
           <div className="flex items-start gap-3">
             <div className="flex-1 min-w-0">
@@ -334,8 +334,8 @@ const PostRow = memo(({ post, onEdit, onDelete, onView, onUpdateStats }: {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            <span className="font-mono bg-muted/50 px-2 py-1 rounded">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span className="font-mono bg-muted/50 px-2 py-1 rounded truncate max-w-[180px]">
               /{post.slug}
             </span>
             {post.tags && post.tags.length > 0 && (
@@ -351,14 +351,27 @@ const PostRow = memo(({ post, onEdit, onDelete, onView, onUpdateStats }: {
               </div>
             )}
           </div>
+
+          {/* Mobile-only inline meta */}
+          <div className="flex flex-wrap items-center gap-3 md:hidden text-xs text-muted-foreground">
+            <StatusBadge post={post} />
+            <div className="flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              <span>{format(publishDate, 'MMM d, yyyy')}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <User className="w-3 h-3" />
+              <span>{post.author_name}</span>
+            </div>
+          </div>
         </div>
       </TableCell>
 
-      <TableCell>
+      <TableCell className="hidden md:table-cell align-top">
         <StatusBadge post={post} />
       </TableCell>
 
-      <TableCell>
+      <TableCell className="hidden lg:table-cell align-top">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-1 text-sm">
             <Calendar className="w-3 h-3 text-muted-foreground" />
@@ -377,17 +390,17 @@ const PostRow = memo(({ post, onEdit, onDelete, onView, onUpdateStats }: {
         </div>
       </TableCell>
 
-      <TableCell className="text-right">
+      <TableCell className="hidden sm:table-cell text-right align-top">
         <StatsEditor post={post} onUpdate={onUpdateStats} />
       </TableCell>
 
-      <TableCell className="text-right">
+      <TableCell className="text-right align-top">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-muted"
+              className="h-8 w-8 p-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hover:bg-muted"
             >
               <MoreVertical className="h-4 w-4" />
             </Button>
