@@ -43,6 +43,20 @@ const staticEntries = [
   { path: '/about5.html', changefreq: 'monthly', priority: '0.7' },
   { path: '/about6.html', changefreq: 'monthly', priority: '0.7' },
   { path: '/about7.html', changefreq: 'monthly', priority: '0.7' },
+
+  // Home pages (redirect to /home — indexed for crawlers)
+  { path: '/home/myself.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/creator.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/freelancer.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/tamil-nadu.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/chennai.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/coimbatore.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/madurai.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/india.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/ai-solutions.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/enterprise.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/technology.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/home/long-tail.html', changefreq: 'monthly', priority: '0.7' },
 ]
 
 const fallbackBlogEntries = [

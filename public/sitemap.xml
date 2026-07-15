@@ -166,6 +166,66 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://ananthdev.vercel.app/home/myself.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/creator.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/freelancer.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/tamil-nadu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/chennai.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/coimbatore.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/madurai.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/india.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/ai-solutions.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/enterprise.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/technology.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home/long-tail.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://ananthdev.vercel.app/blog/ai-coding-tools-vs-human-developers-will-ai-replace-programmers</loc>
     <lastmod>2026-07-11</lastmod>
     <changefreq>weekly</changefreq>
