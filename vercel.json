@@ -22,6 +22,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!assets/|.*\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|sitemap|robots\\.txt|favicon|.*\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }
   ]
 }
