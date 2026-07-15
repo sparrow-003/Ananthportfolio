@@ -131,6 +131,41 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://ananthdev.vercel.app/about1.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/about2.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/about3.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/about4.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/about5.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/about6.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/about7.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://ananthdev.vercel.app/blog/ai-coding-tools-vs-human-developers-will-ai-replace-programmers</loc>
     <lastmod>2026-07-11</lastmod>
     <changefreq>weekly</changefreq>

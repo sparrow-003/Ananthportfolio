@@ -34,6 +34,15 @@ const staticEntries = [
   { path: '/services/hrm-development', changefreq: 'monthly', priority: '0.7' },
   { path: '/services/logistics-software', changefreq: 'monthly', priority: '0.7' },
   { path: '/services/business-automation', changefreq: 'monthly', priority: '0.7' },
+
+  // About pages (redirect to /home — indexed for crawlers)
+  { path: '/about1.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/about2.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/about3.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/about4.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/about5.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/about6.html', changefreq: 'monthly', priority: '0.7' },
+  { path: '/about7.html', changefreq: 'monthly', priority: '0.7' },
 ]
 
 const fallbackBlogEntries = [
