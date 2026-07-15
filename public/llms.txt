@@ -13,4 +13,4 @@ Ananth N, Madurai, India. Python, React, TypeScript, AI/ML, Prompt Engineering.
 Email: thanan757@gmail.com
 LinkedIn: linkedin.com/in/ananth-n-583036233
 GitHub: github.com/sparrow-003
-Web: https://ananthdev.lovable.app
+Web: https://ananthdev.vercel.app

@@ -132,26 +132,76 @@ const Blog = memo(() => {
             description="Articles by Ananth N on AI engineering, full-stack web development, Python, React, TypeScript, and prompt engineering. Tutorials, deep dives, and project notes."
             path="/blog"
             type="website"
+            imageAlt="ANANTH.DEV Blog — AI, Web Development & Engineering Insights"
           />
           <Helmet>
             <script type="application/ld+json">{JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Blog",
               "name": "ANANTH.DEV Blog",
-              "url": "https://ananthdev.lovable.app/blog",
+              "url": "https://ananthdev.vercel.app/blog",
               "author": { "@type": "Person", "name": "Ananth N" },
-              "description": "Articles on AI, web development, and engineering by Ananth N."
+              "description": "Articles on AI, web development, and engineering by Ananth N.",
+              "inLanguage": "en",
+              "publisher": { "@type": "Person", "name": "Ananth N" }
             })}</script>
             <script type="application/ld+json">{JSON.stringify({
               "@context": "https://schema.org",
               "@type": "BreadcrumbList",
               "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ananthdev.lovable.app/" },
-                { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ananthdev.lovable.app/blog" }
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ananthdev.vercel.app/" },
+                { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ananthdev.vercel.app/blog" }
               ]
             })}</script>
           </Helmet>
         </>
+      )}
+      {slug && selectedPost && (
+        <Helmet>
+          <title>{selectedPost.title} | ANANTH.DEV Blog</title>
+          <meta name="description" content={selectedPost.excerpt || `Read ${selectedPost.title} by Ananth N on ANANTH.DEV`} />
+          <link rel="canonical" href={`https://ananthdev.vercel.app/blog/${selectedPost.slug}`} />
+          <meta property="og:title" content={`${selectedPost.title} | ANANTH.DEV Blog`} />
+          <meta property="og:description" content={selectedPost.excerpt || `Read ${selectedPost.title} by Ananth N`} />
+          <meta property="og:url" content={`https://ananthdev.vercel.app/blog/${selectedPost.slug}`} />
+          <meta property="og:image:alt" content={selectedPost.title} />
+          <meta name="twitter:title" content={`${selectedPost.title} | ANANTH.DEV Blog`} />
+          <meta name="twitter:description" content={selectedPost.excerpt || `Read ${selectedPost.title} by Ananth N`} />
+          <meta name="twitter:image:alt" content={selectedPost.title} />
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": selectedPost.title,
+            "description": selectedPost.excerpt,
+            "url": `https://ananthdev.vercel.app/blog/${selectedPost.slug}`,
+            "author": {
+              "@type": "Person",
+              "name": "Ananth N",
+              "url": "https://ananthdev.vercel.app",
+              "jobTitle": "Full-Stack Developer & AI Engineer"
+            },
+            "publisher": {
+              "@type": "Person",
+              "name": "Ananth N"
+            },
+            "inLanguage": "en",
+            "datePublished": selectedPost.created_at || selectedPost.publish_at,
+            "dateModified": selectedPost.updated_at || selectedPost.created_at,
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://ananthdev.vercel.app/blog/${selectedPost.slug}`
+            }
+          })}</script>
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ananthdev.vercel.app/" },
+              { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ananthdev.vercel.app/blog" },
+              { "@type": "ListItem", "position": 3, "name": selectedPost.title, "item": `https://ananthdev.vercel.app/blog/${selectedPost.slug}` }
+            ]
+          })}</script>
+        </Helmet>
       )}
       <main className="pt-24 pb-12 w-full min-h-[80vh]">
         {renderContent()}

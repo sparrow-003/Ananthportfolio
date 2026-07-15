@@ -19,7 +19,7 @@ import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { Helmet } from 'react-helmet-async'
 
-const SITE_URL = 'https://ananthdev.lovable.app'
+const SITE_URL = 'https://ananthdev.vercel.app'
 
 interface BlogPostProps {
   post: BlogPostType

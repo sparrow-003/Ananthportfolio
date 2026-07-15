@@ -38,6 +38,13 @@ type NavItem = {
     { name: 'Hire Me', href: 'mailto', isHireMe: true }
   ];
 
+  const isActiveHash = (href: string) => {
+    if (href.startsWith('#')) {
+      return location.pathname === '/' && location.hash === href;
+    }
+    return false;
+  };
+
   const handleHireMe = () => {
     const subject = encodeURIComponent("Hiring Inquiry - Let's Work Together!");
     const body = encodeURIComponent(
@@ -112,12 +119,13 @@ type NavItem = {
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8" aria-label="Main navigation">
             {navItems.map((item, index) => (
               <motion.a
                 key={item.name}
                 href={item.href}
-               className="text-sm lg:text-base text-foreground opacity-80 hover:opacity-100 hover:text-primary font-medium transition-all"
+                className="text-sm lg:text-base text-foreground opacity-80 hover:opacity-100 hover:text-primary font-medium transition-all"
+                aria-current={item.href && isActiveHash(item.href) ? 'page' : undefined}
                 whileHover={effectiveMode === 'full' ? { scale: 1.1, y: -2 } : undefined}
                 whileTap={effectiveMode !== 'off' ? { scale: 0.95 } : undefined}
                 initial={{ opacity: 0, y: -20 }}
@@ -147,7 +155,7 @@ type NavItem = {
             <div className="pl-4 flex items-center space-x-2">
               <ThemeToggle />
             </div>
-          </div>
+          </nav>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">

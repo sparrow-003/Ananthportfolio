@@ -22,4 +22,4 @@ A: Yes, worldwide.
 
 ## Contact
 Email: thanan757@gmail.com
-https://ananthdev.lovable.app
+https://ananthdev.vercel.app

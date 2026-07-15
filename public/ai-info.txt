@@ -1,5 +1,5 @@
 # AI Info — Ananth N
 Full-stack developer and AI engineer. Madurai, India.
 Skills: Python, React, TypeScript, AI/ML, Prompt Engineering
-Web: https://ananthdev.lovable.app
+Web: https://ananthdev.vercel.app
 Email: thanan757@gmail.com

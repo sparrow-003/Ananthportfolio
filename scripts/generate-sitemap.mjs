@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-const BASE_URL = 'https://ananthdev.lovable.app'
+const BASE_URL = 'https://ananthdev.vercel.app'
 const SUPABASE_URL = 'https://ahdxviaqamejzvtbsicg.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoZHh2aWFxYW1lanp2dGJzaWNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1MjY3MDAsImV4cCI6MjA4NTEwMjcwMH0.ekoCAaOd6WVrdWT3AnTsYshcPVsQVte2wqlsdvXGXLQ'
 
@@ -23,11 +23,22 @@ const staticEntries = [
   { path: '/hire-me', changefreq: 'monthly', priority: '0.8' },
   { path: '/skills', changefreq: 'monthly', priority: '0.8' },
   { path: '/contact', changefreq: 'monthly', priority: '0.8' },
+
+  // Services pages (redirect to /home — indexed for crawlers)
+  { path: '/services/full-stack-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/ai-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/web-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/saas-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/erp-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/crm-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/hrm-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/logistics-software', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/business-automation', changefreq: 'monthly', priority: '0.7' },
 ]
 
 const fallbackBlogEntries = [
   { path: '/blog/ai-coding-tools-vs-human-developers-will-ai-replace-programmers', lastmod: '2026-05-13', changefreq: 'weekly', priority: '0.85' },
-  { path: '/blog/ananth-n-self-taught-software-developer-building-custom-business-software-meta-description-meet-ananth-n-a-self-taught-software-developer-who-builds-custom-software-solutions-and-freelance-projects-to-help-businesses-grow-using-the-power-of-technology', lastmod: '2026-04-17', changefreq: 'weekly', priority: '0.85' },
+  { path: '/blog/ananth-n-self-taught-software-developer', lastmod: '2026-04-17', changefreq: 'weekly', priority: '0.85' },
   { path: '/blog/gpt-vs-claude-ai', lastmod: '2026-05-13', changefreq: 'weekly', priority: '0.85' },
   { path: '/blog/building-modern-web-apps-with-react', lastmod: '2026-05-13', changefreq: 'weekly', priority: '0.85' },
   { path: '/blog/welcome-to-my-blog', lastmod: '2026-05-13', changefreq: 'weekly', priority: '0.85' },

@@ -1,116 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ananthdev.lovable.app/</loc>
+    <loc>https://ananthdev.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/blog</loc>
+    <loc>https://ananthdev.vercel.app/blog</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/python-developer</loc>
+    <loc>https://ananthdev.vercel.app/python-developer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/react-developer</loc>
+    <loc>https://ananthdev.vercel.app/react-developer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/ai-engineer</loc>
+    <loc>https://ananthdev.vercel.app/ai-engineer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/typescript-developer</loc>
+    <loc>https://ananthdev.vercel.app/typescript-developer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/prompt-engineering</loc>
+    <loc>https://ananthdev.vercel.app/prompt-engineering</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/web-development</loc>
+    <loc>https://ananthdev.vercel.app/web-development</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/ui-ux-design</loc>
+    <loc>https://ananthdev.vercel.app/ui-ux-design</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/full-stack-developer</loc>
+    <loc>https://ananthdev.vercel.app/full-stack-developer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/ai-solutions</loc>
+    <loc>https://ananthdev.vercel.app/ai-solutions</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/consulting</loc>
+    <loc>https://ananthdev.vercel.app/consulting</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/portfolio</loc>
+    <loc>https://ananthdev.vercel.app/portfolio</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/about</loc>
+    <loc>https://ananthdev.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/hire-me</loc>
+    <loc>https://ananthdev.vercel.app/hire-me</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/skills</loc>
+    <loc>https://ananthdev.vercel.app/skills</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/contact</loc>
+    <loc>https://ananthdev.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/blog/ai-coding-tools-vs-human-developers-will-ai-replace-programmers</loc>
+    <loc>https://ananthdev.vercel.app/services/full-stack-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/ai-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/web-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/saas-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/erp-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/crm-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/hrm-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/logistics-software</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/services/business-automation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/blog/ai-coding-tools-vs-human-developers-will-ai-replace-programmers</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/blog/ananth-n-self-taught-software-developer-building-custom-business-software-meta-description-meet-ananth-n-a-self-taught-software-developer-who-builds-custom-software-solutions-and-freelance-projects-to-help-businesses-grow-using-the-power-of-technology</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/blog/ananth-n-self-taught-software-developer-building-custom-business-software-meta-description-meet-ananth-n-a-self-taught-software-developer-who-builds-custom-software-solutions-and-freelance-projects-to-help-businesses-grow-using-the-power-of-technology</loc>
+    <loc>https://ananthdev.vercel.app/blog/gpt-vs-claude-ai</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/blog/gpt-vs-claude-ai</loc>
+    <loc>https://ananthdev.vercel.app/blog/building-modern-web-apps-with-react</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://ananthdev.lovable.app/blog/building-modern-web-apps-with-react</loc>
-    <lastmod>2026-07-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://ananthdev.lovable.app/blog/welcome-to-my-blog</loc>
+    <loc>https://ananthdev.vercel.app/blog/welcome-to-my-blog</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>

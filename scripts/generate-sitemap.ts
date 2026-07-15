@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-const BASE_URL = 'https://ananthdev.lovable.app'
+const BASE_URL = 'https://ananthdev.vercel.app'
 const SUPABASE_URL = 'https://ahdxviaqamejzvtbsicg.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1cCI6ImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJyZWYiOiJhaGR4dmlhcWFtZWpadnRic2ljZyIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzY5NTI2NzAwLCJleHAiOjIwODUxMDI3MDB9.ekoCAaOd6WVrdWT3AnTsYshcPVsQVte2wqlsdvXGXLQ'
 
@@ -32,6 +32,17 @@ const staticEntries: SitemapEntry[] = [
   { path: '/hire-me', changefreq: 'monthly', priority: '0.8' },
   { path: '/skills', changefreq: 'monthly', priority: '0.8' },
   { path: '/contact', changefreq: 'monthly', priority: '0.8' },
+
+  // Services pages (redirect to /home — indexed for crawlers)
+  { path: '/services/full-stack-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/ai-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/web-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/saas-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/erp-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/crm-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/hrm-development', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/logistics-software', changefreq: 'monthly', priority: '0.7' },
+  { path: '/services/business-automation', changefreq: 'monthly', priority: '0.7' },
 ]
 
 const escapeXml = (value: string) =>

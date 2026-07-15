@@ -28,8 +28,8 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ananthdev.lovable.app/sitemap.xml
-Sitemap: https://ananthdev.lovable.app/sitemap-pages.xml
-Sitemap: https://ananthdev.lovable.app/sitemap-skills.xml
+Sitemap: https://ananthdev.vercel.app/sitemap.xml
+Sitemap: https://ananthdev.vercel.app/sitemap-pages.xml
+Sitemap: https://ananthdev.vercel.app/sitemap-skills.xml
 
-Host: https://ananthdev.lovable.app
+Host: https://ananthdev.vercel.app
