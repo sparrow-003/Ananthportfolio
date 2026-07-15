@@ -32,6 +32,8 @@ const staticEntries: SitemapEntry[] = [
   { path: '/hire-me', changefreq: 'monthly', priority: '0.8' },
   { path: '/skills', changefreq: 'monthly', priority: '0.8' },
   { path: '/contact', changefreq: 'monthly', priority: '0.8' },
+  { path: '/projects', changefreq: 'monthly', priority: '0.8' },
+  { path: '/home', changefreq: 'monthly', priority: '0.8' },
 
   // Services pages (redirect to /home — indexed for crawlers)
   { path: '/services/full-stack-development', changefreq: 'monthly', priority: '0.7' },

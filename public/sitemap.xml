@@ -86,6 +86,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ananthdev.vercel.app/projects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ananthdev.vercel.app/home</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ananthdev.vercel.app/services/full-stack-development</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
